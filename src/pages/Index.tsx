@@ -1,11 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { Button } from "@/components/ui/button";
+import { RegistrationForm } from "@/components/RegistrationForm";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen paper-texture">
+      <div className="container mx-auto px-4 py-8">
+        <header className="mb-12 text-center">
+          <div className="flex justify-end mb-4">
+            <Button variant="ghost" asChild>
+              <Link to="/login">Вход для библиотекарей</Link>
+            </Button>
+          </div>
+          <h1 className="text-4xl font-serif mb-4">Библиотека</h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Добро пожаловать в нашу библиотеку. Для получения читательского билета, пожалуйста,
+            заполните форму регистрации ниже.
+          </p>
+        </header>
+        <main className="animate-in">
+          <RegistrationForm />
+        </main>
       </div>
     </div>
   );
