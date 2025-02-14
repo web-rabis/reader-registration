@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import axios from "axios";
 
 export function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -17,7 +18,9 @@ export function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // In a real app, this would be an API call
+      // For now, we'll just mock the API call
+      // When you connect Supabase, this will be replaced with a real API endpoint
+      await axios.post("/api/register", formData);
       console.log("Registration submitted:", formData);
       toast.success("Регистрация отправлена на рассмотрение");
       setFormData({ fullName: "", email: "", phone: "", address: "" });

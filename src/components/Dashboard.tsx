@@ -4,6 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+type Registration = {
+  id: number;
+  fullName: string;
+  email: string;
+  status: string;
+  date: string;
+};
 
 const mockRegistrations = [
   {
@@ -24,6 +34,26 @@ const mockRegistrations = [
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const [registrations, setRegistrations] = useState<Registration[]>(mockRegistrations);
+
+  useEffect(() => {
+    const fetchRegistrations = async () => {
+      try {
+        // This will be replaced with a real API call when Supabase is connected
+        // const response = await axios.get("/api/registrations");
+        // setRegistrations(response.data);
+        setRegistrations(mockRegistrations);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toast.error(error.response?.data?.message || "Ошибка при загрузке данных");
+        } else {
+          toast.error("Ошибка при загрузке данных");
+        }
+      }
+    };
+
+    fetchRegistrations();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("librarian-token");
@@ -31,12 +61,30 @@ export function Dashboard() {
     toast.success("Вы вышли из системы");
   };
 
-  const handleApprove = (id: number) => {
-    toast.success(`Заявка #${id} одобрена`);
+  const handleApprove = async (id: number) => {
+    try {
+      // This will be replaced with a real API call when Supabase is connected
+      // await axios.post(`/api/registrations/${id}/approve`);
+      toast.success(`Заявка #${id} одобрена`);
+      setRegistrations(registrations.map(reg => 
+        reg.id === id ? { ...reg, status: "approved" } : reg
+      ));
+    } catch (error) {
+      toast.error("Ошибка при обработке заявки");
+    }
   };
 
-  const handleReject = (id: number) => {
-    toast.success(`Заявка #${id} отклонена`);
+  const handleReject = async (id: number) => {
+    try {
+      // This will be replaced with a real API call when Supabase is connected
+      // await axios.post(`/api/registrations/${id}/reject`);
+      toast.success(`Заявка #${id} отклонена`);
+      setRegistrations(registrations.map(reg => 
+        reg.id === id ? { ...reg, status: "rejected" } : reg
+      ));
+    } catch (error) {
+      toast.error("Ошибка при обработке заявки");
+    }
   };
 
   return (
@@ -54,7 +102,7 @@ export function Dashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockRegistrations.map((reg) => (
+            {registrations.map((reg) => (
               <div
                 key={reg.id}
                 className="p-4 border rounded-lg flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors"
@@ -65,23 +113,30 @@ export function Dashboard() {
                   <p className="text-sm text-muted-foreground">Дата: {reg.date}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary">{reg.status === "pending" ? "Ожидает" : reg.status}</Badge>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-green-600 hover:text-green-700"
-                    onClick={() => handleApprove(reg.id)}
-                  >
-                    Одобрить
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-red-600 hover:text-red-700"
-                    onClick={() => handleReject(reg.id)}
-                  >
-                    Отклонить
-                  </Button>
+                  <Badge variant="secondary">
+                    {reg.status === "pending" ? "Ожидает" : 
+                     reg.status === "approved" ? "Одобрено" : "Отклонено"}
+                  </Badge>
+                  {reg.status === "pending" && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-green-600 hover:text-green-700"
+                        onClick={() => handleApprove(reg.id)}
+                      >
+                        Одобрить
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700"
+                        onClick={() => handleReject(reg.id)}
+                      >
+                        Отклонить
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -17,16 +17,20 @@ export function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // In a real app, this would validate against an API
       if (credentials.username === "admin" && credentials.password === "admin") {
-        localStorage.setItem("librarian-token", "dummy-jwt-token");
+        const mockResponse = { data: { token: "dummy-jwt-token" } };
+        localStorage.setItem("librarian-token", mockResponse.data.token);
         toast.success("Успешный вход");
         navigate("/dashboard");
       } else {
         toast.error("Неверные учетные данные");
       }
     } catch (error) {
-      toast.error("Ошибка при входе");
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Ошибка при входе");
+      } else {
+        toast.error("Ошибка при входе");
+      }
     }
   };
 
