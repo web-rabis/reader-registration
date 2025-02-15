@@ -6,30 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { registrationService } from "@/services/registration-service";
-import { authService } from "@/services/auth-service";
 import { RegistrationResponse } from "@/types/api";
 import { PencilIcon } from "lucide-react";
-
-const mockRegistrations: RegistrationResponse[] = [
-  {
-    id: 1,
-    fullName: "Иванов Иван Иванович",
-    email: "ivanov@example.com",
-    status: "pending",
-    date: "2024-03-20",
-  },
-  {
-    id: 2,
-    fullName: "Петрова Мария Сергеевна",
-    email: "petrova@example.com",
-    status: "pending",
-    date: "2024-03-19",
-  },
-];
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function Dashboard() {
   const navigate = useNavigate();
   const [registrations, setRegistrations] = useState<RegistrationResponse[]>([]);
+  const [statusFilter, setStatusFilter] = useState<string>("all");
 
   useEffect(() => {
     const fetchRegistrations = async () => {
@@ -76,6 +66,24 @@ export function Dashboard() {
     navigate(`/edit-registration/${id}`);
   };
 
+  const filteredRegistrations = registrations.filter((reg) => {
+    if (statusFilter === "all") return true;
+    return reg.status === statusFilter;
+  });
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "pending":
+        return "Ожидает";
+      case "approved":
+        return "Одобрено";
+      case "rejected":
+        return "Отклонено";
+      default:
+        return "Все";
+    }
+  };
+
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center">
@@ -87,11 +95,27 @@ export function Dashboard() {
       
       <Card>
         <CardHeader>
-          <CardTitle>Заявки на регистрацию</CardTitle>
+          <div className="flex justify-between items-center">
+            <CardTitle>Заявки на регистрацию</CardTitle>
+            <Select
+              value={statusFilter}
+              onValueChange={setStatusFilter}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Фильтр по статусу" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Все заявки</SelectItem>
+                <SelectItem value="pending">Ожидающие</SelectItem>
+                <SelectItem value="approved">Одобренные</SelectItem>
+                <SelectItem value="rejected">Отклоненные</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {registrations.map((reg) => (
+            {filteredRegistrations.map((reg) => (
               <div
                 key={reg.id}
                 className="p-4 border rounded-lg flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors"
@@ -103,8 +127,7 @@ export function Dashboard() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">
-                    {reg.status === "pending" ? "Ожидает" : 
-                     reg.status === "approved" ? "Одобрено" : "Отклонено"}
+                    {getStatusLabel(reg.status)}
                   </Badge>
                   <Button
                     variant="outline"
