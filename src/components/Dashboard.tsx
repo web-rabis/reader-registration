@@ -11,9 +11,12 @@ import { ReaderCard } from "./ReaderCard";
 import { RegistrationFilters } from "./dashboard/RegistrationFilters";
 import { RegistrationCard } from "./dashboard/RegistrationCard";
 import { RegistrationPagination } from "./dashboard/RegistrationPagination";
+import { useTranslation } from "@/hooks/useTranslation";
+import { LanguageSelector } from "./LanguageSelector";
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [registrations, setRegistrations] = useState<RegistrationResponse[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedRegistration, setSelectedRegistration] = useState<RegistrationResponse | null>(null);
@@ -27,38 +30,38 @@ export function Dashboard() {
         const response = await registrationService.getAll();
         setRegistrations(response.data);
       } catch (error) {
-        toast.error("Ошибка при загрузке данных");
+        toast.error(t('loadError'));
       }
     };
 
     fetchRegistrations();
-  }, []);
+  }, [t]);
 
   const handleLogout = () => {
     authService.logout();
     navigate("/login");
-    toast.success("Вы вышли из системы");
+    toast.success(t('logoutSuccess'));
   };
 
   const handleApprove = async (id: number) => {
     try {
       await registrationService.approve(id);
-      toast.success(`Заявка #${id} одобрена`);
+      toast.success(t('approveSuccess').replace('{id}', id.toString()));
       const response = await registrationService.getAll();
       setRegistrations(response.data);
     } catch (error) {
-      toast.error("Ошибка при обработке заявки");
+      toast.error(t('processingError'));
     }
   };
 
   const handleReject = async (id: number) => {
     try {
       await registrationService.reject(id);
-      toast.success(`Заявка #${id} отклонена`);
+      toast.success(t('rejectSuccess').replace('{id}', id.toString()));
       const response = await registrationService.getAll();
       setRegistrations(response.data);
     } catch (error) {
-      toast.error("Ошибка при обработке заявки");
+      toast.error(t('processingError'));
     }
   };
 
@@ -92,23 +95,26 @@ export function Dashboard() {
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "pending":
-        return "Ожидает";
+        return t('pending');
       case "approved":
-        return "Одобрено";
+        return t('approved');
       case "rejected":
-        return "Отклонено";
+        return t('rejected');
       default:
-        return "Все";
+        return t('all');
     }
   };
 
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-serif">Панель управления</h1>
-        <Button variant="outline" onClick={handleLogout}>
-          Выйти
-        </Button>
+        <h1 className="text-3xl font-serif">{t('dashboard')}</h1>
+        <div className="flex gap-4 items-center">
+          <LanguageSelector />
+          <Button variant="outline" onClick={handleLogout}>
+            {t('logout')}
+          </Button>
+        </div>
       </div>
       
       <Card>
@@ -124,7 +130,7 @@ export function Dashboard() {
           <div className="space-y-4">
             {paginatedRegistrations.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
-                Нет заявок для отображения
+                {t('noRegistrations')}
               </div>
             ) : (
               paginatedRegistrations.map((registration) => (
