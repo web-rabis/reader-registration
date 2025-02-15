@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +7,7 @@ import { useEffect, useState } from "react";
 import { registrationService } from "@/services/registration-service";
 import { authService } from "@/services/auth-service";
 import { RegistrationResponse } from "@/types/api";
-import { PencilIcon } from "lucide-react";
+import { PencilIcon, IdCard } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -16,11 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ReaderCard } from "./ReaderCard";
 
 export function Dashboard() {
   const navigate = useNavigate();
   const [registrations, setRegistrations] = useState<RegistrationResponse[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [selectedRegistration, setSelectedRegistration] = useState<RegistrationResponse | null>(null);
 
   useEffect(() => {
     const fetchRegistrations = async () => {
@@ -65,6 +66,10 @@ export function Dashboard() {
 
   const handleEdit = (id: number) => {
     navigate(`/edit-registration/${id}`);
+  };
+
+  const handleViewCard = (registration: RegistrationResponse) => {
+    setSelectedRegistration(registration);
   };
 
   const filteredRegistrations = registrations.filter((reg) => {
@@ -130,6 +135,17 @@ export function Dashboard() {
                   <Badge variant="secondary">
                     {getStatusLabel(reg.status)}
                   </Badge>
+                  {reg.status === "approved" && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-gray-600 hover:text-gray-700"
+                      onClick={() => handleViewCard(reg)}
+                    >
+                      <IdCard className="w-4 h-4 mr-1" />
+                      Билет
+                    </Button>
+                  )}
                   <Button
                     variant="outline"
                     size="sm"
@@ -165,6 +181,14 @@ export function Dashboard() {
           </div>
         </CardContent>
       </Card>
+
+      {selectedRegistration && (
+        <ReaderCard
+          registration={selectedRegistration}
+          open={!!selectedRegistration}
+          onClose={() => setSelectedRegistration(null)}
+        />
+      )}
     </div>
   );
 }
