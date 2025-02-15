@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -91,7 +92,7 @@ export function Dashboard() {
       !searchQuery || 
       reg.fullName.toLowerCase().includes(searchLower) ||
       (reg.iin && reg.iin.includes(searchQuery)) ||
-      (reg.mobilePhone && reg.mobilePhone.toLowerCase().includes(searchQuery));
+      (reg.mobilePhone && reg.mobilePhone.toLowerCase().includes(searchLower));
     
     return matchesStatus && matchesSearch;
   });
@@ -102,6 +103,11 @@ export function Dashboard() {
     startIndex,
     startIndex + itemsPerPage
   );
+
+  // Reset to first page when filter or search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [statusFilter, searchQuery]);
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -158,75 +164,81 @@ export function Dashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {paginatedRegistrations.map((reg) => (
-              <div
-                key={reg.id}
-                className="p-4 border rounded-lg flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors"
-              >
-                <div className="space-y-1">
-                  <p className="font-medium">{reg.fullName}</p>
-                  <p className="text-sm text-muted-foreground">{reg.email}</p>
-                  <p className="text-sm text-muted-foreground">Дата: {reg.date}</p>
-                  {reg.iin && <p className="text-sm text-muted-foreground">ИИН: {reg.iin}</p>}
-                  {reg.mobilePhone && <p className="text-sm text-muted-foreground">Телефон: {reg.mobilePhone}</p>}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary">
-                    {getStatusLabel(reg.status)}
-                  </Badge>
-                  {reg.status === "approved" && (
+            {paginatedRegistrations.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                Нет заявок для отображения
+              </div>
+            ) : (
+              paginatedRegistrations.map((reg) => (
+                <div
+                  key={reg.id}
+                  className="p-4 border rounded-lg flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors"
+                >
+                  <div className="space-y-1">
+                    <p className="font-medium">{reg.fullName}</p>
+                    <p className="text-sm text-muted-foreground">{reg.email}</p>
+                    <p className="text-sm text-muted-foreground">Дата: {reg.date}</p>
+                    {reg.iin && <p className="text-sm text-muted-foreground">ИИН: {reg.iin}</p>}
+                    {reg.mobilePhone && <p className="text-sm text-muted-foreground">Телефон: {reg.mobilePhone}</p>}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary">
+                      {getStatusLabel(reg.status)}
+                    </Badge>
+                    {reg.status === "approved" && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-gray-600 hover:text-gray-700"
+                        onClick={() => handleViewCard(reg)}
+                      >
+                        <IdCard className="w-4 h-4 mr-1" />
+                        Билет
+                      </Button>
+                    )}
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-gray-600 hover:text-gray-700"
-                      onClick={() => handleViewCard(reg)}
+                      className="text-blue-600 hover:text-blue-700"
+                      onClick={() => handleEdit(reg.id)}
                     >
-                      <IdCard className="w-4 h-4 mr-1" />
-                      Билет
+                      <PencilIcon className="w-4 h-4 mr-1" />
+                      Редактировать
                     </Button>
-                  )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-blue-600 hover:text-blue-700"
-                    onClick={() => handleEdit(reg.id)}
-                  >
-                    <PencilIcon className="w-4 h-4 mr-1" />
-                    Редактировать
-                  </Button>
-                  {reg.status === "pending" && (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-green-600 hover:text-green-700"
-                        onClick={() => handleApprove(reg.id)}
-                      >
-                        Одобрить
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-red-600 hover:text-red-700"
-                        onClick={() => handleReject(reg.id)}
-                      >
-                        Отклонить
-                      </Button>
-                    </>
-                  )}
+                    {reg.status === "pending" && (
+                      <>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-green-600 hover:text-green-700"
+                          onClick={() => handleApprove(reg.id)}
+                        >
+                          Одобрить
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700"
+                          onClick={() => handleReject(reg.id)}
+                        >
+                          Отклонить
+                        </Button>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
           
           {totalPages > 1 && (
-            <div className="mt-4">
+            <div className="mt-6 flex justify-center">
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious 
                       onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                      className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </PaginationItem>
                   {[...Array(totalPages)].map((_, i) => (
@@ -234,6 +246,7 @@ export function Dashboard() {
                       <PaginationLink
                         onClick={() => setCurrentPage(i + 1)}
                         isActive={currentPage === i + 1}
+                        className="cursor-pointer"
                       >
                         {i + 1}
                       </PaginationLink>
@@ -242,7 +255,7 @@ export function Dashboard() {
                   <PaginationItem>
                     <PaginationNext 
                       onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </PaginationItem>
                 </PaginationContent>
