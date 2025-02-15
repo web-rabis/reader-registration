@@ -1,4 +1,3 @@
-
 export const translations = {
   ru: {
     // Общие
@@ -60,6 +59,22 @@ export const translations = {
     updateSuccess: "Данные успешно обновлены",
     submissionSuccess: "Заявка успешно отправлена",
     processingError: "Ошибка при обработке заявки",
+
+    // Дополнительные переводы
+    login: "Вход",
+    username: "Имя пользователя",
+    password: "Пароль",
+    librarianLogin: "Вход для библиотекарей",
+    loginSuccess: "Вход выполнен успешно",
+    loginError: "Неверные учетные данные",
+    active: "Активный",
+    inactive: "Не активный",
+    readerCard: "Читательский билет",
+    readerCardNumber: "Читательский билет №",
+    fullName: "ФИО",
+    registrationDate: "Дата регистрации",
+    status: "Статус",
+    print: "Печать"
   },
   kk: {
     // Общие
@@ -121,9 +136,25 @@ export const translations = {
     updateSuccess: "Деректер сәтті жаңартылды",
     submissionSuccess: "Өтінім сәтті жіберілді",
     processingError: "Өтінімді өңдеу кезінде қате",
+
+    // Дополнительные переводы
+    login: "Кіру",
+    username: "Пайдаланушы аты",
+    password: "Құпия сөз",
+    librarianLogin: "Кітапханашылар кіруі",
+    loginSuccess: "Сәтті кірдіңіз",
+    loginError: "Қате логин немесе құпия сөз",
+    active: "Белсенді",
+    inactive: "Белсенді емес",
+    readerCard: "Оқырман билеті",
+    readerCardNumber: "Оқырман билеті №",
+    fullName: "Аты-жөні",
+    registrationDate: "Тіркелген күні",
+    status: "Мәртебесі",
+    print: "Басып шығару"
   },
   en: {
-    // Common
+    // Общие
     back: "Back",
     submit: "Submit",
     edit: "Edit",
@@ -132,13 +163,13 @@ export const translations = {
     logout: "Logout",
     ticket: "Ticket",
 
-    // Headers
+    // Заголовки
     dashboard: "Dashboard",
     library: "Library",
     registration: "Reader Registration",
     registrationEdit: "Edit Registration",
 
-    // Forms
+    // Формы
     photo: "Photo",
     iin: "IIN",
     lastName: "Last Name",
@@ -159,7 +190,7 @@ export const translations = {
     position: "Position",
     academicDegree: "Academic Degree",
 
-    // Statuses
+    // Статусы
     pending: "Pending",
     approved: "Approved",
     rejected: "Rejected",
@@ -172,7 +203,7 @@ export const translations = {
     noRegistrations: "No registrations to display",
     date: "Date",
 
-    // Messages
+    // Сообщения
     welcomeMessage: "Welcome to our library. To get a reader's card, please fill out the registration form below.",
     loginMessage: "Please log in to access the dashboard.",
     logoutSuccess: "You have been logged out",
@@ -182,5 +213,21 @@ export const translations = {
     updateSuccess: "Data updated successfully",
     submissionSuccess: "Registration submitted successfully",
     processingError: "Error processing registration",
+
+    // Дополнительные переводы
+    login: "Login",
+    username: "Username",
+    password: "Password",
+    librarianLogin: "Librarian Login",
+    loginSuccess: "Login successful",
+    loginError: "Invalid credentials",
+    active: "Active",
+    inactive: "Inactive",
+    readerCard: "Reader Card",
+    readerCardNumber: "Reader Card #",
+    fullName: "Full Name",
+    registrationDate: "Registration Date",
+    status: "Status",
+    print: "Print"
   }
 };

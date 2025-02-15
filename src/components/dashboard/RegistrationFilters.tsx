@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CardTitle } from "@/components/ui/card";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface RegistrationFiltersProps {
   statusFilter: string;
@@ -23,29 +24,31 @@ export function RegistrationFilters({
   onStatusChange,
   onSearchChange,
 }: RegistrationFiltersProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <CardTitle>Заявки на регистрацию</CardTitle>
+        <CardTitle>{t('registrationRequests')}</CardTitle>
         <Select
           value={statusFilter}
           onValueChange={onStatusChange}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Фильтр по статусу" />
+            <SelectValue placeholder={t('statusFilter')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Все заявки</SelectItem>
-            <SelectItem value="pending">Ожидающие</SelectItem>
-            <SelectItem value="approved">Одобренные</SelectItem>
-            <SelectItem value="rejected">Отклоненные</SelectItem>
+            <SelectItem value="all">{t('all')}</SelectItem>
+            <SelectItem value="pending">{t('pending')}</SelectItem>
+            <SelectItem value="approved">{t('approved')}</SelectItem>
+            <SelectItem value="rejected">{t('rejected')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Поиск по ИИН, ФИО или номеру телефона"
+          placeholder={t('searchPlaceholder')}
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           className="pl-8"

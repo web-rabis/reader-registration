@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,9 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { authService } from "@/services/auth-service";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -19,22 +22,22 @@ export function LoginForm() {
     try {
       const response = await authService.login(credentials);
       localStorage.setItem("librarian-token", response.data.token);
-      toast.success("Успешный вход");
+      toast.success(t('loginSuccess'));
       navigate("/dashboard");
     } catch (error) {
-      toast.error("Неверные учетные данные");
+      toast.error(t('loginError'));
     }
   };
 
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">Вход для библиотекарей</CardTitle>
+        <CardTitle className="text-2xl text-center">{t('librarianLogin')}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="username">Имя пользователя</Label>
+            <Label htmlFor="username">{t('username')}</Label>
             <Input
               id="username"
               value={credentials.username}
@@ -46,7 +49,7 @@ export function LoginForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Пароль</Label>
+            <Label htmlFor="password">{t('password')}</Label>
             <Input
               id="password"
               type="password"
@@ -59,7 +62,7 @@ export function LoginForm() {
             />
           </div>
           <Button type="submit" className="w-full">
-            Войти
+            {t('login')}
           </Button>
         </form>
       </CardContent>

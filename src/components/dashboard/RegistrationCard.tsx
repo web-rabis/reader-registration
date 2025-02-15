@@ -3,6 +3,7 @@ import { PencilIcon, IdCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RegistrationResponse } from "@/types/api";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface RegistrationCardProps {
   registration: RegistrationResponse;
@@ -21,18 +22,20 @@ export function RegistrationCard({
   onViewCard,
   getStatusLabel,
 }: RegistrationCardProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="p-4 border rounded-lg flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors">
       <div className="space-y-1">
         <p className="font-medium">{registration.fullName}</p>
         <p className="text-sm text-muted-foreground">{registration.email}</p>
-        <p className="text-sm text-muted-foreground">Дата: {registration.date}</p>
+        <p className="text-sm text-muted-foreground">{t('date')}: {registration.date}</p>
         {registration.iin && (
-          <p className="text-sm text-muted-foreground">ИИН: {registration.iin}</p>
+          <p className="text-sm text-muted-foreground">{t('iin')}: {registration.iin}</p>
         )}
         {registration.mobilePhone && (
           <p className="text-sm text-muted-foreground">
-            Телефон: {registration.mobilePhone}
+            {t('mobilePhone')}: {registration.mobilePhone}
           </p>
         )}
       </div>
@@ -46,7 +49,7 @@ export function RegistrationCard({
             onClick={() => onViewCard(registration)}
           >
             <IdCard className="w-4 h-4 mr-1" />
-            Билет
+            {t('ticket')}
           </Button>
         )}
         <Button
@@ -56,7 +59,7 @@ export function RegistrationCard({
           onClick={() => onEdit(registration.id)}
         >
           <PencilIcon className="w-4 h-4 mr-1" />
-          Редактировать
+          {t('edit')}
         </Button>
         {registration.status === "pending" && (
           <>
@@ -66,7 +69,7 @@ export function RegistrationCard({
               className="text-green-600 hover:text-green-700"
               onClick={() => onApprove(registration.id)}
             >
-              Одобрить
+              {t('approve')}
             </Button>
             <Button
               variant="outline"
@@ -74,7 +77,7 @@ export function RegistrationCard({
               className="text-red-600 hover:text-red-700"
               onClick={() => onReject(registration.id)}
             >
-              Отклонить
+              {t('reject')}
             </Button>
           </>
         )}
