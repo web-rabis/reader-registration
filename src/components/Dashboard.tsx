@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { registrationService } from "@/services/registration-service";
+import { authService } from "@/services/auth-service";
 import { RegistrationResponse } from "@/types/api";
 import { PencilIcon } from "lucide-react";
 import {
