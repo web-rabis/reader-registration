@@ -1,11 +1,12 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { registrationService } from "@/services/registration-service";
+import { authService } from "@/services/auth-service";
+import { RegistrationResponse } from "@/types/api";
 
 type Registration = {
   id: number;
@@ -34,21 +35,15 @@ const mockRegistrations = [
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const [registrations, setRegistrations] = useState<Registration[]>(mockRegistrations);
+  const [registrations, setRegistrations] = useState<RegistrationResponse[]>(mockRegistrations);
 
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        // This will be replaced with a real API call when Supabase is connected
-        // const response = await axios.get("/api/registrations");
-        // setRegistrations(response.data);
-        setRegistrations(mockRegistrations);
+        const response = await registrationService.getAll();
+        setRegistrations(response.data);
       } catch (error) {
-        if (axios.isAxiosError(error)) {
-          toast.error(error.response?.data?.message || "Ошибка при загрузке данных");
-        } else {
-          toast.error("Ошибка при загрузке данных");
-        }
+        toast.error("Ошибка при загрузке данных");
       }
     };
 
@@ -56,19 +51,17 @@ export function Dashboard() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("librarian-token");
+    authService.logout();
     navigate("/login");
     toast.success("Вы вышли из системы");
   };
 
   const handleApprove = async (id: number) => {
     try {
-      // This will be replaced with a real API call when Supabase is connected
-      // await axios.post(`/api/registrations/${id}/approve`);
+      await registrationService.approve(id);
       toast.success(`Заявка #${id} одобрена`);
-      setRegistrations(registrations.map(reg => 
-        reg.id === id ? { ...reg, status: "approved" } : reg
-      ));
+      const response = await registrationService.getAll();
+      setRegistrations(response.data);
     } catch (error) {
       toast.error("Ошибка при обработке заявки");
     }
@@ -76,12 +69,10 @@ export function Dashboard() {
 
   const handleReject = async (id: number) => {
     try {
-      // This will be replaced with a real API call when Supabase is connected
-      // await axios.post(`/api/registrations/${id}/reject`);
+      await registrationService.reject(id);
       toast.success(`Заявка #${id} отклонена`);
-      setRegistrations(registrations.map(reg => 
-        reg.id === id ? { ...reg, status: "rejected" } : reg
-      ));
+      const response = await registrationService.getAll();
+      setRegistrations(response.data);
     } catch (error) {
       toast.error("Ошибка при обработке заявки");
     }

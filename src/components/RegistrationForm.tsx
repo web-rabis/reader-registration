@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,17 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import axios from "axios";
 import { RegistrationFormData } from "@/types/registration";
-import {
-  genderDictionary,
-  educationDictionary,
-  socialStatusDictionary,
-  specializationDictionary,
-  instituteDictionary,
-  facultyDictionary,
-  academicDegreeDictionary,
-} from "@/mocks/dictionaries";
+import { Dictionary } from "@/types/api";
+import { dictionaryService } from "@/services/dictionary-service";
+import { registrationService } from "@/services/registration-service";
 
 export function RegistrationForm() {
   const [formData, setFormData] = useState<RegistrationFormData>({
@@ -47,10 +39,66 @@ export function RegistrationForm() {
     academicDegree: 0,
   });
 
+  const [dictionaries, setDictionaries] = useState<{
+    genders: Dictionary[];
+    educations: Dictionary[];
+    socialStatuses: Dictionary[];
+    specializations: Dictionary[];
+    institutes: Dictionary[];
+    faculties: Dictionary[];
+    academicDegrees: Dictionary[];
+  }>({
+    genders: [],
+    educations: [],
+    socialStatuses: [],
+    specializations: [],
+    institutes: [],
+    faculties: [],
+    academicDegrees: [],
+  });
+
+  useEffect(() => {
+    const loadDictionaries = async () => {
+      try {
+        const [
+          gendersRes,
+          educationsRes,
+          socialStatusesRes,
+          specializationsRes,
+          institutesRes,
+          facultiesRes,
+          academicDegreesRes,
+        ] = await Promise.all([
+          dictionaryService.getGenders(),
+          dictionaryService.getEducations(),
+          dictionaryService.getSocialStatuses(),
+          dictionaryService.getSpecializations(),
+          dictionaryService.getInstitutes(),
+          dictionaryService.getFaculties(),
+          dictionaryService.getAcademicDegrees(),
+        ]);
+
+        setDictionaries({
+          genders: gendersRes.data,
+          educations: educationsRes.data,
+          socialStatuses: socialStatusesRes.data,
+          specializations: specializationsRes.data,
+          institutes: institutesRes.data,
+          faculties: facultiesRes.data,
+          academicDegrees: academicDegreesRes.data,
+        });
+      } catch (error) {
+        toast.error("Ошибка при загрузке справочников");
+      }
+    };
+
+    loadDictionaries();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/api/register", formData);
+      await registrationService.submit(formData);
       toast.success("Регистрация отправлена на рассмотрение");
       setFormData({
         photo: null,
@@ -164,7 +212,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите пол" />
                 </SelectTrigger>
                 <SelectContent>
-                  {genderDictionary.map((item) => (
+                  {dictionaries.genders.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>
@@ -183,7 +231,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите образование" />
                 </SelectTrigger>
                 <SelectContent>
-                  {educationDictionary.map((item) => (
+                  {dictionaries.educations.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>
@@ -202,7 +250,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите социальный статус" />
                 </SelectTrigger>
                 <SelectContent>
-                  {socialStatusDictionary.map((item) => (
+                  {dictionaries.socialStatuses.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>
@@ -221,7 +269,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите специальность" />
                 </SelectTrigger>
                 <SelectContent>
-                  {specializationDictionary.map((item) => (
+                  {dictionaries.specializations.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>
@@ -240,7 +288,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите институт" />
                 </SelectTrigger>
                 <SelectContent>
-                  {instituteDictionary.map((item) => (
+                  {dictionaries.institutes.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>
@@ -259,7 +307,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите факультет" />
                 </SelectTrigger>
                 <SelectContent>
-                  {facultyDictionary.map((item) => (
+                  {dictionaries.faculties.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>
@@ -308,7 +356,7 @@ export function RegistrationForm() {
                   <SelectValue placeholder="Выберите ученую степень" />
                 </SelectTrigger>
                 <SelectContent>
-                  {academicDegreeDictionary.map((item) => (
+                  {dictionaries.academicDegrees.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
                       {item.name}
                     </SelectItem>

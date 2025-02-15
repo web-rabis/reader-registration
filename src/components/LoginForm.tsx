@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { authService } from "@/services/auth-service";
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -17,20 +17,12 @@ export function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (credentials.username === "admin" && credentials.password === "admin") {
-        const mockResponse = { data: { token: "dummy-jwt-token" } };
-        localStorage.setItem("librarian-token", mockResponse.data.token);
-        toast.success("Успешный вход");
-        navigate("/dashboard");
-      } else {
-        toast.error("Неверные учетные данные");
-      }
+      const response = await authService.login(credentials);
+      localStorage.setItem("librarian-token", response.data.token);
+      toast.success("Успешный вход");
+      navigate("/dashboard");
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "Ошибка при входе");
-      } else {
-        toast.error("Ошибка при входе");
-      }
+      toast.error("Неверные учетные данные");
     }
   };
 
