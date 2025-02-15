@@ -15,8 +15,15 @@ import { RegistrationFormData } from "@/types/registration";
 import { Dictionary } from "@/types/api";
 import { dictionaryService } from "@/services/dictionary-service";
 import { registrationService } from "@/services/registration-service";
+import { useNavigate } from "react-router-dom";
 
-export function RegistrationForm() {
+interface RegistrationFormProps {
+  mode?: "create" | "edit";
+  registrationId?: number;
+}
+
+export function RegistrationForm({ mode = "create", registrationId }: RegistrationFormProps) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegistrationFormData>({
     photo: null,
     iin: "",
@@ -95,34 +102,56 @@ export function RegistrationForm() {
     loadDictionaries();
   }, []);
 
+  useEffect(() => {
+    if (mode === "edit" && registrationId) {
+      const loadRegistration = async () => {
+        try {
+          const response = await registrationService.getById(registrationId);
+          const { id, status, date, ...registrationData } = response.data;
+          setFormData(registrationData);
+        } catch (error) {
+          toast.error("Ошибка при загрузке данных");
+          navigate("/dashboard");
+        }
+      };
+      loadRegistration();
+    }
+  }, [mode, registrationId, navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await registrationService.submit(formData);
-      toast.success("Регистрация отправлена на рассмотрение");
-      setFormData({
-        photo: null,
-        iin: "",
-        lastName: "",
-        firstName: "",
-        birthDate: "",
-        address: "",
-        phoneNumber: "",
-        mobilePhone: "",
-        email: "",
-        gender: 0,
-        education: 0,
-        socialStatus: 0,
-        specialization: 0,
-        institute: 0,
-        faculty: 0,
-        course: "",
-        workplace: "",
-        position: "",
-        academicDegree: 0,
-      });
+      if (mode === "edit" && registrationId) {
+        await registrationService.update(registrationId, formData);
+        toast.success("Данные успешно обновлены");
+        navigate("/dashboard");
+      } else {
+        await registrationService.submit(formData);
+        toast.success("Регистрация отправлена на рассмотрение");
+        setFormData({
+          photo: null,
+          iin: "",
+          lastName: "",
+          firstName: "",
+          birthDate: "",
+          address: "",
+          phoneNumber: "",
+          mobilePhone: "",
+          email: "",
+          gender: 0,
+          education: 0,
+          socialStatus: 0,
+          specialization: 0,
+          institute: 0,
+          faculty: 0,
+          course: "",
+          workplace: "",
+          position: "",
+          academicDegree: 0,
+        });
+      }
     } catch (error) {
-      toast.error("Ошибка при отправке формы");
+      toast.error(mode === "edit" ? "Ошибка при обновлении данных" : "Ошибка при отправке формы");
     }
   };
 

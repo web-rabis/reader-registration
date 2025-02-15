@@ -35,3 +35,9 @@ export interface RegistrationResponse {
 export interface DictionaryResponse {
   [key: string]: Dictionary[];
 }
+
+export interface RegistrationDetailsResponse extends RegistrationFormData {
+  id: number;
+  status: "pending" | "approved" | "rejected";
+  date: string;
+}
