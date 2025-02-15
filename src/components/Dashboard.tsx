@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import { RegistrationPagination } from "./dashboard/RegistrationPagination";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageSelector } from "./LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
+import { RegistrationResponse } from "@/types/api";
 
 export function Dashboard() {
   const navigate = useNavigate();
