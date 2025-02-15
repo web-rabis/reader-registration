@@ -11,15 +11,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return !!localStorage.getItem('librarian-token');
+  });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('librarian-token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
 
   const login = (token: string) => {
     localStorage.setItem('librarian-token', token);

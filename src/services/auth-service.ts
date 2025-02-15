@@ -17,7 +17,7 @@ export const authService = {
         },
       };
     }
-    throw new Error("Неверные учетные данные");
+    throw new Error("Invalid credentials");
   },
 
   logout: () => {

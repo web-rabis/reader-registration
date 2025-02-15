@@ -5,14 +5,9 @@ import { translations } from '../i18n/translations';
 type Language = 'ru' | 'kk' | 'en';
 
 export function useTranslation() {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('ru');
-
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage) {
-      setCurrentLanguage(savedLanguage);
-    }
-  }, []);
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
+    return (localStorage.getItem('language') as Language) || 'ru';
+  });
 
   const changeLanguage = (language: Language) => {
     setCurrentLanguage(language);
