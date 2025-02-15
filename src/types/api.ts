@@ -1,6 +1,8 @@
 
 import { Dictionary, RegistrationFormData } from "./registration";
 
+export type { Dictionary, RegistrationFormData };
+
 export interface ApiResponse<T> {
   data: T;
   status: number;
@@ -24,6 +26,9 @@ export interface LoginResponse {
 export interface RegistrationResponse {
   id: number;
   status: "pending" | "approved" | "rejected";
+  fullName: string;
+  email: string;
+  date: string;
   message?: string;
 }
 

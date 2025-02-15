@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,15 +9,7 @@ import { registrationService } from "@/services/registration-service";
 import { authService } from "@/services/auth-service";
 import { RegistrationResponse } from "@/types/api";
 
-type Registration = {
-  id: number;
-  fullName: string;
-  email: string;
-  status: string;
-  date: string;
-};
-
-const mockRegistrations = [
+const mockRegistrations: RegistrationResponse[] = [
   {
     id: 1,
     fullName: "Иванов Иван Иванович",
@@ -35,7 +28,7 @@ const mockRegistrations = [
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const [registrations, setRegistrations] = useState<RegistrationResponse[]>(mockRegistrations);
+  const [registrations, setRegistrations] = useState<RegistrationResponse[]>([]);
 
   useEffect(() => {
     const fetchRegistrations = async () => {
