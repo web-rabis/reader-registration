@@ -1,3 +1,4 @@
+
 import { RegistrationFormData, ApiResponse, RegistrationResponse, RegistrationDetailsResponse } from "@/types/api";
 import apiClient from "./api-client";
 
@@ -111,14 +112,18 @@ export const registrationService = {
   approve: async (id: number): Promise<ApiResponse<RegistrationResponse>> => {
     // В будущем здесь будет реальный API-запрос
     // return await apiClient.post(`/registrations/${id}/approve`);
+    const registrations = (await registrationService.getAll()).data;
+    const registration = registrations.find(r => r.id === id);
+    
+    if (!registration) {
+      throw new Error('Registration not found');
+    }
+
     return {
       status: 200,
       data: {
-        id,
+        ...registration,
         status: "approved",
-        fullName: "Тестов Тест Тестович",
-        email: "test@example.com",
-        date: new Date().toISOString().split('T')[0],
         message: "Заявка одобрена",
       },
     };
@@ -127,14 +132,18 @@ export const registrationService = {
   reject: async (id: number): Promise<ApiResponse<RegistrationResponse>> => {
     // В будущем здесь будет реальный API-запрос
     // return await apiClient.post(`/registrations/${id}/reject`);
+    const registrations = (await registrationService.getAll()).data;
+    const registration = registrations.find(r => r.id === id);
+    
+    if (!registration) {
+      throw new Error('Registration not found');
+    }
+
     return {
       status: 200,
       data: {
-        id,
+        ...registration,
         status: "rejected",
-        fullName: "Тестов Тест Тестович",
-        email: "test@example.com",
-        date: new Date().toISOString().split('T')[0],
         message: "Заявка отклонена",
       },
     };
