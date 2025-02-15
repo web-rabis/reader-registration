@@ -14,6 +14,17 @@ export function useTranslation() {
     localStorage.setItem('language', language);
   };
 
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'language') {
+        setCurrentLanguage((e.newValue as Language) || 'ru');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const t = (key: keyof typeof translations['ru']) => {
     return translations[currentLanguage][key] || key;
   };
