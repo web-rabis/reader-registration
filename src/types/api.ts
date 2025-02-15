@@ -30,6 +30,8 @@ export interface RegistrationResponse {
   email: string;
   date: string;
   message?: string;
+  iin?: string;
+  mobilePhone?: string;
 }
 
 export interface DictionaryResponse {
