@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { registrationService } from "@/services/registration-service";
 import { authService } from "@/services/auth-service";
 import { RegistrationResponse } from "@/types/api";
+import { PencilIcon } from "lucide-react";
 
 const mockRegistrations: RegistrationResponse[] = [
   {
@@ -71,6 +72,10 @@ export function Dashboard() {
     }
   };
 
+  const handleEdit = (id: number) => {
+    navigate(`/edit-registration/${id}`);
+  };
+
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center">
@@ -101,6 +106,15 @@ export function Dashboard() {
                     {reg.status === "pending" ? "Ожидает" : 
                      reg.status === "approved" ? "Одобрено" : "Отклонено"}
                   </Badge>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-blue-600 hover:text-blue-700"
+                    onClick={() => handleEdit(reg.id)}
+                  >
+                    <PencilIcon className="w-4 h-4 mr-1" />
+                    Редактировать
+                  </Button>
                   {reg.status === "pending" && (
                     <>
                       <Button
