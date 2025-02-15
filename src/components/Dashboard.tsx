@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -13,10 +12,12 @@ import { RegistrationCard } from "./dashboard/RegistrationCard";
 import { RegistrationPagination } from "./dashboard/RegistrationPagination";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageSelector } from "./LanguageSelector";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { logout } = useAuth();
   const [registrations, setRegistrations] = useState<RegistrationResponse[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedRegistration, setSelectedRegistration] = useState<RegistrationResponse | null>(null);
@@ -38,8 +39,7 @@ export function Dashboard() {
   }, [t]);
 
   const handleLogout = () => {
-    authService.logout();
-    navigate("/login");
+    logout();
     toast.success(t('logoutSuccess'));
   };
 

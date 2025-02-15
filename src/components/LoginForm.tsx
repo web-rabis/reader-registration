@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import { authService } from "@/services/auth-service";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function LoginForm() {
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const { login } = useAuth();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -21,9 +21,8 @@ export function LoginForm() {
     e.preventDefault();
     try {
       const response = await authService.login(credentials);
-      localStorage.setItem("librarian-token", response.data.token);
+      login(response.data.token);
       toast.success(t('loginSuccess'));
-      navigate("/dashboard");
     } catch (error) {
       toast.error(t('loginError'));
     }
