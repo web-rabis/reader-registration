@@ -1,19 +1,17 @@
 
 import { LoginForm } from "@/components/LoginForm";
 import { Button } from "@/components/ui/button";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
-  const location = useLocation();
 
   if (isAuthenticated) {
-    const from = location.state?.from?.pathname || '/dashboard';
-    return <Navigate to={from} replace />;
+    return null;
   }
 
   return (

@@ -1,6 +1,6 @@
 
-import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,18 +15,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return !!localStorage.getItem('librarian-token');
   });
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const login = useCallback((token: string) => {
+  const login = (token: string) => {
     localStorage.setItem('librarian-token', token);
     setIsAuthenticated(true);
-    navigate('/dashboard', { replace: true });
-  }, [navigate]);
+  };
 
-  const logout = useCallback(() => {
+  const logout = () => {
     localStorage.removeItem('librarian-token');
     setIsAuthenticated(false);
-    navigate('/login', { replace: true });
-  }, [navigate]);
+  };
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (isAuthenticated && (path === '/login' || path === '/')) {
+      navigate('/dashboard', { replace: true });
+    } else if (!isAuthenticated && path !== '/' && path !== '/login') {
+      navigate('/login', { replace: true });
+    }
+  }, [isAuthenticated, location.pathname, navigate]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>

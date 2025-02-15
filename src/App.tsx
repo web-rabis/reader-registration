@@ -6,18 +6,21 @@ import DashboardPage from "./pages/DashboardPage";
 import NotFound from "./pages/NotFound";
 import { EditRegistrationPage } from "./pages/EditRegistrationPage";
 import { AuthProvider } from "./contexts/AuthContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/edit-registration/:id" element={<EditRegistrationPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/edit-registration/:id" element={<EditRegistrationPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 
