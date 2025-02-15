@@ -3,13 +3,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { registrationService } from "@/services/registration-service";
 import { ReaderCard } from "./ReaderCard";
 import { RegistrationFilters } from "./dashboard/RegistrationFilters";
 import { RegistrationCard } from "./dashboard/RegistrationCard";
 import { RegistrationPagination } from "./dashboard/RegistrationPagination";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "./LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
 import { RegistrationResponse } from "@/types/api";
@@ -25,74 +25,76 @@ export function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  useEffect(() => {
-    const fetchRegistrations = async () => {
-      try {
-        const response = await registrationService.getAll();
-        setRegistrations(response.data);
-      } catch (error) {
-        toast.error(t('loadError'));
-      }
-    };
-
-    fetchRegistrations();
+  const fetchRegistrations = useCallback(async () => {
+    try {
+      const response = await registrationService.getAll();
+      setRegistrations(response.data);
+    } catch (error) {
+      toast.error(t('loadError'));
+    }
   }, [t]);
 
-  const handleLogout = () => {
+  useEffect(() => {
+    fetchRegistrations();
+  }, [fetchRegistrations]);
+
+  const handleLogout = useCallback(() => {
     logout();
     toast.success(t('logoutSuccess'));
-  };
+  }, [logout, t]);
 
-  const handleApprove = async (id: number) => {
+  const handleApprove = useCallback(async (id: number) => {
     try {
       await registrationService.approve(id);
       toast.success(t('approveSuccess').replace('{id}', id.toString()));
-      const response = await registrationService.getAll();
-      setRegistrations(response.data);
+      await fetchRegistrations();
     } catch (error) {
       toast.error(t('processingError'));
     }
-  };
+  }, [fetchRegistrations, t]);
 
-  const handleReject = async (id: number) => {
+  const handleReject = useCallback(async (id: number) => {
     try {
       await registrationService.reject(id);
       toast.success(t('rejectSuccess').replace('{id}', id.toString()));
-      const response = await registrationService.getAll();
-      setRegistrations(response.data);
+      await fetchRegistrations();
     } catch (error) {
       toast.error(t('processingError'));
     }
-  };
+  }, [fetchRegistrations, t]);
 
-  const handleEdit = (id: number) => {
+  const handleEdit = useCallback((id: number) => {
     navigate(`/edit-registration/${id}`);
-  };
+  }, [navigate]);
 
-  const filteredRegistrations = registrations.filter((reg) => {
-    const matchesStatus = statusFilter === "all" || reg.status === statusFilter;
-    const searchLower = searchQuery.toLowerCase();
-    const matchesSearch = 
-      !searchQuery || 
-      reg.fullName.toLowerCase().includes(searchLower) ||
-      (reg.iin && reg.iin.includes(searchQuery)) ||
-      (reg.mobilePhone && reg.mobilePhone.toLowerCase().includes(searchLower));
-    
-    return matchesStatus && matchesSearch;
-  });
+  const filteredRegistrations = useMemo(() => {
+    return registrations.filter((reg) => {
+      const matchesStatus = statusFilter === "all" || reg.status === statusFilter;
+      const searchLower = searchQuery.toLowerCase();
+      const matchesSearch = 
+        !searchQuery || 
+        reg.fullName.toLowerCase().includes(searchLower) ||
+        (reg.iin && reg.iin.includes(searchQuery)) ||
+        (reg.mobilePhone && reg.mobilePhone.toLowerCase().includes(searchLower));
+      
+      return matchesStatus && matchesSearch;
+    });
+  }, [registrations, statusFilter, searchQuery]);
 
   const totalPages = Math.ceil(filteredRegistrations.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedRegistrations = filteredRegistrations.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const paginatedRegistrations = useMemo(() => {
+    return filteredRegistrations.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
+  }, [filteredRegistrations, startIndex, itemsPerPage]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, searchQuery]);
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = useCallback((status: string) => {
     switch (status) {
       case "pending":
         return t('pending');
@@ -103,7 +105,19 @@ export function Dashboard() {
       default:
         return t('all');
     }
-  };
+  }, [t]);
+
+  const handleStatusChange = useCallback((value: string) => {
+    setStatusFilter(value);
+  }, []);
+
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchQuery(value);
+  }, []);
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
 
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6">
@@ -122,8 +136,8 @@ export function Dashboard() {
           <RegistrationFilters
             statusFilter={statusFilter}
             searchQuery={searchQuery}
-            onStatusChange={setStatusFilter}
-            onSearchChange={setSearchQuery}
+            onStatusChange={handleStatusChange}
+            onSearchChange={handleSearchChange}
           />
         </CardHeader>
         <CardContent>
@@ -151,7 +165,7 @@ export function Dashboard() {
             <RegistrationPagination
               currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={setCurrentPage}
+              onPageChange={handlePageChange}
             />
           )}
         </CardContent>
