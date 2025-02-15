@@ -27,3 +27,5 @@ export function EditRegistrationPage() {
     </div>
   );
 }
+
+export default EditRegistrationPage;
