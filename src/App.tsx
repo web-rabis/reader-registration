@@ -1,8 +1,8 @@
 
 import { Routes, Route } from "react-router-dom";
-import { Login } from "./pages/Login";
-import { DashboardPage } from "./pages/DashboardPage";
-import { NotFound } from "./pages/NotFound";
+import Login from "./pages/Login";
+import DashboardPage from "./pages/DashboardPage";
+import NotFound from "./pages/NotFound";
 import { EditRegistrationPage } from "./pages/EditRegistrationPage";
 
 function App() {
