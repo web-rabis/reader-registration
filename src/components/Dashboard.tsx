@@ -45,23 +45,33 @@ export function Dashboard() {
 
   const handleApprove = useCallback(async (id: number) => {
     try {
-      await registrationService.approve(id);
+      const response = await registrationService.approve(id);
       toast.success(t('approveSuccess').replace('{id}', id.toString()));
-      await fetchRegistrations();
+      // Обновляем локальный список регистраций
+      setRegistrations(prev => 
+        prev.map(reg => 
+          reg.id === id ? { ...reg, status: "approved", message: response.data.message } : reg
+        )
+      );
     } catch (error) {
       toast.error(t('processingError'));
     }
-  }, [fetchRegistrations, t]);
+  }, [t]);
 
   const handleReject = useCallback(async (id: number) => {
     try {
-      await registrationService.reject(id);
+      const response = await registrationService.reject(id);
       toast.success(t('rejectSuccess').replace('{id}', id.toString()));
-      await fetchRegistrations();
+      // Обновляем локальный список регистраций
+      setRegistrations(prev => 
+        prev.map(reg => 
+          reg.id === id ? { ...reg, status: "rejected", message: response.data.message } : reg
+        )
+      );
     } catch (error) {
       toast.error(t('processingError'));
     }
-  }, [fetchRegistrations, t]);
+  }, [t]);
 
   const handleEdit = useCallback((id: number) => {
     navigate(`/edit-registration/${id}`);
