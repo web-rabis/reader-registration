@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { RegistrationForm } from "@/components/RegistrationForm";
 import { Link } from "react-router-dom";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 const Index = () => {
   const { t } = useTranslation();

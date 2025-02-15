@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export function LanguageSelector() {
   const { currentLanguage, changeLanguage } = useTranslation();
