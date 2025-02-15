@@ -4,15 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { registrationService } from "@/services/registration-service";
-import { authService } from "@/services/auth-service";
-import { RegistrationResponse } from "@/types/api";
 import { ReaderCard } from "./ReaderCard";
 import { RegistrationFilters } from "./dashboard/RegistrationFilters";
 import { RegistrationCard } from "./dashboard/RegistrationCard";
 import { RegistrationPagination } from "./dashboard/RegistrationPagination";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageSelector } from "./LanguageSelector";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function Dashboard() {
   const navigate = useNavigate();
