@@ -14,31 +14,42 @@ import {
 export const dictionaryService = {
   getGenders: async (): Promise<ApiResponse<Dictionary[]>> => {
     // В будущем здесь будет реальный API-запрос
-    // return await apiClient.get("/dictionaries/genders");
-    return { status: 200, data: genderDictionary };
+    return await apiClient.get("/v1/dictionary/sex");
+    // return { status: 200, data: genderDictionary };
+  },
+  getNationalities: async (): Promise<ApiResponse<Dictionary[]>> => {
+    // В будущем здесь будет реальный API-запрос
+    return await apiClient.get("/v1/dictionary/nationality");
+    // return { status: 200, data: nationalityDictionary };
   },
 
   getEducations: async (): Promise<ApiResponse<Dictionary[]>> => {
-    return { status: 200, data: educationDictionary };
+    return await apiClient.get("/v1/dictionary/education");
+    // return { status: 200, data: educationDictionary };
   },
 
   getSocialStatuses: async (): Promise<ApiResponse<Dictionary[]>> => {
-    return { status: 200, data: socialStatusDictionary };
+    return await apiClient.get("/v1/dictionary/social-status");
+    // return { status: 200, data: socialStatusDictionary };
   },
 
   getSpecializations: async (): Promise<ApiResponse<Dictionary[]>> => {
-    return { status: 200, data: specializationDictionary };
+    return await apiClient.get("/v1/dictionary/speciality");
+    // return { status: 200, data: specializationDictionary };
   },
 
   getInstitutes: async (): Promise<ApiResponse<Dictionary[]>> => {
-    return { status: 200, data: instituteDictionary };
+    // return { status: 200, data: instituteDictionary };
+    return await apiClient.get("/v1/dictionary/institution");
   },
 
   getFaculties: async (): Promise<ApiResponse<Dictionary[]>> => {
-    return { status: 200, data: facultyDictionary };
+    // return { status: 200, data: facultyDictionary };
+    return await apiClient.get("/v1/dictionary/faculty");
   },
 
   getAcademicDegrees: async (): Promise<ApiResponse<Dictionary[]>> => {
-    return { status: 200, data: academicDegreeDictionary };
+    // return { status: 200, data: academicDegreeDictionary };
+    return await apiClient.get("/v1/dictionary/academic-degree");
   },
 };

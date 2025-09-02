@@ -12,12 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { RegistrationFormData } from "@/types/registration";
-import { Dictionary } from "@/types/api";
+import {dictionaryWithLabel, Dictionary, initRegistrationFormData, RegistrationFormData} from "@/types/api";
 import { dictionaryService } from "@/services/dictionary-service";
 import { registrationService } from "@/services/registration-service";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "@/contexts/LanguageContext";
+import PhoneMaskedInput from "@/components/ui/PhoneMaskedInput.tsx";
 
 interface RegistrationFormProps {
   mode?: "create" | "edit";
@@ -26,30 +26,10 @@ interface RegistrationFormProps {
 
 export function RegistrationForm({ mode = "create", registrationId }: RegistrationFormProps) {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  const [formData, setFormData] = useState<RegistrationFormData>({
-    photo: null,
-    iin: "",
-    lastName: "",
-    firstName: "",
-    birthDate: "",
-    address: "",
-    phoneNumber: "",
-    mobilePhone: "",
-    email: "",
-    gender: 0,
-    education: 0,
-    socialStatus: 0,
-    specialization: 0,
-    institute: 0,
-    faculty: 0,
-    course: "",
-    workplace: "",
-    position: "",
-    academicDegree: 0,
-  });
-
+  const { t, currentLanguage } = useTranslation();
+  const [formData, setFormData] = useState<RegistrationFormData>(initRegistrationFormData);
   const [dictionaries, setDictionaries] = useState<{
+    nationalities: Dictionary[];
     genders: Dictionary[];
     educations: Dictionary[];
     socialStatuses: Dictionary[];
@@ -58,6 +38,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
     faculties: Dictionary[];
     academicDegrees: Dictionary[];
   }>({
+    nationalities: [],
     genders: [],
     educations: [],
     socialStatuses: [],
@@ -71,6 +52,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
     const loadDictionaries = async () => {
       try {
         const [
+          nationalitiesRes,
           gendersRes,
           educationsRes,
           socialStatusesRes,
@@ -79,6 +61,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
           facultiesRes,
           academicDegreesRes,
         ] = await Promise.all([
+            dictionaryService.getNationalities(),
           dictionaryService.getGenders(),
           dictionaryService.getEducations(),
           dictionaryService.getSocialStatuses(),
@@ -89,6 +72,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
         ]);
 
         setDictionaries({
+          nationalities: nationalitiesRes.data,
           genders: gendersRes.data,
           educations: educationsRes.data,
           socialStatuses: socialStatusesRes.data,
@@ -105,59 +89,23 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
     loadDictionaries();
   }, [t]);
 
-  useEffect(() => {
-    if (mode === "edit" && registrationId) {
-      const loadRegistration = async () => {
-        try {
-          const response = await registrationService.getById(registrationId);
-          const { id, status, date, ...registrationData } = response.data;
-          setFormData(registrationData);
-        } catch (error) {
-          toast.error(t('loadError'));
-          navigate("/dashboard");
-        }
-      };
-      loadRegistration();
-    }
-  }, [mode, registrationId, navigate, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (mode === "edit" && registrationId) {
-        await registrationService.update(registrationId, formData);
-        toast.success(t('updateSuccess'));
-        navigate("/dashboard");
-      } else {
-        await registrationService.submit(formData);
+        const res = await registrationService.submit(formData);
         toast.success(t('submissionSuccess'));
-        setFormData({
-          photo: null,
-          iin: "",
-          lastName: "",
-          firstName: "",
-          birthDate: "",
-          address: "",
-          phoneNumber: "",
-          mobilePhone: "",
-          email: "",
-          gender: 0,
-          education: 0,
-          socialStatus: 0,
-          specialization: 0,
-          institute: 0,
-          faculty: 0,
-          course: "",
-          workplace: "",
-          position: "",
-          academicDegree: 0,
-        });
-      }
+        if (res.data.status === "pending") {
+            alert(t('submissionSuccess'))
+        } else if (res.data.status === "reregistration") {
+            alert(t('renewalReaderRegistration')+'\n'+t('ticket')+' №'+res.data.ticketNumber)
+        }
+        setFormData(initRegistrationFormData);
+
     } catch (error) {
-      toast.error(t('processingError'));
+        alert(t('processingError')+'\n'+error.response?.data.error.message)
     }
   };
-
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -168,7 +116,6 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
       reader.readAsDataURL(file);
     }
   };
-
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -176,7 +123,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
+            <div className="space-y-2">
             <Label htmlFor="photo">{t('photo')}</Label>
             <Input
               id="photo"
@@ -189,7 +136,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="iin">{t('iin')}</Label>
+              <Label htmlFor="iin" required={true} requiredLabel={'*'}>{t('iin')}</Label>
               <Input
                 id="iin"
                 value={formData.iin}
@@ -201,29 +148,39 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="lastName">{t('lastName')}</Label>
+              <Label htmlFor="lastName" required={true} requiredLabel={'*'}>{t('lastName')}</Label>
               <Input
                 id="lastName"
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                value={formData.lastname}
+                onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
                 required
                 className="transition-all duration-200"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="firstName">{t('firstName')}</Label>
+              <Label htmlFor="firstName" required={true} requiredLabel={'*'}>{t('firstName')}</Label>
               <Input
                 id="firstName"
-                value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                value={formData.firstname}
+                onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
                 required
                 className="transition-all duration-200"
               />
             </div>
 
+              <div className="space-y-2">
+                  <Label htmlFor="firstName">{t('middleName')}</Label>
+                  <Input
+                      id="middleName"
+                      value={formData.middlename}
+                      onChange={(e) => setFormData({ ...formData, middlename: e.target.value })}
+                      className="transition-all duration-200"
+                  />
+              </div>
+
             <div className="space-y-2">
-              <Label htmlFor="birthDate">{t('birthDate')}</Label>
+              <Label htmlFor="birthDate" required={true} requiredLabel={'*'}>{t('birthDate')}</Label>
               <Input
                 id="birthDate"
                 type="date"
@@ -233,12 +190,29 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 className="transition-all duration-200"
               />
             </div>
-
             <div className="space-y-2">
-              <Label htmlFor="gender">{t('gender')}</Label>
+            <Label htmlFor="nationality" required={true} requiredLabel={'*'}>{t('nationality')}</Label>
               <Select
-                value={formData.gender.toString()}
-                onValueChange={(value) => setFormData({ ...formData, gender: Number(value) })}
+                  value={formData.nationality.toString()}
+                  onValueChange={(value) => setFormData({ ...formData, nationality: Number(value) })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t('nationality')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {dictionaries.nationalities.map((item) => (
+                      <SelectItem key={item.id} value={item.id.toString()}>
+                        {item.name}
+                      </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="gender" required={true} requiredLabel={'*'}>{t('gender')}</Label>
+              <Select
+                value={formData.sex.toString()}
+                onValueChange={(value) => setFormData({ ...formData, sex: Number(value) })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder={t('gender')} />
@@ -246,7 +220,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 <SelectContent>
                   {dictionaries.genders.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
+                        {dictionaryWithLabel(item).label(currentLanguage)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -254,7 +228,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="education">{t('education')}</Label>
+              <Label htmlFor="education" required={true} requiredLabel={'*'}>{t('education')}</Label>
               <Select
                 value={formData.education.toString()}
                 onValueChange={(value) => setFormData({ ...formData, education: Number(value) })}
@@ -265,7 +239,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 <SelectContent>
                   {dictionaries.educations.map((item) => (
                     <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
+                        {dictionaryWithLabel(item).label(currentLanguage)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -273,7 +247,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="socialStatus">{t('socialStatus')}</Label>
+              <Label htmlFor="socialStatus" required={true} requiredLabel={'*'}>{t('socialStatus')}</Label>
               <Select
                 value={formData.socialStatus.toString()}
                 onValueChange={(value) => setFormData({ ...formData, socialStatus: Number(value) })}
@@ -294,18 +268,21 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             <div className="space-y-2">
               <Label htmlFor="specialization">{t('specialization')}</Label>
               <Select
-                value={formData.specialization.toString()}
-                onValueChange={(value) => setFormData({ ...formData, specialization: Number(value) })}
+                value={formData.speciality.toString()}
+                onValueChange={(value) => setFormData({ ...formData, speciality: Number(value) })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder={t('specialization')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {dictionaries.specializations.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
+                  {dictionaries.specializations.map((item) => {
+                      if (item.name !== "") {
+                          return <SelectItem key={item.id} value={item.id.toString()}>
+                              {item.name}
+                          </SelectItem>
+                      }
+                    }
+                  )}
                 </SelectContent>
               </Select>
             </div>
@@ -313,18 +290,20 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             <div className="space-y-2">
               <Label htmlFor="institute">{t('institute')}</Label>
               <Select
-                value={formData.institute.toString()}
-                onValueChange={(value) => setFormData({ ...formData, institute: Number(value) })}
+                value={formData.institution.toString()}
+                onValueChange={(value) => setFormData({ ...formData, institution: Number(value) })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder={t('institute')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {dictionaries.institutes.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
+                  {dictionaries.institutes.map((item) => {
+                      if(item.name!=="") {
+                          return <SelectItem key={item.id} value={item.id.toString()}>
+                              {item.name}
+                          </SelectItem>
+                      }
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -339,11 +318,13 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                   <SelectValue placeholder={t('faculty')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {dictionaries.faculties.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
+                  {dictionaries.faculties.map((item) => {
+                      if(item.name!=="") {
+                          return <SelectItem key={item.id} value={item.id.toString()}>
+                              {item.name}
+                          </SelectItem>
+                      }
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -362,8 +343,8 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               <Label htmlFor="workplace">{t('workplace')}</Label>
               <Input
                 id="workplace"
-                value={formData.workplace}
-                onChange={(e) => setFormData({ ...formData, workplace: e.target.value })}
+                value={formData.workPlace}
+                onChange={(e) => setFormData({ ...formData, workPlace: e.target.value })}
                 className="transition-all duration-200"
               />
             </div>
@@ -388,41 +369,42 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                   <SelectValue placeholder={t('academicDegree')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {dictionaries.academicDegrees.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                      {item.name}
-                    </SelectItem>
-                  ))}
+                  {dictionaries.academicDegrees.map((item) => {
+                      if(item.name!=="") {
+                          return <SelectItem key={item.id} value={item.id.toString()}>
+                              {item.name}
+                          </SelectItem>
+                      }
+                  })}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phoneNumber">{t('phoneNumber')}</Label>
+              <Label htmlFor="phoneNumber" required={true} requiredLabel={'*'}>{t('phoneNumber')}</Label>
               <Input
                 id="phoneNumber"
                 type="tel"
-                value={formData.phoneNumber}
-                onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 required
                 className="transition-all duration-200"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="mobilePhone">{t('mobilePhone')}</Label>
-              <Input
-                id="mobilePhone"
-                type="tel"
-                value={formData.mobilePhone}
-                onChange={(e) => setFormData({ ...formData, mobilePhone: e.target.value })}
-                required
-                className="transition-all duration-200"
-              />
+              <Label htmlFor="mobilePhone" required={true} requiredLabel={'*'}>{t('mobilePhone')}</Label>
+                <PhoneMaskedInput
+                    id="mobile"
+                    value={formData.mobile || ""}                // ВАЖНО: дефолт в ""
+                    onValueChange={(masked) => setFormData({ ...formData, mobile: masked })}
+                    required
+                />
+
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">{t('email')}</Label>
+              <Label htmlFor="email" required={true} requiredLabel={'*'}>{t('email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -434,7 +416,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address">{t('address')}</Label>
+              <Label htmlFor="address" required={true} requiredLabel={'*'}>{t('address')}</Label>
               <Input
                 id="address"
                 value={formData.address}

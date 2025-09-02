@@ -1,17 +1,18 @@
 
-import { PencilIcon, IdCard } from "lucide-react";
+import { PencilIcon, IdCard, Repeat } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RegistrationResponse } from "@/types/api";
+import {Reader } from "@/types/admin-api";
 import { useTranslation } from "@/contexts/LanguageContext";
 
 interface RegistrationCardProps {
-  registration: RegistrationResponse;
+  registration: Reader;
   onApprove: (id: number) => void;
   onReject: (id: number) => void;
   onEdit: (id: number) => void;
-  onViewCard: (registration: RegistrationResponse) => void;
+  onViewCard: (registration: Reader) => void;
   getStatusLabel: (status: string) => string;
+  onReRegistration: (registration: Reader) => void;
 }
 
 export function RegistrationCard({
@@ -20,26 +21,32 @@ export function RegistrationCard({
   onReject,
   onEdit,
   onViewCard,
+  onReRegistration,
   getStatusLabel,
+
 }: RegistrationCardProps) {
   const { t } = useTranslation();
-
+    const formatter = new Intl.DateTimeFormat("ru-RU", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    });
   const handleApprove = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onApprove(registration.id);
+    onApprove(registration.ticketNumber);
   };
 
   const handleReject = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onReject(registration.id);
+    onReject(registration.ticketNumber);
   };
 
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onEdit(registration.id);
+    onEdit(registration.ticketNumber);
   };
 
   const handleViewCard = (e: React.MouseEvent) => {
@@ -47,25 +54,42 @@ export function RegistrationCard({
     e.stopPropagation();
     onViewCard(registration);
   };
-
+    const handleReRegistration = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onReRegistration(registration);
+    };
   return (
-    <div className="p-4 border rounded-lg flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors">
+    <div className="p-4 border rounded-lg  gap-4 hover:bg-muted/50 transition-colors grid grid-cols-1">
       <div className="space-y-1">
-        <p className="font-medium">{registration.fullName}</p>
-        <p className="text-sm text-muted-foreground">{registration.email}</p>
-        <p className="text-sm text-muted-foreground">{t('date')}: {registration.date}</p>
+        <div className="font-medium grid grid-cols-2">№ {registration.ticketNumber} {registration.lastname} {registration.firstname} {registration.middlename}
+        </div>
+        <p className="text-sm text-muted-foreground">{t('yearBirth')}: {registration.yearBirth}</p>
         {registration.iin && (
           <p className="text-sm text-muted-foreground">{t('iin')}: {registration.iin}</p>
         )}
-        {registration.mobilePhone && (
+        {registration.workPhone && (
           <p className="text-sm text-muted-foreground">
-            {t('mobilePhone')}: {registration.mobilePhone}
+            {t('workPhone')}: {registration.workPhone}
           </p>
         )}
+          {registration.registrationDate && (
+              <p className="text-sm text-muted-foreground">
+                  {t('registrationDate')}: {formatter.format(new Date(registration.registrationDate))}
+              </p>
+          )}
+          {registration.expirationDate && (
+              <p className="text-sm text-muted-foreground">
+                  {t('expirationDate')}: {formatter.format(new Date(registration.expirationDate))}
+              </p>
+          )}
+
       </div>
       <div className="flex items-center gap-2">
-        <Badge variant="secondary">{getStatusLabel(registration.status)}</Badge>
-        {registration.status === "approved" && (
+          <Badge variant="secondary" className={"w-[100px]"}>{getStatusLabel(registration.status)}</Badge>
+
+        {registration.status === "" && (
+            <>
           <Button
             variant="outline"
             size="sm"
@@ -75,7 +99,18 @@ export function RegistrationCard({
             <IdCard className="w-4 h-4 mr-1" />
             {t('ticket')}
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-gray-600 hover:text-gray-700"
+            onClick={handleReRegistration}
+      >
+          <Repeat className="w-4 h-4 mr-1" />
+          {t('reregistration')}
+      </Button>
+            </>
         )}
+          {registration.status !== "rejected" &&(
         <Button
           variant="outline"
           size="sm"
@@ -85,6 +120,7 @@ export function RegistrationCard({
           <PencilIcon className="w-4 h-4 mr-1" />
           {t('edit')}
         </Button>
+          )}
         {registration.status === "pending" && (
           <>
             <Button

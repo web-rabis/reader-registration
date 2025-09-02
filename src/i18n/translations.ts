@@ -19,13 +19,17 @@ export const translations = {
     photo: "Фото",
     iin: "ИИН",
     lastName: "Фамилия",
+    middleName: "Отчество",
     firstName: "Имя",
     birthDate: "Дата рождения",
+    yearBirth: "Год рождения",
     address: "Адрес",
     phoneNumber: "Номер телефона",
     mobilePhone: "Мобильный телефон",
+    workPhone: "Рабочий телефон",
     email: "Email",
     gender: "Пол",
+    nationality: "Национальность",
     education: "Образование",
     socialStatus: "Социальный статус",
     specialization: "Специальность",
@@ -57,8 +61,10 @@ export const translations = {
     approveSuccess: "Заявка #{id} одобрена",
     rejectSuccess: "Заявка #{id} отклонена",
     updateSuccess: "Данные успешно обновлены",
-    submissionSuccess: "Заявка успешно отправлена",
+    submissionSuccess: "Регистрация успешно завершена, подойдите к библиотекарю за читетльским билетом",
+    renewalReaderRegistration: "Вы уже зарегистрированы, подойдите к библиотекарю для продления читательского билета",
     processingError: "Ошибка при обработке заявки",
+    loading: "Загрузка",
 
     // Дополнительные переводы
     login: "Вход",
@@ -73,8 +79,10 @@ export const translations = {
     readerCardNumber: "Читательский билет №",
     fullName: "ФИО",
     registrationDate: "Дата регистрации",
+    expirationDate: "Дата окончания регистрации",
     status: "Статус",
-    print: "Печать"
+    print: "Печать",
+    advancedSearch:"Расширенный поиск",
   },
   kk: {
     // Общие
@@ -97,12 +105,16 @@ export const translations = {
     iin: "ЖСН",
     lastName: "Тегі",
     firstName: "Аты",
+    middleName: "Әкесінің аты",
     birthDate: "Туған күні",
+    yearBirth: "Туған жылы",
     address: "Мекенжайы",
     phoneNumber: "Телефон нөмірі",
     mobilePhone: "Ұялы телефон",
+    workPhone: "Жұмыс телефон",
     email: "Email",
     gender: "Жынысы",
+    nationality: "Ултты",
     education: "Білімі",
     socialStatus: "Әлеуметтік мәртебесі",
     specialization: "Мамандығы",
@@ -134,8 +146,10 @@ export const translations = {
     approveSuccess: "Өтінім #{id} мақұлданды",
     rejectSuccess: "Өтінім #{id} қабылданбады",
     updateSuccess: "Деректер сәтті жаңартылды",
-    submissionSuccess: "Өтінім сәтті жіберілді",
+    submissionSuccess: "Тіркеу сәтті аяқталды, кітапхана картасын алу үшін кітапханашыға хабарласыңыз.",
+    renewalReaderRegistration: "Сіз тіркелгенсіз, кітапхана картасын жаңарту үшін кітапханашыға хабарласыңыз.",
     processingError: "Өтінімді өңдеу кезінде қате",
+    loading: "Жүктеу",
 
     // Дополнительные переводы
     login: "Кіру",
@@ -150,8 +164,10 @@ export const translations = {
     readerCardNumber: "Оқырман билеті №",
     fullName: "Аты-жөні",
     registrationDate: "Тіркелген күні",
+    expirationDate: "Сонғы күні",
     status: "Мәртебесі",
-    print: "Басып шығару"
+    print: "Басып шығару",
+    advancedSearch:"Расширенный поиск",
   },
   en: {
     // Общие
@@ -173,13 +189,17 @@ export const translations = {
     photo: "Photo",
     iin: "IIN",
     lastName: "Last Name",
+    middleName: "Middle Name",
     firstName: "First Name",
     birthDate: "Birth Date",
+    yearBirth: "Year of Birth",
     address: "Address",
     phoneNumber: "Phone Number",
     mobilePhone: "Mobile Phone",
+    workPhone: "Work Phone",
     email: "Email",
     gender: "Gender",
+    nationality: "Nationality",
     education: "Education",
     socialStatus: "Social Status",
     specialization: "Specialization",
@@ -211,8 +231,10 @@ export const translations = {
     approveSuccess: "Registration #{id} approved",
     rejectSuccess: "Registration #{id} rejected",
     updateSuccess: "Data updated successfully",
-    submissionSuccess: "Registration submitted successfully",
+    submissionSuccess: "Registration completed successfully, please contact the librarian for a library card.",
+    renewalReaderRegistration: "You are already registered, please contact the librarian for a renewal of the reader's card.",
     processingError: "Error processing registration",
+    loading:"Loading",
 
     // Дополнительные переводы
     login: "Login",
@@ -227,7 +249,9 @@ export const translations = {
     readerCardNumber: "Reader Card #",
     fullName: "Full Name",
     registrationDate: "Registration Date",
+    expirationDate: "Expiration Date",
     status: "Status",
-    print: "Print"
+    print: "Print",
+    advancedSearch:"Advanced search",
   }
 };

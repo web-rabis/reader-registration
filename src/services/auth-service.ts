@@ -1,26 +1,16 @@
 
 import { LoginRequest, LoginResponse, ApiResponse } from "@/types/api";
+import apiClient from "@/services/api-client.ts";
+import {clearStorageKeys, KEY_PAGING, KEY_SEARCH} from "@/utils/stateStorage.ts";
 
 export const authService = {
   login: async (credentials: LoginRequest): Promise<ApiResponse<LoginResponse>> => {
-    // В реальном приложении это будет реальный API-запрос
-    if (credentials.username === "admin" && credentials.password === "admin") {
-      return {
-        status: 200,
-        data: {
-          token: "dummy-jwt-token",
-          user: {
-            id: 1,
-            username: "admin",
-            role: "librarian",
-          },
-        },
-      };
-    }
-    throw new Error("Invalid credentials");
+      clearStorageKeys([KEY_SEARCH, KEY_PAGING ]);
+    return await apiClient.post("/v1/admin/auth/sign-in", credentials);
   },
 
   logout: () => {
+      clearStorageKeys([KEY_SEARCH, KEY_PAGING ]);
     localStorage.removeItem("librarian-token");
   },
 };

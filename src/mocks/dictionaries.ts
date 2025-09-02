@@ -5,6 +5,12 @@ export const genderDictionary: Dictionary[] = [
   { id: 1, name: "Мужской" },
   { id: 2, name: "Женский" },
 ];
+export const nationalityDictionary: Dictionary[] = [
+  { id: 1, name: "Казах" },
+  { id: 2, name: "Русский" },
+  { id: 2, name: "Немец" },
+];
+
 
 export const educationDictionary: Dictionary[] = [
   { id: 1, name: "Среднее" },

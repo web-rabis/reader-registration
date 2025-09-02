@@ -6,6 +6,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import {ReaderEditForm} from "@/components/dashboard/ReaderEditForm.tsx";
 
 export function EditRegistrationPage() {
   const { id } = useParams<{ id: string }>();
@@ -39,7 +40,7 @@ export function EditRegistrationPage() {
           </Button>
         </div>
       </div>
-      <RegistrationForm mode="edit" registrationId={Number(id)} />
+      <ReaderEditForm mode="edit" id={Number(id)} />
     </div>
   );
 }

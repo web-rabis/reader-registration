@@ -1,12 +1,17 @@
 
-import { Dictionary, RegistrationFormData } from "./registration";
+import { RegistrationFormData,initRegistrationFormData} from "./registration";
+import { Dictionary, dictionaryWithLabel } from "./dictionary";
 
-export type { Dictionary, RegistrationFormData };
-
+export type { RegistrationFormData,Dictionary  };
+export {initRegistrationFormData, dictionaryWithLabel};
+export interface Error {
+    status: string;
+    code: number;
+    message: string;
+}
 export interface ApiResponse<T> {
   data: T;
-  status: number;
-  message?: string;
+  error?: Error;
 }
 
 export interface LoginRequest {
@@ -24,22 +29,16 @@ export interface LoginResponse {
 }
 
 export interface RegistrationResponse {
-  id: number;
-  status: "pending" | "approved" | "rejected";
-  fullName: string;
-  email: string;
-  date: string;
-  message?: string;
-  iin?: string;
-  mobilePhone?: string;
-}
-
-export interface DictionaryResponse {
-  [key: string]: Dictionary[];
+  ticketNumber: number;
+  status: "pending" | "reregistration";
 }
 
 export interface RegistrationDetailsResponse extends RegistrationFormData {
   id: number;
   status: "pending" | "approved" | "rejected";
   date: string;
+}
+export interface Paging {
+    skip?: number
+    limit?: number
 }

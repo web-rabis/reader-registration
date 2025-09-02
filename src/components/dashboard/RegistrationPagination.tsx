@@ -20,7 +20,6 @@ export function RegistrationPagination({
   onPageChange,
 }: RegistrationPaginationProps) {
   if (totalPages <= 1) return null;
-
   return (
     <div className="mt-6">
       <Pagination>
