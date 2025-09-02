@@ -7,7 +7,7 @@ export interface LanguageOptions {
 export interface Dictionary {
     id: number;
     name: string;
-    translations: LanguageOptions;
+    translations?: LanguageOptions;
 }
 export interface TypeCard {
     id: number;
@@ -25,11 +25,11 @@ export function dictionaryWithLabel(dict: Dictionary) {
         ...dict,
         label(lang: string) {
             if (lang === 'en') {
-                return dict.translations.en
+                return dict.translations?.en ?? dict.name
             } else if (lang === 'kk') {
-                return dict.translations.kz
+                return dict.translations?.kz ?? dict.name
             }else if (lang === 'ru') {
-                return dict.translations.ru
+                return dict.translations?.ru ?? dict.name
             }
         },
     };
