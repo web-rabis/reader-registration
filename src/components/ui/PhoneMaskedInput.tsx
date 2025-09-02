@@ -66,7 +66,7 @@ export const PhoneMaskedInput: React.FC<PhoneMaskedInputProps> = ({ value, onVal
                 onValueChange(digitsToMasked(nextDigits));
             }}
             inputMode="tel"
-            placeholder="+7 (___) ___-__-__"
+            placeholder="+7 ___ _______"
             maxLength={18}
             {...rest}
         />
