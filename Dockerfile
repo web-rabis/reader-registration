@@ -1,27 +1,26 @@
-# ===== Builder =====
-FROM node:20-alpine AS builder
+
+# Build stage
+FROM node:20-alpine as builder
+
 WORKDIR /app
 
-# 1) Ставим зависимости
 COPY package*.json ./
 RUN npm ci
 
-# 2) Копируем исходники
 COPY . .
-
-# 3) На всякий случай чиним права .bin (фиксирует "Permission denied")
-RUN find node_modules/.bin -type f -exec chmod +x {} \;
-
-# 4) Сборка
 RUN npm run build
 
-# ===== Runtime (статическая выдача) =====
-FROM nginx:1.27-alpine AS runner
-# Если у вас Vite SPA, собранный фронт лежит в dist
+# Production stage
+FROM nginx:alpine
+
+# Копируем собранные файлы из build stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# По желанию: свой nginx.conf
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Копируем конфигурацию nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Открываем порт 80
 EXPOSE 80
+
+# Запускаем nginx
 CMD ["nginx", "-g", "daemon off;"]
