@@ -382,22 +382,20 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
 
             <div className="space-y-2">
               <Label htmlFor="phoneNumber" required={true} requiredLabel={'*'}>{t('phoneNumber')}</Label>
-              <Input
-                id="phoneNumber"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                required
-                className="transition-all duration-200"
+              <PhoneMaskedInput
+                    id="phoneNumber"
+                    value={formData.phone || ""}                // ВАЖНО: дефолт в ""
+                    onValueChange={(masked) => setFormData({ ...formData, phone: masked })}
+                    required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="mobilePhone" required={true} requiredLabel={'*'}>{t('mobilePhone')}</Label>
+              <Label htmlFor="workPhone" required={true} requiredLabel={'*'}>{t('workPhone')}</Label>
                 <PhoneMaskedInput
-                    id="mobile"
-                    value={formData.mobile || ""}                // ВАЖНО: дефолт в ""
-                    onValueChange={(masked) => setFormData({ ...formData, mobile: masked })}
+                    id="workPhone"
+                    value={formData.workPhone || ""}                // ВАЖНО: дефолт в ""
+                    onValueChange={(masked) => setFormData({ ...formData, workPhone: masked })}
                     required
                 />
 
@@ -411,7 +409,6 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
-                className="transition-all duration-200"
               />
             </div>
 
@@ -422,7 +419,6 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 required
-                className="transition-all duration-200"
               />
             </div>
           </div>

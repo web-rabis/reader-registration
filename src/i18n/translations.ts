@@ -8,6 +8,8 @@ export const translations = {
     reject: "Отклонить",
     logout: "Выйти",
     ticket: "Билет",
+    readers: "Читатели",
+    renewalRegistration: "Продление регистрации",
 
     // Заголовки
     dashboard: "Панель управления",
@@ -93,6 +95,8 @@ export const translations = {
     reject: "Қабылдамау",
     logout: "Шығу",
     ticket: "Билет",
+    readers: "Оқырмандар",
+    renewalRegistration: "Тіркеуді жаңарту",
 
     // Заголовки
     dashboard: "Басқару панелі",
@@ -178,6 +182,8 @@ export const translations = {
     reject: "Reject",
     logout: "Logout",
     ticket: "Ticket",
+    readers: "Readers",
+    renewalRegistration: "Renewal registation",
 
     // Заголовки
     dashboard: "Dashboard",

@@ -77,7 +77,7 @@ export interface EditReaderFormData {
     birthDate: string;
     address: string;
     phone: string;
-    mobile: string;
+    workPhone: string;
     email: string;
     nationality: number;
     sex?: number;
@@ -108,7 +108,7 @@ export const initEditReaderFormData: EditReaderFormData = {
     birthDate: "",
     address: "",
     phone: "",
-    mobile: "",
+    workPhone: "",
     email: "",
     nationality: 0,
     sex: 0,
@@ -136,7 +136,7 @@ export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFo
         birthDate: data.birthDate ? data.birthDate.split("T")[0] : "",
         address: data.address ?? "",
         phone: data.phone ?? "",
-        mobile: data.workPhone ?? "",
+        workPhone: data.workPhone ?? "",
         email: data.email ?? "",
         education: data.education?.id ?? 0,
         socialStatus: data.socialStatus?.id ?? 0,

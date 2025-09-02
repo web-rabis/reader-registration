@@ -106,7 +106,7 @@ export function RegistrationCard({
             onClick={handleReRegistration}
       >
           <Repeat className="w-4 h-4 mr-1" />
-          {t('reregistration')}
+          {t('renewalRegistration')}
       </Button>
             </>
         )}

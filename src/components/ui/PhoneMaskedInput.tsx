@@ -17,7 +17,7 @@ function normalizeDigits(raw: string): string {
     let di = onlyDigits(raw);
     if (!di) return "";
     if (di.startsWith("8")) di = "7" + di.slice(1);
-    if (di.length === 10) di = "7" + di;
+    // if (di.length === 10) di = "7" + di;
     if (!di.startsWith("7")) di = "7" + di;
     if (di.length > 11) di = di.slice(0, 11);
     return di.slice(1); // national part (0..10 digits)

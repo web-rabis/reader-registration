@@ -8,7 +8,7 @@ export interface RegistrationFormData {
   birthDate: string;
   address: string;
   phone: string;
-  mobile: string;
+  workPhone: string;
   email: string;
   nationality: number;
   sex?: number;
@@ -33,7 +33,7 @@ export const initRegistrationFormData: RegistrationFormData = {
     birthDate: "",
     address: "",
     phone: "",
-    mobile: "",
+    workPhone: "",
     email: "",
     nationality: 0,
     sex: 0,

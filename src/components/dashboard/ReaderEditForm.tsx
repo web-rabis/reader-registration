@@ -416,12 +416,12 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="mobilePhone">{t('mobilePhone')}</Label>
+              <Label htmlFor="workPhone">{t('workPhone')}</Label>
               <Input
-                id="mobilePhone"
+                id="workPhone"
                 type="tel"
-                value={formData.mobile}
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                value={formData.workPhone}
+                onChange={(e) => setFormData({ ...formData, workPhone: e.target.value })}
                 required
               />
             </div>
