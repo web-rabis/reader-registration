@@ -65,7 +65,7 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
     }
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="w-[400px]">
+      <DialogContent className="w-[374px]">
         <DialogHeader>
             <DialogTitle></DialogTitle>
         </DialogHeader>
@@ -94,7 +94,7 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
                   }} />
                   </div>
                   <div style={{
-                      marginLeft: "0px"
+                      marginLeft: "2px"
                   }}>
                   <Ean13 data12={registration.barcode}/>   {/* библиотека сама дорисует 13-ю цифру */}
                   </div>

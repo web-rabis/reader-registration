@@ -29,7 +29,7 @@ export function Ean13({ data12 }: { data12: string }) {
             height: 30,             // высота полос (px)
             margin: 0,             // поля вокруг
             font: "monospace",
-            fontSize: 9,
+            fontSize: 10,
             textMargin: 0,
         });
     }, [data12]);
