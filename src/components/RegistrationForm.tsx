@@ -140,17 +140,16 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
 
     try {
         const res = await registrationService.submit(formData);
-        setIsSubmitted(true);
         if (res.data.status === "pending") {
             alert(t('submissionSuccess'))
         } else if (res.data.status === "reregistration") {
             alert(t('renewalReaderRegistration')+'\n'+t('ticket')+' №'+res.data.ticketNumber)
         }
+        setIsSubmitted(true);
         setFormData(initRegistrationFormData);
     } catch (error) {
-        setIsSubmitting(false);
         alert(t('processingError')+'\n'+error.response?.data.error.message)
-
+        setIsSubmitting(false);
     }
   };
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
