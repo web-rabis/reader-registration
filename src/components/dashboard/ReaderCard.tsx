@@ -94,7 +94,7 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
                   }} />
                   </div>
                   <div style={{
-                      marginLeft: "-12px"
+                      marginLeft: "0px"
                   }}>
                   <Ean13 data12={registration.barcode}/>   {/* библиотека сама дорисует 13-ю цифру */}
                   </div>
