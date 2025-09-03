@@ -24,7 +24,7 @@ export function Ean13({ data12 }: { data12: string }) {
 
         JsBarcode(svgRef.current, data12, {
             format: "ean13",
-            displayValue: true,     // подпись цифр под штрихкодом
+            displayValue: false,     // подпись цифр под штрихкодом
             width: 1,               // толщина одной полосы (px)
             height: 30,             // высота полос (px)
             margin: 0,             // поля вокруг
