@@ -1,5 +1,5 @@
 
-import { Printer } from "lucide-react";
+import { Printer, RotateCcw, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { useTranslation } from "@/hooks/useTranslation.ts";
@@ -38,6 +38,19 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
   const handlePrint = () => {
     printDiv('reader-card');
   };
+
+    const handleRotate90 = () => {
+        adminReaderService.rotateReaderPhoto90(registration.ticketNumber).then((data)=>{
+            setPhoto(data);
+        });
+    };
+    const handleRotate270 = () => {
+        adminReaderService.rotateReaderPhoto270(registration.ticketNumber).then((data)=>{
+            setPhoto(data);
+        });
+    };
+
+
 
   const getStatusText = (status: string) => {
     return status === 'approved' ? t('active') : t('inactive');
@@ -128,11 +141,17 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
 
           </div>
           </div>
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+            <div className={"flex flex-row gap-2"}>
+                <Button onClick={handleRotate270}><RotateCcw/></Button>
+                <Button onClick={handleRotate90}><RotateCw/></Button>
+            </div>
+            <div>
           <Button onClick={handlePrint} className="gap-2">
             <Printer className="w-4 h-4" />
             {t('print')}
           </Button>
+            </div>
         </div>
       </DialogContent>
     </Dialog>

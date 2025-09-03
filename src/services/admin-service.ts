@@ -41,6 +41,15 @@ export const adminReaderService = {
         return response.data; // строка base64
     },
 
+    rotateReaderPhoto90: async (id: number): Promise<string> => {
+        const response = await apiClient.put(`/v1/admin/reader/${id}/photo/rotate90`);
+        return response.data; // строка base64
+    },
+
+    rotateReaderPhoto270: async (id: number): Promise<string> => {
+        const response = await apiClient.put(`/v1/admin/reader/${id}/photo/rotate270`);
+        return response.data; // строка base64
+    },
 
     updateReader: async (id: number, formData: RegistrationFormData): Promise<ApiResponse<string>> => {
         return await apiClient.put(`/v1/admin/reader/${id}`, formData);
