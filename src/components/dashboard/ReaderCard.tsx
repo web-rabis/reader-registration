@@ -6,6 +6,10 @@ import { useTranslation } from "@/hooks/useTranslation.ts";
 import {Reader} from "@/types/reader.ts";
 import {Ean13} from "@/components/dashboard/Ean13.tsx";
 import {printDiv} from "@/utils/print.ts";
+import {useCallback, useEffect, useState} from "react";
+import {adminReaderService} from "@/services/admin-service.ts";
+import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
+import {toast} from "sonner";
 
 interface ReaderCardProps {
   registration: Reader;
@@ -16,6 +20,21 @@ interface ReaderCardProps {
 export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
   const { t } = useTranslation();
 
+    const [photo, setPhoto] = useState<string>("");
+    const [background, setBackground] = useState<string>("");
+    useEffect(() => {
+        fetchPhoto()
+    }, []);
+    const fetchPhoto = useCallback(async () => {
+        try {
+            const responsePhoto = await adminReaderService.getReaderPhoto(registration.ticketNumber);
+            const responseBackground = await adminDictionaryService.getTypeCardBackground(registration.typeCard.id)
+            setPhoto(responsePhoto);
+            setBackground(responseBackground);
+        } catch (error) {
+            toast.error(t('loadError'));
+        }
+    }, [ registration, t]);
   const handlePrint = () => {
     printDiv('reader-card');
   };
@@ -28,6 +47,9 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
         month: "2-digit",
         year: "numeric",
     });
+    if (registration===undefined){
+        return <></>
+    }
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="w-[400px]">
@@ -36,7 +58,7 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
         </DialogHeader>
           <div className="space-y-4 p-4 border rounded-lg " id="reader-card">
           <div id={"readerCard"} style={{
-              backgroundImage: `url(data:image/jpg;base64,${registration.typeCard.photo})`,
+              backgroundImage: `url(data:image/jpg;base64,${background})`,
               display:"grid",
               gridTemplateColumns: "90px auto",
               width: "7.6cm",
@@ -50,7 +72,7 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
           }}>
               <div>
                   <div>
-                  <img src={`data:image/jpg;base64,${registration.photo}`} alt="Card" style={{
+                  <img src={`data:image/jpg;base64,${photo}`} alt="Card" style={{
                       width: "90px",
                       height: "130px",
                       objectFit: "contain",
