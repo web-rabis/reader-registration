@@ -176,6 +176,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               type="file"
               accept="image/*"
               onChange={handlePhotoChange}
+              max={1000000000000}
               className="transition-all duration-200"
             />
           </div>

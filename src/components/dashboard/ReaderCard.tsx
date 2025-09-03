@@ -32,10 +32,11 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="w-[400px]">
         <DialogHeader>
+            <DialogTitle></DialogTitle>
         </DialogHeader>
           <div className="space-y-4 p-4 border rounded-lg " id="reader-card">
           <div id={"readerCard"} style={{
-              backgroundImage: `url(data:image/png;base64,${registration.typeCard.photo})`,
+              backgroundImage: `url(data:image/jpg;base64,${registration.typeCard.photo})`,
               display:"grid",
               gridTemplateColumns: "90px auto",
               width: "7.6cm",
@@ -48,19 +49,25 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
               fontFamily: "Tahoma, sans-serif",
           }}>
               <div>
-                  <img src={`data:image/png;base64,${registration.photo}`} alt="Card" style={{
+                  <div>
+                  <img src={`data:image/jpg;base64,${registration.photo}`} alt="Card" style={{
                       width: "90px",
                       height: "130px",
                       objectFit: "contain",
                       maxWidth: "90px",
                       maxHeight: "130px",
                   }} />
+                  </div>
+                  <div style={{
+                      marginLeft: "-12px"
+                  }}>
                   <Ean13 data12={registration.barcode}/>   {/* библиотека сама дорисует 13-ю цифру */}
+                  </div>
 
               </div>
               <div style={{
                   marginLeft: "2px",
-                  marginTop: "20px",
+                  marginTop: "25px",
               }}>
                   <div style={{
                       fontSize: "13px"

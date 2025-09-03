@@ -137,14 +137,13 @@ export function Dashboard() {
     }, []);
 
   const handleOnViewCard=useCallback((reader:Reader)=>{
-        setSelectedRegistration(reader);
        adminReaderService.getReaderPhoto(reader.ticketNumber).then(res=>{
         reader.photo = res
        });
        adminDictionaryService.getTypeCardBackground(reader.typeCard.id).then(res=>{
            reader.typeCard.photo = res
        })
-
+      setSelectedRegistration(reader);
   },[])
 
     const handleReRegistration = useCallback(async (reader:Reader) => {
