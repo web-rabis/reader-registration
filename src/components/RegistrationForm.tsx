@@ -28,6 +28,8 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
   const navigate = useNavigate();
   const { t, currentLanguage } = useTranslation();
   const [formData, setFormData] = useState<RegistrationFormData>(initRegistrationFormData);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
   const [dictionaries, setDictionaries] = useState<{
     nationalities: Dictionary[];
     genders: Dictionary[];
@@ -84,6 +86,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
       } catch (error) {
         toast.error(t('loadError'));
       }
+        setIsSubmitting(false);
     };
 
     loadDictionaries();
@@ -92,18 +95,62 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+      if (!formData.photo){
+          alert("Загрузите "+t('photo'));
+          return
+      }
+      if (!formData.iin){
+          alert("Введите "+t('iin'));
+          return
+      }
+      if (!formData.firstname){
+          alert("Введите "+t('firstName'));
+          return
+      }
+      if (!formData.lastname){
+          alert("Введите "+t('lastName'));
+          return
+      }
+      if (!formData.birthDate){
+          alert("Введите "+t('birthDate'));
+          return
+      }
+      if (!formData.nationality){
+          alert("Выберите "+t('nationality'));
+          return
+      }
+      if (!formData.sex){
+          alert("Выберите "+t('gender'));
+          return
+      }
+      if (!formData.phone){
+        alert("Введите "+t('phoneNumber'));
+        return
+      }
+      if (!formData.email){
+          alert("Введите "+t('email'));
+          return
+      }
+      if (!formData.address){
+          alert("Введите "+t('address'));
+          return
+      }
+      setIsSubmitting(true);
+
     try {
         const res = await registrationService.submit(formData);
-        toast.success(t('submissionSuccess'));
+        setIsSubmitted(true);
         if (res.data.status === "pending") {
             alert(t('submissionSuccess'))
         } else if (res.data.status === "reregistration") {
             alert(t('renewalReaderRegistration')+'\n'+t('ticket')+' №'+res.data.ticketNumber)
         }
         setFormData(initRegistrationFormData);
-
     } catch (error) {
+        setIsSubmitting(false);
         alert(t('processingError')+'\n'+error.response?.data.error.message)
+
     }
   };
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +170,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
+          <div className="space-y-2">
             <Label htmlFor="photo">{t('photo')}</Label>
             <Input
               id="photo"
@@ -141,7 +188,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 id="iin"
                 value={formData.iin}
                 onChange={(e) => setFormData({ ...formData, iin: e.target.value })}
-                required
+
                 maxLength={12}
                 className="transition-all duration-200"
               />
@@ -153,7 +200,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 id="lastName"
                 value={formData.lastname}
                 onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
-                required
+
                 className="transition-all duration-200"
               />
             </div>
@@ -164,12 +211,12 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 id="firstName"
                 value={formData.firstname}
                 onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
-                required
+
                 className="transition-all duration-200"
               />
             </div>
 
-              <div className="space-y-2">
+            <div className="space-y-2">
                   <Label htmlFor="firstName">{t('middleName')}</Label>
                   <Input
                       id="middleName"
@@ -186,49 +233,96 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                 type="date"
                 value={formData.birthDate}
                 onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
-                required
+
                 className="transition-all duration-200"
               />
             </div>
-            <div className="space-y-2">
-            <Label htmlFor="nationality" required={true} requiredLabel={'*'}>{t('nationality')}</Label>
-              <Select
-                  value={formData.nationality.toString()}
-                  onValueChange={(value) => setFormData({ ...formData, nationality: Number(value) })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t('nationality')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {dictionaries.nationalities.map((item) => (
-                      <SelectItem key={item.id} value={item.id.toString()}>
-                        {item.name}
-                      </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="gender" required={true} requiredLabel={'*'}>{t('gender')}</Label>
-              <Select
-                value={formData.sex.toString()}
-                onValueChange={(value) => setFormData({ ...formData, sex: Number(value) })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t('gender')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {dictionaries.genders.map((item) => (
-                    <SelectItem key={item.id} value={item.id.toString()}>
-                        {dictionaryWithLabel(item).label(currentLanguage)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+
+              <div className="space-y-2">
+                  <Label htmlFor="gender" required={true} requiredLabel={'*'}>{t('gender')}</Label>
+                  <Select
+                      value={formData.sex.toString()}
+                      onValueChange={(value) => setFormData({ ...formData, sex: Number(value) })}
+                  >
+                      <SelectTrigger>
+                          <SelectValue placeholder={t('gender')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                          {dictionaries.genders.map((item) => (
+                              <SelectItem key={item.id} value={item.id.toString()}>
+                                  {dictionaryWithLabel(item).label(currentLanguage)}
+                              </SelectItem>
+                          ))}
+                      </SelectContent>
+                  </Select>
+              </div>
+
+              <div className="space-y-2">
+                  <Label htmlFor="nationality" required={true} requiredLabel={'*'}>{t('nationality')}</Label>
+                  <Select
+                      value={formData.nationality.toString()}
+                      onValueChange={(value) => setFormData({ ...formData, nationality: Number(value) })}
+                  >
+                      <SelectTrigger>
+                          <SelectValue placeholder={t('nationality')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                          {dictionaries.nationalities.map((item) => (
+                              <SelectItem key={item.id} value={item.id.toString()}>
+                                  {item.name}
+                              </SelectItem>
+                          ))}
+                      </SelectContent>
+                  </Select>
+              </div>
+
+              <div className="space-y-2">
+                  <Label htmlFor="address" required={true} requiredLabel={'*'}>{t('address')}</Label>
+                  <Input
+                      id="address"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+
+                  />
+              </div>
+
+              <div className="space-y-2">
+                  <Label htmlFor="email" required={true} requiredLabel={'*'}>{t('email')}</Label>
+                  <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+
+                  />
+              </div>
+
+              <div className="space-y-2">
+                  <Label htmlFor="phoneNumber" required={true} requiredLabel={'*'}>{t('phoneNumber')}</Label>
+                  <PhoneMaskedInput
+                      id="phoneNumber"
+                      value={formData.phone || ""}                // ВАЖНО: дефолт в ""
+                      onValueChange={(masked) => setFormData({ ...formData, phone: masked })}
+
+                  />
+              </div>
+
+              <div className="space-y-2">
+                  <Label htmlFor="workPhone">{t('workPhone')}</Label>
+                  <PhoneMaskedInput
+                      id="workPhone"
+                      value={formData.workPhone || ""}                // ВАЖНО: дефолт в ""
+                      onValueChange={(masked) => setFormData({ ...formData, workPhone: masked })}
+
+                  />
+
+              </div>
+
+
+
 
             <div className="space-y-2">
-              <Label htmlFor="education" required={true} requiredLabel={'*'}>{t('education')}</Label>
+              <Label htmlFor="education">{t('education')}</Label>
               <Select
                 value={formData.education.toString()}
                 onValueChange={(value) => setFormData({ ...formData, education: Number(value) })}
@@ -247,7 +341,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="socialStatus" required={true} requiredLabel={'*'}>{t('socialStatus')}</Label>
+              <Label htmlFor="socialStatus">{t('socialStatus')}</Label>
               <Select
                 value={formData.socialStatus.toString()}
                 onValueChange={(value) => setFormData({ ...formData, socialStatus: Number(value) })}
@@ -380,50 +474,10 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="phoneNumber" required={true} requiredLabel={'*'}>{t('phoneNumber')}</Label>
-              <PhoneMaskedInput
-                    id="phoneNumber"
-                    value={formData.phone || ""}                // ВАЖНО: дефолт в ""
-                    onValueChange={(masked) => setFormData({ ...formData, phone: masked })}
-                    required
-              />
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="workPhone" required={true} requiredLabel={'*'}>{t('workPhone')}</Label>
-                <PhoneMaskedInput
-                    id="workPhone"
-                    value={formData.workPhone || ""}                // ВАЖНО: дефолт в ""
-                    onValueChange={(masked) => setFormData({ ...formData, workPhone: masked })}
-                    required
-                />
-
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email" required={true} requiredLabel={'*'}>{t('email')}</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="address" required={true} requiredLabel={'*'}>{t('address')}</Label>
-              <Input
-                id="address"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                required
-              />
-            </div>
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full"  disabled={isSubmitting || isSubmitted}>
             {t('submit')}
           </Button>
         </form>
