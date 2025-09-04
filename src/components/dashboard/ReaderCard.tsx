@@ -97,9 +97,7 @@ export function ReaderCard({ registration, open, onClose,cropImage }: ReaderCard
                       maxHeight: "130px",
                   }} />
                   </div>
-                  <div style={{
-                      marginLeft: "2px"
-                  }}>
+                  <div>
                   <Ean13 data12={registration.barcode}/>   {/* библиотека сама дорисует 13-ю цифру */}
                   </div>
 
