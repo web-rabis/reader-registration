@@ -428,6 +428,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               <Input
                 id="course"
                 value={formData.course}
+                maxLength={1}
                 onChange={(e) => setFormData({ ...formData, course: e.target.value })}
                 className="transition-all duration-200"
               />
