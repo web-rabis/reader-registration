@@ -95,7 +95,8 @@ export interface EditReaderFormData {
 export interface ReaderSearchParams {
     status: string;
     query: string;
-    expirationDate: string;
+    expirationDateLow: string;
+    expirationDateHigh: string;
     advancedSearch: boolean;
 }
 export const initEditReaderFormData: EditReaderFormData = {
@@ -152,6 +153,7 @@ export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFo
 export const initReaderSearchParams: ReaderSearchParams = {
     status: "",
     query: "",
-    expirationDate: "",
+    expirationDateLow: "",
+    expirationDateHigh: "",
     advancedSearch: false,
 }

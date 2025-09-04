@@ -31,19 +31,24 @@ export function RegistrationPagination({
             />
           </PaginationItem>
           
-          {[...Array(totalPages)].map((_, i) => (
-            <PaginationItem key={i + 1}>
-              <PaginationLink
-                onClick={() => onPageChange(i + 1)}
-                isActive={currentPage === i + 1}
-                className={`cursor-pointer hover:bg-accent ${
-                  currentPage === i + 1 ? "bg-accent" : ""
-                }`}
-              >
-                {i + 1}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
+          {[...Array(totalPages)].map((_, i) => {
+              if (i+1<currentPage || i+1-currentPage>6) {
+                  return <></>
+              }
+              return (
+              <PaginationItem key={i + 1}>
+                  <PaginationLink
+                      onClick={() => onPageChange(i + 1)}
+                      isActive={currentPage === i + 1}
+                      className={`cursor-pointer hover:bg-accent ${
+                          currentPage === i + 1 ? "bg-accent" : ""
+                      }`}
+                  >
+                      {i + 1}
+                  </PaginationLink>
+              </PaginationItem>
+              )
+          })}
           
           <PaginationItem>
             <PaginationNext

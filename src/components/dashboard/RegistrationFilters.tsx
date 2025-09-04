@@ -18,7 +18,8 @@ interface RegistrationFiltersProps {
   searchParams:ReaderSearchParams;
   onStatusChange: (value: string) => void;
   onSearchChange: (value: string) => void;
-  onExpirationChange: (value: string) => void;
+  onExpirationLowChange: (value: string) => void;
+  onExpirationHighChange: (value: string) => void;
   onAdvancedToggle: (value: boolean) => void;
 }
 
@@ -26,7 +27,8 @@ export function RegistrationFilters({
   searchParams,
   onStatusChange,
   onSearchChange,
-  onExpirationChange,
+  onExpirationLowChange,
+  onExpirationHighChange,
   onAdvancedToggle,
 }: RegistrationFiltersProps) {
   const { t } = useTranslation();
@@ -70,8 +72,16 @@ export function RegistrationFilters({
                 <Input
                     id="expirationDate"
                     type="date"
-                    value={searchParams.expirationDate}
-                    onChange={(e) => onExpirationChange(e.target.value)}
+                    value={searchParams.expirationDateLow}
+                    onChange={(e) => onExpirationLowChange(e.target.value)}
+                    required
+                    className="width-full"
+                />
+                <Input
+                    id="expirationDate"
+                    type="date"
+                    value={searchParams.expirationDateHigh}
+                    onChange={(e) => onExpirationHighChange(e.target.value)}
                     required
                     className="width-full"
                 />

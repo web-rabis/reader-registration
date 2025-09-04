@@ -127,12 +127,14 @@ export function Dashboard() {
       setPaging(DEFAULT_PAGING); // сброс
   }, []);
 
-  const handleExpirationChange = useCallback((value: string) => {
-        // setSearchQuery(value);
-
-      setSearchParams(prev => ({ ...prev, expirationDate: value}));
+  const handleExpirationChangeLow = useCallback((value: string) => {
+      setSearchParams(prev => ({ ...prev, expirationDateLow: value}));
       setPaging(DEFAULT_PAGING); // сброс
     }, []);
+  const handleExpirationChangeHigh = useCallback((value: string) => {
+      setSearchParams(prev => ({ ...prev, expirationDateHigh: value}));
+      setPaging(DEFAULT_PAGING); // сброс
+  }, []);
 
   const handlePageChange = useCallback((page: number) => {
       setPaging({...paging,skip:page}); // сброс
@@ -171,7 +173,8 @@ export function Dashboard() {
             searchParams={searchParams}
             onStatusChange={handleStatusChange}
             onSearchChange={handleSearchChange}
-            onExpirationChange={handleExpirationChange}
+            onExpirationLowChange={handleExpirationChangeLow}
+            onExpirationHighChange={handleExpirationChangeHigh}
             onAdvancedToggle={handleAdvancedToggle}
           />
         </CardHeader>
