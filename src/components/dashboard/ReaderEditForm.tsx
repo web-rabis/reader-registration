@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "@/contexts/LanguageContext";
 import {EditReaderFormData, initEditReaderFormData, editReaderFormDataFromReaderData} from "@/types/reader.ts";
 import {adminReaderService} from "@/services/admin-service.ts";
+import {Crop} from "lucide-react";
+import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
 
 interface ReaderEditFormProps {
   mode?: "create" | "edit";
@@ -132,15 +134,20 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData({ ...formData, photo: reader.result as string });
+        setFormData({ ...formData, photo: reader.result as string ,photoView: reader.result as string});
       };
       reader.readAsDataURL(file);
     }
   };
+    const handleOnCropImage=()=>{
+        setOpenCropPhoto(true);
+    }
+    const [openCropPhoto, setOpenCropPhoto] = useState<boolean>(false);
     if (loading) {
         return <div className="text-center p-6">{t("loading")}...</div>;
     }
-  return (
+
+    return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl text-center">{t('registration')}</CardTitle>
@@ -150,8 +157,12 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
             {formData.photoView && (
                 <div className="mb-4">
                     <img src={formData.photoView} alt="User photo" className="max-w-[200px] rounded shadow" />
+                    {/*<div className={"flex flex-row gap-2"}>*/}
+                    {/*    <Button onClick={handleOnCropImage }><Crop/></Button>*/}
+                    {/*</div>*/}
                 </div>
             )}
+
             <div className="space-y-2">
             <Label htmlFor="photo">{t('photo')}</Label>
             <Input
@@ -452,6 +463,13 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
             {t('submit')}
           </Button>
         </form>
+          {formData && openCropPhoto && (
+              <ReaderCropPhoto
+                  id={id}
+                  open={!!openCropPhoto}
+                  onClose={() => setOpenCropPhoto(false)}
+              />
+          )}
       </CardContent>
     </Card>
   );

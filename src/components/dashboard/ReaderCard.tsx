@@ -1,5 +1,5 @@
 
-import { Printer, RotateCcw, RotateCw } from "lucide-react";
+import { Printer, RotateCcw, RotateCw, Crop } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.tsx";
 import { useTranslation } from "@/hooks/useTranslation.ts";
@@ -9,15 +9,18 @@ import {printDiv} from "@/utils/print.ts";
 import {useCallback, useEffect, useState} from "react";
 import {adminReaderService} from "@/services/admin-service.ts";
 import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
+import 'react-advanced-cropper/dist/style.css';
 import {toast} from "sonner";
+import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
 
 interface ReaderCardProps {
   registration: Reader;
   open: boolean;
   onClose: () => void;
+  cropImage: (registration: Reader) => void;
 }
 
-export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
+export function ReaderCard({ registration, open, onClose,cropImage }: ReaderCardProps) {
   const { t } = useTranslation();
 
     const [photo, setPhoto] = useState<string>("");
@@ -50,7 +53,9 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
         });
     };
 
-
+    const handleOnCropImage=()=>{
+        cropImage(registration);
+    }
 
   const getStatusText = (status: string) => {
     return status === 'approved' ? t('active') : t('inactive');
@@ -65,17 +70,16 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
     }
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="w-[374px]">
+      <DialogContent className="w-[415px]">
         <DialogHeader>
-            <DialogTitle></DialogTitle>
         </DialogHeader>
           <div className="space-y-4 p-4 border rounded-lg " id="reader-card">
           <div id={"readerCard"} style={{
               backgroundImage: `url(data:image/jpg;base64,${background})`,
               display:"grid",
               gridTemplateColumns: "90px auto",
-              width: "7.6cm",
-              height: "4.5cm",
+              width: "8.5cm",
+              height: "5.4cm",
               border: "black solid 0px",
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
@@ -102,15 +106,17 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
               </div>
               <div style={{
                   marginLeft: "2px",
-                  marginTop: "25px",
+                  marginTop: "35px",
               }}>
                   <div style={{
+                      marginLeft: "10px",
                       fontSize: "13px"
                   }}>
                       <b>OQYRMAN BILETI</b> № {registration.ticketNumber}
                   </div>
                   <div style={{
-                      marginTop: "2px",
+                      marginTop: "5px",
+                      marginLeft: "20px",
                       fontSize: "14px",
                       fontWeight: "bold",
                   }}>
@@ -119,8 +125,8 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
                       {registration.middlename}
                   </div>
                   <div style={{
-                      marginTop: "2px",
-                      marginLeft: "25px",
+                      marginTop: "5px",
+                      marginLeft: "20px",
                       fontSize: "10px",
                   }}>
                       Tirkelgen kuni {formatter.format(new Date(registration.registrationDate))}<br/>
@@ -128,8 +134,8 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
                   </div>
                   <div style={{
                       fontSize: "10px",
-                      marginTop: "2px",
-                      marginLeft: "25px",
+                      marginTop: "8px",
+                      marginLeft: "20px",
                   }}
                   >
                       Сайт: {registration.typeCard.web}<br/>
@@ -146,6 +152,9 @@ export function ReaderCard({ registration, open, onClose }: ReaderCardProps) {
                 <Button onClick={handleRotate270}><RotateCcw/></Button>
                 <Button onClick={handleRotate90}><RotateCw/></Button>
             </div>
+            {/*<div className={"flex flex-row gap-2"}>*/}
+            {/*    <Button onClick={handleOnCropImage }><Crop/></Button>*/}
+            {/*</div>*/}
             <div>
           <Button onClick={handlePrint} className="gap-2">
             <Printer className="w-4 h-4" />

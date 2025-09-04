@@ -16,6 +16,7 @@ import {adminReaderService} from "@/services/admin-service.ts";
 import { loadFromStorage, saveToStorage } from "@/utils/stateStorage";
 import {Paging} from "@/types/api.ts";
 import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
+import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
 const KEY_SEARCH   = "dashboard:search";
 const KEY_PAGING   = "dashboard:paging";
 const DEFAULT_SEARCH: ReaderSearchParams = initReaderSearchParams; // КОНСТАНТА, не вызываем!
@@ -24,6 +25,7 @@ export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { logout } = useAuth();
+    const [openCropPhoto, setOpenCropPhoto] = useState<boolean>(false);
   const [registrations, setRegistrations] = useState<ReaderListResponse>({result:[],count:0});
     const [searchParams, setSearchParams] = useState<ReaderSearchParams>(() =>
         loadFromStorage<ReaderSearchParams>(KEY_SEARCH, DEFAULT_SEARCH)
@@ -149,6 +151,8 @@ export function Dashboard() {
             toast.error(t('processingError'));
         }
     }, []);
+  console.log(openCropPhoto)
+    console.log(selectedRegistration)
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center">
@@ -208,8 +212,16 @@ export function Dashboard() {
           registration={selectedRegistration}
           open={!!selectedRegistration}
           onClose={() => setSelectedRegistration(null)}
+          cropImage={(registration)=>{setOpenCropPhoto(true);}}
         />
       )}
+        {selectedRegistration && openCropPhoto && (
+            <ReaderCropPhoto
+                id={selectedRegistration?.ticketNumber}
+                open={!!openCropPhoto}
+                onClose={() => setOpenCropPhoto(false)}
+            />
+        )}
     </div>
   );
 }
