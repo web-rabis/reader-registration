@@ -179,28 +179,39 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
               className="transition-all duration-200"
             />
           </div>
-            <div className="space-y-2">
-                <Label htmlFor="typeCard">{t('typeCard')}</Label>
-                <Select
-                    value={formData.typeCard.toString()}
-                    onValueChange={(value) => setFormData({ ...formData, typeCard: Number(value) })}
-                >
-                    <SelectTrigger>
-                        <SelectValue placeholder={t('typeCard')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {dictionaries.typeCards.map((item) => {
-                            if (item.type.trim()!=='') {
-                                return <SelectItem key={item.id} value={item.id.toString()}>
-                                    {item.type}
-                                </SelectItem>
-                            }
-                        })}
-                    </SelectContent>
-                </Select>
-            </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                  <Label htmlFor="typeCard">{t('typeCard')}</Label>
+                  <Select
+                      value={formData.typeCard.toString()}
+                      onValueChange={(value) => setFormData({ ...formData, typeCard: Number(value) })}
+                  >
+                      <SelectTrigger>
+                          <SelectValue placeholder={t('typeCard')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                          {dictionaries.typeCards.map((item) => {
+                              if (item.type.trim()!=='') {
+                                  return <SelectItem key={item.id} value={item.id.toString()}>
+                                      {item.type}
+                                  </SelectItem>
+                              }
+                          })}
+                      </SelectContent>
+                  </Select>
+              </div>
+              <div className="space-y-2">
+                  <Label htmlFor="barcode">{t('barCode')}</Label>
+                  <Input
+                      id="barcode"
+                      value={formData.barCode}
+                      onChange={(e) => setFormData({ ...formData, barCode: e.target.value })}
+                      required
+                      maxLength={13}
+                  />
+              </div>
+
             <div className="space-y-2">
               <Label htmlFor="iin">{t('iin')}</Label>
               <Input
@@ -209,7 +220,6 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                 onChange={(e) => setFormData({ ...formData, iin: e.target.value })}
                 required
                 maxLength={12}
-                className="transition-all duration-200"
               />
             </div>
 
@@ -220,7 +230,6 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                 value={formData.lastname}
                 onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
                 required
-                className="transition-all duration-200"
               />
             </div>
 
@@ -231,7 +240,6 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                 value={formData.firstname}
                 onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
                 required
-                className="transition-all duration-200"
               />
             </div>
 

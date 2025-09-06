@@ -70,6 +70,7 @@ export interface ReaderUser {
 export interface EditReaderFormData {
     photo: string | null;
     photoView: string | null;
+    barCode: string | null;
     typeCard: number;
     iin: string;
     lastname: string;
@@ -104,6 +105,7 @@ export const initEditReaderFormData: EditReaderFormData = {
     photoView: null,
     photo: null,
     typeCard: 0,
+    barCode: null,
     iin: "",
     lastname: "",
     middlename:"",
@@ -129,6 +131,7 @@ export const initEditReaderFormData: EditReaderFormData = {
 export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFormData=>(
     {
         iin:data.iin ?? "",
+        barCode:data.barcode ?? "",
         typeCard:data.typeCard?.id ?? 0,
         nationality: data.nationality?.id ?? 0,
         sex:data.sex?.id ?? 0,

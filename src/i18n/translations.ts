@@ -20,6 +20,7 @@ export const translations = {
     // Формы
     photo: "Фото",
     iin: "ИИН",
+    barCode: "Штрих-код",
     typeCard:'Тип карточки',
     lastName: "Фамилия",
     middleName: "Отчество",
@@ -108,6 +109,7 @@ export const translations = {
     // Формы
     photo: "Фото",
     iin: "ЖСН",
+    barCode: "Штрих-код",
     typeCard:'Картаның түрі',
     lastName: "Тегі",
     firstName: "Аты",
@@ -196,6 +198,7 @@ export const translations = {
     // Формы
     photo: "Photo",
     iin: "IIN",
+    barCode: "Barcode",
     typeCard:'Card type',
     lastName: "Last Name",
     middleName: "Middle Name",
