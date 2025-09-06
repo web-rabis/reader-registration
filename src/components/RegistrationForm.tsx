@@ -141,12 +141,13 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
     try {
         const res = await registrationService.submit(formData);
         if (res.data.status === "pending") {
+            console.log(initRegistrationFormData)
+            setFormData(initRegistrationFormData);
             alert(t('submissionSuccess'))
         } else if (res.data.status === "reregistration") {
             alert(t('renewalReaderRegistration')+'\n'+t('ticket')+' №'+res.data.ticketNumber)
         }
-        setIsSubmitted(true);
-        setFormData(initRegistrationFormData);
+        setIsSubmitting(false);
     } catch (error) {
         alert(t('processingError')+'\n'+error.response?.data.error.message)
         setIsSubmitting(false);
@@ -199,6 +200,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               <Input
                 id="lastName"
                 value={formData.lastname}
+                maxLength={100}
                 onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
 
                 className="transition-all duration-200"
@@ -210,6 +212,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               <Input
                 id="firstName"
                 value={formData.firstname}
+                maxLength={100}
                 onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
 
                 className="transition-all duration-200"
@@ -221,6 +224,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                   <Input
                       id="middleName"
                       value={formData.middlename}
+                      maxLength={100}
                       onChange={(e) => setFormData({ ...formData, middlename: e.target.value })}
                       className="transition-all duration-200"
                   />
@@ -281,6 +285,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                   <Input
                       id="address"
                       value={formData.address}
+                      maxLength={100}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
 
                   />
@@ -439,6 +444,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               <Input
                 id="workplace"
                 value={formData.workPlace}
+                maxLength={40}
                 onChange={(e) => setFormData({ ...formData, workPlace: e.target.value })}
                 className="transition-all duration-200"
               />
@@ -449,6 +455,7 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
               <Input
                 id="position"
                 value={formData.position}
+                maxLength={45}
                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                 className="transition-all duration-200"
               />

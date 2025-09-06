@@ -20,6 +20,7 @@ import {EditReaderFormData, initEditReaderFormData, editReaderFormDataFromReader
 import {adminReaderService} from "@/services/admin-service.ts";
 import {Crop} from "lucide-react";
 import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
+import {TypeCard} from "@/types/dictionary.ts";
 
 interface ReaderEditFormProps {
   mode?: "create" | "edit";
@@ -40,6 +41,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
     institutes: Dictionary[];
     faculties: Dictionary[];
     academicDegrees: Dictionary[];
+    typeCards: TypeCard[];
   }>({
     nationalities: [],
     genders: [],
@@ -49,6 +51,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
     institutes: [],
     faculties: [],
     academicDegrees: [],
+    typeCards: [],
   });
 
   useEffect(() => {
@@ -63,6 +66,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
           institutesRes,
           facultiesRes,
           academicDegreesRes,
+          typeCards,
         ] = await Promise.all([
             adminDictionaryService.getNationalities(),
             adminDictionaryService.getGenders(),
@@ -72,6 +76,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
             adminDictionaryService.getInstitutes(),
             adminDictionaryService.getFaculties(),
             adminDictionaryService.getAcademicDegrees(),
+            adminDictionaryService.getTypeCards(),
         ]);
 
         setDictionaries({
@@ -83,6 +88,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
           institutes: institutesRes.data,
           faculties: facultiesRes.data,
           academicDegrees: academicDegreesRes.data,
+          typeCards:typeCards.data,
         });
       } catch (error) {
         toast.error(t('loadError'));
@@ -173,6 +179,26 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
               className="transition-all duration-200"
             />
           </div>
+            <div className="space-y-2">
+                <Label htmlFor="typeCard">{t('typeCard')}</Label>
+                <Select
+                    value={formData.typeCard.toString()}
+                    onValueChange={(value) => setFormData({ ...formData, typeCard: Number(value) })}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder={t('typeCard')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {dictionaries.typeCards.map((item) => {
+                            if (item.type.trim()!=='') {
+                                return <SelectItem key={item.id} value={item.id.toString()}>
+                                    {item.type}
+                                </SelectItem>
+                            }
+                        })}
+                    </SelectContent>
+                </Select>
+            </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -372,6 +398,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
               <Input
                 id="course"
                 value={formData.course}
+                maxLength={1}
                 onChange={(e) => setFormData({ ...formData, course: e.target.value })}
               />
             </div>
@@ -381,6 +408,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
               <Input
                 id="workplace"
                 value={formData.workPlace}
+                maxLength={40}
                 onChange={(e) => setFormData({ ...formData, workPlace: e.target.value })}
               />
             </div>
@@ -390,6 +418,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
               <Input
                 id="position"
                 value={formData.position}
+                maxLength={45}
                 onChange={(e) => setFormData({ ...formData, position: e.target.value })}
               />
             </div>
@@ -433,7 +462,6 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                 type="tel"
                 value={formData.workPhone}
                 onChange={(e) => setFormData({ ...formData, workPhone: e.target.value })}
-                required
               />
             </div>
 
@@ -453,6 +481,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
               <Input
                 id="address"
                 value={formData.address}
+                maxLength={100}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 required
               />

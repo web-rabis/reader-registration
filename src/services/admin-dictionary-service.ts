@@ -1,5 +1,6 @@
 import {ApiResponse, Dictionary} from "@/types/api.ts";
 import apiClient from "@/services/api-client.ts";
+import {TypeCard} from "@/types/dictionary.ts";
 
 
 export const adminDictionaryService = {
@@ -42,6 +43,10 @@ export const adminDictionaryService = {
     getAcademicDegrees: async (): Promise<ApiResponse<Dictionary[]>> => {
         // return { status: 200, data: academicDegreeDictionary };
         return await apiClient.get("/v1/admin/dictionary/academic-degree");
+    },
+    getTypeCards: async (): Promise<ApiResponse<TypeCard[]>> => {
+        // return { status: 200, data: academicDegreeDictionary };
+        return await apiClient.get("/v1/admin/dictionary/type-card");
     },
     getTypeCardBackground: async (id: number): Promise<string> => {
         const response = await apiClient.get(`/v1/admin/dictionary/type-card/${id}/backgrounds`);
