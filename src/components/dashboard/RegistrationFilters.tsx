@@ -73,7 +73,7 @@ export function RegistrationFilters({
       </div>
         <div className="flex justify-between items-center">
             <SearchToggle isAdvanced={searchParams.advancedSearch} onToggle={onAdvancedToggle}></SearchToggle>
-            <div className={"w-[350px] inline-flex items-center hidden]"}>
+            <!--div className={"w-[350px] inline-flex items-center hidden]"}>
                 <Label htmlFor="sort">{t('sort')}</Label>&nbsp;
                 <Select value={paging.order}>
                     <SelectTrigger>
@@ -89,7 +89,7 @@ export function RegistrationFilters({
                     {paging.orderBy===1 && <Button><ArrowDownNarrowWide/></Button>}
                     {paging.orderBy!==1 && <Button><ArrowUpWideNarrow /></Button>}
                 </div>
-            </div>
+            </div!-->
         </div>
         {searchParams.advancedSearch && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
