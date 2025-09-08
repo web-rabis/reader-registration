@@ -73,23 +73,23 @@ export function RegistrationFilters({
       </div>
         <div className="flex justify-between items-center">
             <SearchToggle isAdvanced={searchParams.advancedSearch} onToggle={onAdvancedToggle}></SearchToggle>
-            <!--div className={"w-[350px] inline-flex items-center hidden]"}>
-                <Label htmlFor="sort">{t('sort')}</Label>&nbsp;
-                <Select value={paging.order}>
-                    <SelectTrigger>
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value={"ticketNumber"}>{t('ticketNumber')}</SelectItem>
-                        <SelectItem value={"registrationDate"}>{t('registrationDate')}</SelectItem>
-                        <SelectItem value={"fio"}>{t('fio')}</SelectItem>
-                    </SelectContent>
-                </Select>
-                <div>
-                    {paging.orderBy===1 && <Button><ArrowDownNarrowWide/></Button>}
-                    {paging.orderBy!==1 && <Button><ArrowUpWideNarrow /></Button>}
-                </div>
-            </div!-->
+            {/*<div className={"w-[350px] inline-flex items-center hidden]"}>*/}
+            {/*    <Label htmlFor="sort">{t('sort')}</Label>&nbsp;*/}
+            {/*    <Select value={paging.order}>*/}
+            {/*        <SelectTrigger>*/}
+            {/*            <SelectValue />*/}
+            {/*        </SelectTrigger>*/}
+            {/*        <SelectContent>*/}
+            {/*            <SelectItem value={"ticketNumber"}>{t('ticketNumber')}</SelectItem>*/}
+            {/*            <SelectItem value={"registrationDate"}>{t('registrationDate')}</SelectItem>*/}
+            {/*            <SelectItem value={"fio"}>{t('fio')}</SelectItem>*/}
+            {/*        </SelectContent>*/}
+            {/*    </Select>*/}
+            {/*    <div>*/}
+            {/*        {paging.orderBy===1 && <Button><ArrowDownNarrowWide/></Button>}*/}
+            {/*        {paging.orderBy!==1 && <Button><ArrowUpWideNarrow /></Button>}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
         {searchParams.advancedSearch && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
