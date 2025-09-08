@@ -201,16 +201,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                       </SelectContent>
                   </Select>
               </div>
-              <div className="space-y-2">
-                  <Label htmlFor="barcode">{t('barCode')}</Label>
-                  <Input
-                      id="barcode"
-                      value={formData.barCode}
-                      onChange={(e) => setFormData({ ...formData, barCode: e.target.value })}
-                      required
-                      maxLength={13}
-                  />
-              </div>
+
 
             <div className="space-y-2">
               <Label htmlFor="iin">{t('iin')}</Label>

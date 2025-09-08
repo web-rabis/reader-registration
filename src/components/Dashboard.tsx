@@ -17,10 +17,11 @@ import { loadFromStorage, saveToStorage } from "@/utils/stateStorage";
 import {Paging} from "@/types/api.ts";
 import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
 import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
+import {SelectItem, SelectTrigger, SelectValue, SelectContent, Select} from "@/components/ui/select.tsx";
 const KEY_SEARCH   = "dashboard:search";
 const KEY_PAGING   = "dashboard:paging";
 const DEFAULT_SEARCH: ReaderSearchParams = initReaderSearchParams; // КОНСТАНТА, не вызываем!
-const DEFAULT_PAGING: Paging = { skip: 1, limit: 15 };
+const DEFAULT_PAGING: Paging = { skip: 1, limit: 15 , order:"ticketNumber", orderBy:-1};
 export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -156,7 +157,7 @@ export function Dashboard() {
   console.log(openCropPhoto)
     console.log(selectedRegistration)
   return (
-    <div className="space-y-6 w-full max-w-4xl mx-auto p-6">
+    <div className="space-y-6 w-full max-w-4xl mx-auto p-6 min-w-[760px]">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-serif">{t('dashboard')}</h1>
         <div className="flex gap-4 items-center">
@@ -171,6 +172,7 @@ export function Dashboard() {
         <CardHeader>
           <RegistrationFilters
             searchParams={searchParams}
+            paging={paging}
             onStatusChange={handleStatusChange}
             onSearchChange={handleSearchChange}
             onExpirationLowChange={handleExpirationChangeLow}

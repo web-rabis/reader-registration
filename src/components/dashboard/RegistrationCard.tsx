@@ -65,25 +65,28 @@ export function RegistrationCard({
         <div className="font-medium grid grid-cols-2">№ {registration.ticketNumber} {registration.lastname} {registration.firstname} {registration.middlename}
         </div>
         <p className="text-sm text-muted-foreground">{t('yearBirth')}: {registration.yearBirth}</p>
+        {registration.barcode && (
+          <p className="text-sm text-muted-foreground">{t('barCode')}: {registration.barcode}</p>
+        )}
         {registration.iin && (
           <p className="text-sm text-muted-foreground">{t('iin')}: {registration.iin}</p>
         )}
+        {registration.phone && (
+           <p className="text-sm text-muted-foreground">{t('phoneNumber')}: {registration.phone}</p>
+        )}
         {registration.workPhone && (
+          <p className="text-sm text-muted-foreground">{t('workPhone')}: {registration.workPhone}</p>
+        )}
+        {registration.registrationDate && (
           <p className="text-sm text-muted-foreground">
-            {t('workPhone')}: {registration.workPhone}
+                  {t('registrationDate')}: {formatter.format(new Date(registration.registrationDate))}
           </p>
         )}
-          {registration.registrationDate && (
-              <p className="text-sm text-muted-foreground">
-                  {t('registrationDate')}: {formatter.format(new Date(registration.registrationDate))}
-              </p>
-          )}
-          {registration.expirationDate && (
-              <p className="text-sm text-muted-foreground">
-                  {t('expirationDate')}: {formatter.format(new Date(registration.expirationDate))}
-              </p>
-          )}
-
+        {registration.expirationDate && (
+          <p className="text-sm text-muted-foreground">
+            {t('expirationDate')}: {formatter.format(new Date(registration.expirationDate))}
+          </p>
+        )}
       </div>
       <div className="flex items-center gap-2">
           <Badge variant="secondary" className={"w-[100px]"}>{getStatusLabel(registration.status)}</Badge>

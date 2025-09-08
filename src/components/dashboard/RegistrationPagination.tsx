@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {useYAxisWithFiniteDomainOrRandom} from "recharts/types/context/chartLayoutContext";
 
 interface RegistrationPaginationProps {
   currentPage: number;
@@ -23,7 +24,7 @@ export function RegistrationPagination({
   return (
     <div className="mt-6">
       <Pagination>
-        <PaginationContent className="flex space-x-2">
+        <PaginationContent className="flex space-x-2" key={"123"}>
           <PaginationItem>
             <PaginationPrevious
               onClick={() => onPageChange(Math.max(1, currentPage - 1))}

@@ -41,4 +41,6 @@ export interface RegistrationDetailsResponse extends RegistrationFormData {
 export interface Paging {
     skip?: number
     limit?: number
+    order?: string
+    orderBy?: number
 }

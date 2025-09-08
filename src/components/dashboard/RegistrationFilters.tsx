@@ -1,5 +1,5 @@
 
-import { Search } from "lucide-react";
+import { Search, ArrowDownNarrowWide, ArrowUpWideNarrow } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -13,9 +13,13 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { SearchToggle } from "@/components/dashboard/SearchToggle.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {ReaderSearchParams} from "@/types/reader.ts";
+import {Paging} from "@/types/api.ts";
+import {Link} from "react-router-dom";
+import {Button} from "@/components/ui/button.tsx";
 
 interface RegistrationFiltersProps {
   searchParams:ReaderSearchParams;
+  paging: Paging;
   onStatusChange: (value: string) => void;
   onSearchChange: (value: string) => void;
   onExpirationLowChange: (value: string) => void;
@@ -25,6 +29,7 @@ interface RegistrationFiltersProps {
 
 export function RegistrationFilters({
   searchParams,
+  paging,
   onStatusChange,
   onSearchChange,
   onExpirationLowChange,
@@ -32,6 +37,12 @@ export function RegistrationFilters({
   onAdvancedToggle,
 }: RegistrationFiltersProps) {
   const { t } = useTranslation();
+  const getSort = () =>{
+      if(paging.orderBy===1)
+        return <ArrowDownNarrowWide/>
+      else
+        return <ArrowUpWideNarrow />
+  }
 
   return (
     <div className="space-y-4 border rounded-lg p-2" >
@@ -62,6 +73,23 @@ export function RegistrationFilters({
       </div>
         <div className="flex justify-between items-center">
             <SearchToggle isAdvanced={searchParams.advancedSearch} onToggle={onAdvancedToggle}></SearchToggle>
+            <div className={"w-[350px] inline-flex items-center hidden]"}>
+                <Label htmlFor="sort">{t('sort')}</Label>&nbsp;
+                <Select value={paging.order}>
+                    <SelectTrigger>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value={"ticketNumber"}>{t('ticketNumber')}</SelectItem>
+                        <SelectItem value={"registrationDate"}>{t('registrationDate')}</SelectItem>
+                        <SelectItem value={"fio"}>{t('fio')}</SelectItem>
+                    </SelectContent>
+                </Select>
+                <div>
+                    {paging.orderBy===1 && <Button><ArrowDownNarrowWide/></Button>}
+                    {paging.orderBy!==1 && <Button><ArrowUpWideNarrow /></Button>}
+                </div>
+            </div>
         </div>
         {searchParams.advancedSearch && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">

@@ -10,6 +10,7 @@ export const translations = {
     ticket: "Билет",
     readers: "Читатели",
     renewalRegistration: "Продление регистрации",
+    sort:"Сортировка",
 
     // Заголовки
     dashboard: "Панель управления",
