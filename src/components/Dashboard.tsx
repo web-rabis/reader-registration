@@ -39,6 +39,7 @@ export function Dashboard() {
 
   const fetchRegistrations = useCallback(async () => {
         try {
+            console.log(searchParams)
             const response = await adminReaderService.getReaderAll(searchParams,paging);
             setRegistrations(response.data);
         } catch (error) {
@@ -147,15 +148,13 @@ export function Dashboard() {
 
     const handleReRegistration = useCallback(async (reader:Reader) => {
         try {
-            const response = await adminReaderService.renewalReaderRegistration(reader.ticketNumber);
+            await adminReaderService.renewalReaderRegistration(reader.ticketNumber);
             toast.success(t('rejectSuccess').replace('{id}', reader.ticketNumber.toString()));
             fetchRegistrations();
         } catch (error) {
             toast.error(t('processingError'));
         }
-    }, []);
-  console.log(openCropPhoto)
-    console.log(selectedRegistration)
+    }, [fetchRegistrations, t]);
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6 min-w-[760px]">
       <div className="flex justify-between items-center">
