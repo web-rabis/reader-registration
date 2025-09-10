@@ -41,7 +41,9 @@ export function Dashboard() {
 
   const fetchRegistrations = useCallback(async () => {
         try {
-            console.log(searchParams)
+            if(searchParams.query!="" && searchParams.query.length<3){
+                return
+            }
             const response = await adminReaderService.getReaderAll(searchParams,paging);
             setRegistrations(response.data);
         } catch (error) {
