@@ -1,4 +1,5 @@
 import {
+    ReaderApproveResponse,
     ReaderByIdResponse,
     ReaderListRequest,
     ReaderListResponse, ReaderSearchParams,
@@ -21,7 +22,7 @@ export const adminReaderService = {
         return await apiClient.get(`/v1/admin/reader?${queryParams.toString()}`);
     },
 
-    approveReaderRegistration: async (id: number): Promise<ApiResponse<string>> => {
+    approveReaderRegistration: async (id: number): Promise<ApiResponse<ReaderApproveResponse>> => {
         return await apiClient.put(`/v1/admin/reader/${id}/approve`);
     },
 

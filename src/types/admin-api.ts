@@ -29,3 +29,8 @@ export interface ReaderListResponse {
 export interface ReaderByIdResponse {
     result: Reader;
 }
+export interface ReaderApproveResponse {
+    ticketNumber: number;
+    status: "pending" | "approved" | "rejected"| "";
+    expirationDate: string;
+}

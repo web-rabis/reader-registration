@@ -70,7 +70,7 @@ export function Dashboard() {
         setRegistrations(prev => ({
             ...prev,
             result: prev.result.map(r =>
-                r.ticketNumber === id ? { ...r, status: "" } : r
+                r.ticketNumber === id ? { ...r, status: response.data.status, expirationDate: response.data.expirationDate } : r
             ),
         }));
     } catch (error) {
