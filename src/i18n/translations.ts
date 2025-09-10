@@ -9,6 +9,7 @@ export const translations = {
     logout: "Выйти",
     ticket: "Билет",
     readers: "Читатели",
+    employees: "Сотрудники",
     renewalRegistration: "Продление регистрации",
     sort:"Сортировка",
 
@@ -17,6 +18,8 @@ export const translations = {
     library: "Библиотека",
     registration: "Регистрация читателя",
     registrationEdit: "Редактирование заявки",
+    createReader:"Новый читатель",
+    editReader:"Редактирование читателя",
 
     // Формы
     photo: "Фото",
@@ -99,6 +102,7 @@ export const translations = {
     logout: "Шығу",
     ticket: "Билет",
     readers: "Оқырмандар",
+    employees: "Қызметкерлер",
     renewalRegistration: "Тіркеуді жаңарту",
 
     // Заголовки
@@ -176,7 +180,7 @@ export const translations = {
     expirationDate: "Сонғы күні",
     status: "Мәртебесі",
     print: "Басып шығару",
-    advancedSearch:"Расширенный поиск",
+    advancedSearch:"Кеңейтілген іздеу",
   },
   en: {
     // Общие
@@ -188,6 +192,7 @@ export const translations = {
     logout: "Logout",
     ticket: "Ticket",
     readers: "Readers",
+    employees: "Employees",
     renewalRegistration: "Renewal registation",
 
     // Заголовки

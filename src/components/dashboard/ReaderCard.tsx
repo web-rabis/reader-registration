@@ -80,6 +80,10 @@ export function ReaderCard({ registration, open, onClose,cropImage }: ReaderCard
               gridTemplateColumns: "90px auto",
               width: "8.5cm",
               height: "5.4cm",
+              paddingLeft: "15px",
+              paddingTop: "15px",
+              paddingBottom: "15px",
+              paddingRight: "10px",
               border: "black solid 0px",
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
@@ -87,7 +91,7 @@ export function ReaderCard({ registration, open, onClose,cropImage }: ReaderCard
               lineHeight: 1.2,
               fontFamily: "Tahoma, sans-serif",
           }}>
-              <div>
+              <div className={"flex flex-col gap-1 justify-end"}>
                   <div>
                   <img src={`data:image/jpg;base64,${photo}`} alt="Card" style={{
                       width: "90px",

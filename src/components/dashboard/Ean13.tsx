@@ -27,8 +27,8 @@ export function Ean13({ data12 }: { data12: string }) {
             format: "ean13",
             displayValue: false,     // подпись цифр под штрихкодом
             width: 1,               // толщина одной полосы (px)
-            height: 30,             // высота полос (px)
-            marginLeft: 5,
+            height: 40,             // высота полос (px)
+            marginLeft: 0,
             margin: 0 ,
             font: "monospace",
             fontSize: 16,

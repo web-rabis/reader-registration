@@ -1,5 +1,5 @@
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -18,6 +18,8 @@ import {Paging} from "@/types/api.ts";
 import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
 import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
 import {SelectItem, SelectTrigger, SelectValue, SelectContent, Select} from "@/components/ui/select.tsx";
+import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import newReaderPage from "@/pages/NewReaderPage.tsx";
 const KEY_SEARCH   = "dashboard:search";
 const KEY_PAGING   = "dashboard:paging";
 const DEFAULT_SEARCH: ReaderSearchParams = initReaderSearchParams; // КОНСТАНТА, не вызываем!
@@ -97,6 +99,10 @@ export function Dashboard() {
     navigate(`/edit-registration/${id}`);
   }, [navigate]);
 
+    const handleNew = useCallback(() => {
+        navigate(`/new-reader`);
+    }, [navigate]);
+
   const totalPages = Math.ceil(registrations.count / paging.limit);
 
   const getStatusLabel = useCallback((status: string) => {
@@ -169,7 +175,15 @@ export function Dashboard() {
       
       <Card>
         <CardHeader>
-          <RegistrationFilters
+
+            <Tabs defaultValue={"readers"}>
+                <TabsList>
+                    <TabsTrigger value={"readers"} ><CardTitle>{t('readers')}</CardTitle></TabsTrigger>
+                    <TabsTrigger value={"employees"} disabled={true}><CardTitle>{t('employees')}</CardTitle></TabsTrigger>
+                </TabsList>
+            </Tabs>
+
+            <RegistrationFilters
             searchParams={searchParams}
             paging={paging}
             onStatusChange={handleStatusChange}
@@ -177,6 +191,7 @@ export function Dashboard() {
             onExpirationLowChange={handleExpirationChangeLow}
             onExpirationHighChange={handleExpirationChangeHigh}
             onAdvancedToggle={handleAdvancedToggle}
+            onNewReader={handleNew}
           />
         </CardHeader>
         <CardContent>

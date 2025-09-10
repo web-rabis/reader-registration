@@ -141,7 +141,6 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
     try {
         const res = await registrationService.submit(formData);
         if (res.data.status === "pending") {
-            console.log(initRegistrationFormData)
             setFormData(initRegistrationFormData);
             alert(t('submissionSuccess'))
         } else if (res.data.status === "reregistration") {

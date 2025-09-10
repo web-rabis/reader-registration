@@ -2,23 +2,23 @@ import React, { useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { onlyDigits } from "@/utils/phone";
 
-const BASE = "+7 ";
+const BASE = "8 ";
 
 function digitsToMasked(d: string): string {
     // d: 0..10 digits after country digit '7'
     if (d.length === 0) return BASE;
     if (d.length <= 3) return BASE + d;
     if (d.length <= 6) return BASE + d.slice(0,3) + " " + d.slice(3);
-    if (d.length <= 8) return BASE + d.slice(0,3) + " " + d.slice(3,6) + d.slice(6);
-    return BASE + d.slice(0,3) + " " + d.slice(3,6) + d.slice(6,8) + d.slice(8,10);
+    if (d.length <= 8) return BASE + d.slice(0,3) + " " + d.slice(3,6) + " " +d.slice(6);
+    return BASE + d.slice(0,3) + " " + d.slice(3,6)  + " " + d.slice(6,8)  + " " + d.slice(8,10);
 }
 
 function normalizeDigits(raw: string): string {
     let di = onlyDigits(raw);
     if (!di) return "";
-    if (di.startsWith("8")) di = "7" + di.slice(1);
+    // if (di.startsWith("8")) di = "7" + di.slice(1);
     // if (di.length === 10) di = "7" + di;
-    if (!di.startsWith("7")) di = "7" + di;
+    // if (!di.startsWith("7")) di = "7" + di;
     if (di.length > 11) di = di.slice(0, 11);
     return di.slice(1); // national part (0..10 digits)
 }

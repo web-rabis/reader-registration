@@ -9,13 +9,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CardTitle } from "@/components/ui/card";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/contexts/LanguageContext";
 import { SearchToggle } from "@/components/dashboard/SearchToggle.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {ReaderSearchParams} from "@/types/reader.ts";
 import {Paging} from "@/types/api.ts";
 import {Link} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 
 interface RegistrationFiltersProps {
   searchParams:ReaderSearchParams;
@@ -25,6 +26,7 @@ interface RegistrationFiltersProps {
   onExpirationLowChange: (value: string) => void;
   onExpirationHighChange: (value: string) => void;
   onAdvancedToggle: (value: boolean) => void;
+  onNewReader: ()=>void;
 }
 
 export function RegistrationFilters({
@@ -35,6 +37,7 @@ export function RegistrationFilters({
   onExpirationLowChange,
   onExpirationHighChange,
   onAdvancedToggle,
+  onNewReader,
 }: RegistrationFiltersProps) {
   const { t } = useTranslation();
   const getSort = () =>{
@@ -47,7 +50,7 @@ export function RegistrationFilters({
   return (
     <div className="space-y-4 border rounded-lg p-2" >
       <div className="flex justify-between items-center">
-        <CardTitle>{t('readers')}</CardTitle>
+          <Button onClick={(e)=>onNewReader()}>{t('createReader')}</Button>
         <Select
           value={searchParams.status}
           onValueChange={onStatusChange}

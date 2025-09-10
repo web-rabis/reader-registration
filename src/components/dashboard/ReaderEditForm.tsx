@@ -126,13 +126,11 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
         toast.success(t('updateSuccess'));
         navigate("/dashboard");
       } else {
-        // await adminReaderService.submit(formData);
-        // toast.success(t('submissionSuccess'));
-        // setFormData(initEditReaderFormData);
-          // create reader
+          await adminReaderService.createReader(formData);
+          navigate("/dashboard");
       }
     } catch (error) {
-      toast.error(t('processingError'));
+        alert(t('processingError')+'\n'+error.response?.data.error.message)
     }
   };
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,7 +154,7 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
     return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">{t('registration')}</CardTitle>
+        <CardTitle className="text-2xl text-center">{mode==='create'?t('createReader'):t('editReader')}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">

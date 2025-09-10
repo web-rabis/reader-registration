@@ -52,6 +52,10 @@ export const adminReaderService = {
         return response.data; // строка base64
     },
 
+    createReader: async (formData: RegistrationFormData): Promise<ApiResponse<string>> => {
+        return await apiClient.post(`/v1/admin/reader`, formData);
+    },
+
     updateReader: async (id: number, formData: RegistrationFormData): Promise<ApiResponse<string>> => {
         return await apiClient.put(`/v1/admin/reader/${id}`, formData);
     },

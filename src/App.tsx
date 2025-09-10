@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import { EditRegistrationPage } from "./pages/EditRegistrationPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import NewReaderPage from "@/pages/NewReaderPage.tsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/new-reader" element={<NewReaderPage />} />
           <Route path="/edit-registration/:id" element={<EditRegistrationPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
