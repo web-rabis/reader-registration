@@ -492,7 +492,6 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                       value={formData.readersHall}
                       maxLength={100}
                       onChange={(e) => setFormData({ ...formData, readersHall: e.target.value })}
-                      required
                   />
               </div>
           </div>
