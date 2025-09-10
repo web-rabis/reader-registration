@@ -93,6 +93,7 @@ export interface EditReaderFormData {
     position: string;
     academicDegree: number;
     status:string;
+    readersHall:string;
 }
 export interface ReaderSearchParams {
     status: string;
@@ -127,6 +128,7 @@ export const initEditReaderFormData: EditReaderFormData = {
     position: "",
     academicDegree: 0,
     status:"",
+    readersHall:"",
 };
 export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFormData=>(
     {
@@ -155,6 +157,7 @@ export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFo
         position: data.position ?? "",
         academicDegree: data.academicDegree?.id ?? 0,
         status: data.status ?? "",
+        readersHall: data.readersHall ?? "",
     })
 export const initReaderSearchParams: ReaderSearchParams = {
     status: "",

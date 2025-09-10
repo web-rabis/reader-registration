@@ -47,6 +47,7 @@ export const translations = {
     workplace: "Место работы",
     position: "Должность",
     academicDegree: "Ученая степень",
+    readersHall: "Читальный зал",
 
     // Статусы
     pending: "Ожидает",
@@ -69,7 +70,7 @@ export const translations = {
     approveSuccess: "Заявка #{id} одобрена",
     rejectSuccess: "Заявка #{id} отклонена",
     updateSuccess: "Данные успешно обновлены",
-    submissionSuccess: "Регистрация успешно завершена, подойдите к библиотекарю за читетльским билетом",
+    submissionSuccess: "Регистрация успешно завершена, подойдите к библиотекарю за читательским билетом",
     renewalReaderRegistration: "Вы уже зарегистрированы, подойдите к библиотекарю для продления читательского билета",
     processingError: "Ошибка при обработке заявки",
     loading: "Загрузка",
@@ -137,6 +138,7 @@ export const translations = {
     workplace: "Жұмыс орны",
     position: "Лауазымы",
     academicDegree: "Ғылыми дәрежесі",
+    readersHall: "Оқу залы",
 
     // Статусы
     pending: "Күтуде",
@@ -227,6 +229,7 @@ export const translations = {
     workplace: "Workplace",
     position: "Position",
     academicDegree: "Academic Degree",
+    readersHall: "Reader Hall",
 
     // Статусы
     pending: "Pending",

@@ -483,6 +483,18 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                 required
               />
             </div>
+
+
+              <div className="space-y-2">
+                  <Label htmlFor="address">{t("readersHall")}</Label>
+                  <Input
+                      id="readerHall"
+                      value={formData.readersHall}
+                      maxLength={100}
+                      onChange={(e) => setFormData({ ...formData, readersHall: e.target.value })}
+                      required
+                  />
+              </div>
           </div>
 
           <Button type="submit" className="w-full">

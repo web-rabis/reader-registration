@@ -121,10 +121,19 @@ export function ReaderCard({ registration, open, onClose,cropImage }: ReaderCard
                       marginLeft: "20px",
                       fontSize: "14px",
                       fontWeight: "bold",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "130px",
+                      alignItems: "center",
                   }}>
+                      <div>
                       {registration.lastname}<br/>
                       {registration.firstname}<br/>
                       {registration.middlename}
+                      </div>
+                      <div>
+                          {registration.readersHall}
+                      </div>
                   </div>
                   <div style={{
                       marginTop: "5px",
