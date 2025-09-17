@@ -14,6 +14,8 @@ export const adminReaderService = {
         if (paging.skip !== undefined) queryParams.append('skip', paging.skip.toString())
         if (paging.limit !== undefined) queryParams.append('limit', paging.limit.toString())
         if (params.status !== undefined) queryParams.append('status', params.status)
+        if (paging.orderBy !== undefined) queryParams.append('orderBy', paging.orderBy)
+        if (paging.order !== undefined) queryParams.append('order', String(paging.order))
         if (params.query !== undefined && params.query.length >= 3) queryParams.append('query', params.query)
         if (params.advancedSearch) {
             if (params.expirationDateLow !== undefined) queryParams.append('expirationDateLow', params.expirationDateLow)
@@ -59,5 +61,54 @@ export const adminReaderService = {
 
     updateReader: async (id: number, formData: RegistrationFormData): Promise<ApiResponse<string>> => {
         return await apiClient.put(`/v1/admin/reader/${id}`, formData);
+    },
+}
+
+export const adminReaderEmployeeService = {
+    getReaderAll: async (params: ReaderSearchParams, paging:Paging): Promise<ApiResponse<ReaderListResponse>> => {
+        const queryParams = new URLSearchParams()
+        if (paging.skip !== undefined) queryParams.append('skip', paging.skip.toString())
+        if (paging.limit !== undefined) queryParams.append('limit', paging.limit.toString())
+        if (params.status !== undefined) queryParams.append('status', params.status)
+        if (paging.orderBy !== undefined) queryParams.append('orderBy', paging.orderBy)
+        if (paging.order !== undefined) queryParams.append('order', String(paging.order))
+        if (params.query !== undefined && params.query.length >= 3) queryParams.append('query', params.query)
+        if (params.advancedSearch) {
+            if (params.expirationDateLow !== undefined) queryParams.append('expirationDateLow', params.expirationDateLow)
+            if (params.expirationDateHigh !== undefined) queryParams.append('expirationDateHigh', params.expirationDateHigh)
+        }
+        return await apiClient.get(`/v1/admin/reader-employee?${queryParams.toString()}`);
+    },
+
+
+    renewalReaderRegistration: async (id: number): Promise<ApiResponse<string>> => {
+        return await apiClient.put(`/v1/admin/reader-employee/${id}/renewal-registration`);
+    },
+
+    getReaderById: async (id: number): Promise<ApiResponse<ReaderByIdResponse>> => {
+        return await apiClient.get(`/v1/admin/reader-employee/${id}`);
+    },
+
+    getReaderPhoto: async (id: number): Promise<string> => {
+        const response = await apiClient.get(`/v1/admin/reader-employee/${id}/photo`);
+        return response.data; // строка base64
+    },
+
+    rotateReaderPhoto90: async (id: number): Promise<string> => {
+        const response = await apiClient.put(`/v1/admin/reader-employee/${id}/photo/rotate90`);
+        return response.data; // строка base64
+    },
+
+    rotateReaderPhoto270: async (id: number): Promise<string> => {
+        const response = await apiClient.put(`/v1/admin/reader-employee/${id}/photo/rotate270`);
+        return response.data; // строка base64
+    },
+
+    createReader: async (formData: RegistrationFormData): Promise<ApiResponse<string>> => {
+        return await apiClient.post(`/v1/admin/reader-employee`, formData);
+    },
+
+    updateReader: async (id: number, formData: RegistrationFormData): Promise<ApiResponse<string>> => {
+        return await apiClient.put(`/v1/admin/reader-employee/${id}`, formData);
     },
 }

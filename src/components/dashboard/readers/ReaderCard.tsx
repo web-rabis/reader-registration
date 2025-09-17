@@ -11,7 +11,7 @@ import {adminReaderService} from "@/services/admin-service.ts";
 import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
 import 'react-advanced-cropper/dist/style.css';
 import {toast} from "sonner";
-import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
+import {ReaderCropPhoto} from "@/components/dashboard/readers/ReaderCropPhoto.tsx";
 
 interface ReaderCardProps {
   registration: Reader;

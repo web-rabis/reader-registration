@@ -10,6 +10,7 @@ export const translations = {
     ticket: "Билет",
     readers: "Читатели",
     employees: "Сотрудники",
+    control: "Контроль",
     renewalRegistration: "Продление регистрации",
     sort:"Сортировка",
 
@@ -104,6 +105,7 @@ export const translations = {
     ticket: "Билет",
     readers: "Оқырмандар",
     employees: "Қызметкерлер",
+    control: "Бақылау",
     renewalRegistration: "Тіркеуді жаңарту",
 
     // Заголовки
@@ -195,6 +197,7 @@ export const translations = {
     ticket: "Ticket",
     readers: "Readers",
     employees: "Employees",
+    control: "Control",
     renewalRegistration: "Renewal registation",
 
     // Заголовки

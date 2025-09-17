@@ -1,7 +1,7 @@
 
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { useTranslation } from "@/contexts/LanguageContext";
+import { Label } from "@/components/ui/label.tsx"
+import { Switch } from "@/components/ui/switch.tsx"
+import { useTranslation } from "@/contexts/LanguageContext.tsx";
 
 interface SearchToggleProps {
   isAdvanced: boolean

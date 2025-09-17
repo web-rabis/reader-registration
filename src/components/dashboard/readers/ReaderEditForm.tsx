@@ -1,25 +1,25 @@
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { Label } from "@/components/ui/label.tsx";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select.tsx";
 import { toast } from "sonner";
-import {Dictionary, dictionaryWithLabel } from "@/types/admin-api";
-import { adminDictionaryService } from "@/services/admin-dictionary-service";
+import {Dictionary, dictionaryWithLabel } from "@/types/admin-api.ts";
+import { adminDictionaryService } from "@/services/admin-dictionary-service.ts";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "@/contexts/LanguageContext";
+import { useTranslation } from "@/contexts/LanguageContext.tsx";
 import {EditReaderFormData, initEditReaderFormData, editReaderFormDataFromReaderData} from "@/types/reader.ts";
 import {adminReaderService} from "@/services/admin-service.ts";
 import {Crop} from "lucide-react";
-import {ReaderCropPhoto} from "@/components/dashboard/ReaderCropPhoto.tsx";
+import {ReaderCropPhoto} from "@/components/dashboard/readers/ReaderCropPhoto.tsx";
 import {TypeCard} from "@/types/dictionary.ts";
 
 interface ReaderEditFormProps {

@@ -1,7 +1,6 @@
 
 import { useEffect, useRef } from "react";
 import JsBarcode from "jsbarcode";
-import Barcode from "./barcode";
 
 function eanChecksum12(digits12: string): number {
     // EAN-13: (10 - ((sum_odd*1 + sum_even*3) % 10)) % 10
@@ -38,20 +37,4 @@ export function Ean13({ data12 }: { data12: string }) {
 
     return <svg ref={svgRef} role="img" aria-label="EAN-13" className={""}/>
 
-    // return <Barcode
-    //     bcid="ean13"
-    //     text={data12.substring(0,12)}   // 12 цифр — bwip-js посчитает checksum
-    //     scale={1}             // толщина узкой полосы
-    //     height={20}           // высота штрихов
-    //     includetext
-    //     textxalign="center"
-    //     mmWidth={40}
-    //     mmHeight={20}
-    //     // можно подкрутить поля/контраст/шрифты:
-    //     options={{
-    //         textfont: "Helvetica",       // если нужен явный шрифт
-    //         textsize: 12,
-    //         // guardwhitespace: true,       // сохранять quiet zone
-    //     }}
-    // />
 }

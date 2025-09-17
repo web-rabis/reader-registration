@@ -1,16 +1,16 @@
 
 import { Search, ArrowDownNarrowWide, ArrowUpWideNarrow } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input.tsx";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { CardTitle } from "@/components/ui/card";
-import { useTranslation } from "@/contexts/LanguageContext";
-import { SearchToggle } from "@/components/dashboard/SearchToggle.tsx";
+} from "@/components/ui/select.tsx";
+import { CardTitle } from "@/components/ui/card.tsx";
+import { useTranslation } from "@/contexts/LanguageContext.tsx";
+import { SearchToggle } from "@/components/dashboard/readers/SearchToggle.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {ReaderSearchParams} from "@/types/reader.ts";
 import {Paging} from "@/types/api.ts";
@@ -41,7 +41,7 @@ export function RegistrationFilters({
 }: RegistrationFiltersProps) {
   const { t } = useTranslation();
   const getSort = () =>{
-      if(paging.orderBy===1)
+      if(paging.order===1)
         return <ArrowDownNarrowWide/>
       else
         return <ArrowUpWideNarrow />

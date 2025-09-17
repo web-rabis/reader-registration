@@ -1,9 +1,9 @@
 
 import { PencilIcon, IdCard, Repeat } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {Reader } from "@/types/admin-api";
-import { useTranslation } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import {Reader } from "@/types/admin-api.ts";
+import { useTranslation } from "@/contexts/LanguageContext.tsx";
 
 interface RegistrationCardProps {
   registration: Reader;
@@ -62,7 +62,9 @@ export function RegistrationCard({
   return (
     <div className="p-4 border rounded-lg  gap-4 hover:bg-muted/50 transition-colors grid grid-cols-1">
       <div className="space-y-1">
-        <div className="font-medium grid grid-cols-2">№ {registration.ticketNumber} {registration.lastname} {registration.firstname} {registration.middlename}
+        <div className="font-medium grid grid-cols-2">
+            {registration.status=="" && (<>№ {registration.ticketNumber} </>)}
+             {registration.lastname} {registration.firstname} {registration.middlename}
         </div>
         <p className="text-sm text-muted-foreground">{t('yearBirth')}: {registration.yearBirth}</p>
         {registration.barcode && (

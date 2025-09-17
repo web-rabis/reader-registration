@@ -30,7 +30,9 @@ export interface ReaderByIdResponse {
     result: Reader;
 }
 export interface ReaderApproveResponse {
+    oldTicketNumber: number;
     ticketNumber: number;
+    barcode: string;
     status: "pending" | "approved" | "rejected"| "";
     expirationDate: string;
 }
