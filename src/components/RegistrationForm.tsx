@@ -311,20 +311,6 @@ export function RegistrationForm({ mode = "create", registrationId }: Registrati
                   />
               </div>
 
-              <div className="space-y-2">
-                  <Label htmlFor="workPhone">{t('workPhone')}</Label>
-                  <PhoneMaskedInput
-                      id="workPhone"
-                      value={formData.workPhone || ""}                // ВАЖНО: дефолт в ""
-                      onValueChange={(masked) => setFormData({ ...formData, workPhone: masked })}
-
-                  />
-
-              </div>
-
-
-
-
             <div className="space-y-2">
               <Label htmlFor="education">{t('education')}</Label>
               <Select
