@@ -35,6 +35,7 @@ export interface Reader {
     course?:string
     readersHall?:string;
     note?:string;
+    priznakUdal?:string;
 }
 export interface ReaderUser {
     id:number;

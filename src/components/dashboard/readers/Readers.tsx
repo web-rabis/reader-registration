@@ -113,6 +113,8 @@ export function Readers({readerType}:ReadersProps) {
                 return t('approved');
             case "rejected":
                 return t('rejected');
+            case "deleted":
+                return t('deleted');
             default:
                 return t('active');
         }
@@ -166,6 +168,15 @@ export function Readers({readerType}:ReadersProps) {
         }
     }, [fetchRegistrations, t]);
 
+    const handleDelete = useCallback(async (id:number) => {
+        try {
+            await adminReaderService.deleteReader(id);
+            fetchRegistrations();
+        } catch (error) {
+            toast.error(t('processingError'));
+        }
+    }, [fetchRegistrations, t]);
+
     return (
         <div>
         <Card>
@@ -197,6 +208,7 @@ export function Readers({readerType}:ReadersProps) {
                                 onEdit={handleEdit}
                                 onViewCard={handleOnViewCard}
                                 onReRegistration={handleReRegistration}
+                                onDelete={handleDelete}
                                 getStatusLabel={getStatusLabel}
                             />
                         ))

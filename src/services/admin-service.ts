@@ -62,6 +62,9 @@ export const adminReaderService = {
     updateReader: async (id: number, formData: RegistrationFormData): Promise<ApiResponse<string>> => {
         return await apiClient.put(`/v1/admin/reader/${id}`, formData);
     },
+    deleteReader: async (id: number): Promise<ApiResponse<string>> => {
+        return await apiClient.delete(`/v1/admin/reader/${id}`);
+    },
 }
 
 export const adminReaderEmployeeService = {
@@ -110,5 +113,9 @@ export const adminReaderEmployeeService = {
 
     updateReader: async (id: number, formData: RegistrationFormData): Promise<ApiResponse<string>> => {
         return await apiClient.put(`/v1/admin/reader-employee/${id}`, formData);
+    },
+
+    deleteReader: async (id: number): Promise<ApiResponse<string>> => {
+        return await apiClient.delete(`/v1/admin/reader-employee/${id}`);
     },
 }

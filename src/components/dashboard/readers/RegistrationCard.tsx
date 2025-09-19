@@ -1,5 +1,5 @@
 
-import { PencilIcon, IdCard, Repeat } from "lucide-react";
+import { PencilIcon, IdCard, Repeat, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import {Reader } from "@/types/admin-api.ts";
@@ -13,6 +13,7 @@ interface RegistrationCardProps {
   onViewCard: (registration: Reader) => void;
   getStatusLabel: (status: string) => string;
   onReRegistration: (registration: Reader) => void;
+  onDelete: (id: number) => void;
 }
 
 export function RegistrationCard({
@@ -22,8 +23,8 @@ export function RegistrationCard({
   onEdit,
   onViewCard,
   onReRegistration,
+  onDelete,
   getStatusLabel,
-
 }: RegistrationCardProps) {
   const { t } = useTranslation();
     const formatter = new Intl.DateTimeFormat("ru-RU", {
@@ -54,10 +55,17 @@ export function RegistrationCard({
     e.stopPropagation();
     onViewCard(registration);
   };
-    const handleReRegistration = (e: React.MouseEvent) => {
+  const handleReRegistration = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onReRegistration(registration);
+  };
+    const handleDelete = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        onReRegistration(registration);
+        if (confirm(t('deleteQuestion'))){
+            onDelete(registration.ticketNumber);
+        }
     };
   return (
     <div className="p-4 border rounded-lg  gap-4 hover:bg-muted/50 transition-colors grid grid-cols-1">
@@ -91,61 +99,76 @@ export function RegistrationCard({
         )}
       </div>
       <div className="flex items-center gap-2">
-          <Badge variant="secondary" className={"w-[100px]"}>{getStatusLabel(registration.status)}</Badge>
-
-        {registration.status === "" && (
+          <Badge variant="secondary" className={"w-[100px]"}>{registration.priznakUdal===""?getStatusLabel(registration.status):t("deleted")}</Badge>
+          {(registration.status === "" && registration.priznakUdal==="") && (
             <>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-gray-600 hover:text-gray-700"
-            onClick={handleViewCard}
-          >
-            <IdCard className="w-4 h-4 mr-1" />
-            {t('ticket')}
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-gray-600 hover:text-gray-700"
-            onClick={handleReRegistration}
-      >
-          <Repeat className="w-4 h-4 mr-1" />
-          {t('renewalRegistration')}
-      </Button>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-gray-600 hover:text-gray-700"
+                    onClick={handleViewCard}
+                >
+                    <IdCard className="w-4 h-4 mr-1" />
+                    {t('ticket')}
+                </Button>
+
+                <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-gray-600 hover:text-gray-700"
+                    onClick={handleReRegistration}
+                >
+                    <Repeat className="w-4 h-4 mr-1" />
+                    {t('renewalRegistration')}
+                </Button>
             </>
-        )}
-          {registration.status !== "rejected" &&(
-        <Button
-          variant="outline"
-          size="sm"
-          className="text-blue-600 hover:text-blue-700"
-          onClick={handleEdit}
-        >
-          <PencilIcon className="w-4 h-4 mr-1" />
-          {t('edit')}
-        </Button>
           )}
-        {registration.status === "pending" && (
-          <>
+
+          {(registration.status !== "rejected" && registration.status !== "deleted" && registration.priznakUdal==="") &&(
             <Button
-              variant="outline"
-              size="sm"
-              className="text-green-600 hover:text-green-700"
-              onClick={handleApprove}
+                variant="outline"
+                size="sm"
+                className="text-blue-600 hover:text-blue-700"
+                onClick={handleEdit}
             >
-              {t('approve')}
+                <PencilIcon className="w-4 h-4 mr-1" />
+                {t('edit')}
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-red-600 hover:text-red-700"
-              onClick={handleReject}
-            >
-              {t('reject')}
-            </Button>
-          </>
-        )}
+          )}
+
+          {(registration.status === "pending" && registration.priznakUdal==="") && (
+            <>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-green-600 hover:text-green-700"
+                    onClick={handleApprove}
+                >
+                    {t('approve')}
+                </Button>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-red-600 hover:text-red-700"
+                    onClick={handleReject}
+                >
+                    {t('reject')}
+                </Button>
+            </>
+          )}
+
+          {(registration.status === "" && registration.priznakUdal==="") && (
+              <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-red-600 hover:text-red-700"
+                  onClick={handleDelete}
+              >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  {t('delete')}
+              </Button>
+
+          )}
       </div>
     </div>
   );

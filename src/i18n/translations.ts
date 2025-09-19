@@ -6,6 +6,7 @@ export const translations = {
     edit: "Редактировать",
     approve: "Одобрить",
     reject: "Отклонить",
+    delete: "Удалить",
     logout: "Выйти",
     ticket: "Билет",
     readers: "Читатели",
@@ -54,6 +55,7 @@ export const translations = {
     pending: "Ожидает",
     approved: "Одобрено",
     rejected: "Отклонено",
+    deleted: "Удалено",
     all: "Все",
 
     // Dashboard
@@ -75,6 +77,7 @@ export const translations = {
     renewalReaderRegistration: "Вы уже зарегистрированы, подойдите к библиотекарю для продления читательского билета",
     processingError: "Ошибка при обработке заявки",
     loading: "Загрузка",
+    deleteQuestion: "Вы действительно хотите удалить читателя?",
 
     // Дополнительные переводы
     login: "Вход",
@@ -101,6 +104,7 @@ export const translations = {
     edit: "Өңдеу",
     approve: "Мақұлдау",
     reject: "Қабылдамау",
+    delete: "Жою",
     logout: "Шығу",
     ticket: "Билет",
     readers: "Оқырмандар",
@@ -146,6 +150,7 @@ export const translations = {
     pending: "Күтуде",
     approved: "Мақұлданды",
     rejected: "Қабылданбады",
+    deleted: "Жойылды",
     all: "Барлығы",
 
     // Dashboard
@@ -167,6 +172,8 @@ export const translations = {
     renewalReaderRegistration: "Сіз тіркелгенсіз, кітапхана картасын жаңарту үшін кітапханашыға хабарласыңыз.",
     processingError: "Өтінімді өңдеу кезінде қате",
     loading: "Жүктеу",
+    deleteQuestion: "Оқырманды өшіргіңіз келетініне сенімдісіз бе?",
+
 
     // Дополнительные переводы
     login: "Кіру",
@@ -193,6 +200,7 @@ export const translations = {
     edit: "Edit",
     approve: "Approve",
     reject: "Reject",
+    delete: "Delete",
     logout: "Logout",
     ticket: "Ticket",
     readers: "Readers",
@@ -238,6 +246,7 @@ export const translations = {
     pending: "Pending",
     approved: "Approved",
     rejected: "Rejected",
+    deleted: "Deleted",
     all: "All",
 
     // Dashboard
@@ -259,6 +268,8 @@ export const translations = {
     renewalReaderRegistration: "You are already registered, please contact the librarian for a renewal of the reader's card.",
     processingError: "Error processing registration",
     loading:"Loading",
+    deleteQuestion: "Are you sure you want to remove the reader?",
+
 
     // Дополнительные переводы
     login: "Login",
