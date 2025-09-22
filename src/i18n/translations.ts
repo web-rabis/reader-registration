@@ -50,6 +50,7 @@ export const translations = {
     position: "Должность",
     academicDegree: "Ученая степень",
     readersHall: "Читальный зал",
+    lastVisitDate: 'Дата последнего посещения',
 
     // Статусы
     pending: "Ожидает",
@@ -58,11 +59,22 @@ export const translations = {
     deleted: "Удалено",
     all: "Все",
 
+    statusOrderOrdered: "Заказан",
+    statusOrderInStorage: "В хранении",
+    statusOrderInReadingHall: "В ЧЗ",
+    statusOrderInHands: "На руках читателя",
+    statusOrderPostponed: "Отложен",
+    statusOrderReturnToStorage: "ЧЗ вернул",
+    statusOrderProcessed: "В архиве обработан",
+    statusOrderRejected: "Отказан",
+    statusOrderReaderReturned: "Читатель вернул",
+
     // Dashboard
     registrationRequests: "Заявки на регистрацию",
     statusFilter: "Фильтр по статусу",
     searchPlaceholder: "Поиск по ИИН, ФИО или номеру телефона",
     noRegistrations: "Нет заявок для отображения",
+    noOrders: "Нет активных заказов",
     date: "Дата",
 
     // Сообщения
@@ -145,6 +157,7 @@ export const translations = {
     position: "Лауазымы",
     academicDegree: "Ғылыми дәрежесі",
     readersHall: "Оқу залы",
+    lastVisitDate: 'Соңғы барған күні',
 
     // Статусы
     pending: "Күтуде",
@@ -153,12 +166,23 @@ export const translations = {
     deleted: "Жойылды",
     all: "Барлығы",
 
+    statusOrderOrdered: "Тапсырыс берілді",
+    statusOrderInStorage: "Сақтауда",
+    statusOrderInReadingHall: "Оқу залында",
+    statusOrderInHands: "Оқырманның қолында",
+    statusOrderPostponed: "Кейінге қалдырылды",
+    statusOrderReturnToStorage: "Оқу залы қайтарды",
+    statusOrderProcessed: "Мұрағатта өңделген",
+    statusOrderRejected: "Қабылданбады",
+    statusOrderReaderReturned: "Оқырман қайтарды",
+
     // Dashboard
     registrationRequests: "Тіркеу өтініштері",
     statusFilter: "Мәртебе бойынша сүзгі",
     searchPlaceholder: "ЖСН, аты-жөні немесе телефон нөмірі бойынша іздеу",
     noRegistrations: "Көрсетілетін өтініштер жоқ",
     date: "Күні",
+    noOrders: "Көрсетілетін тапсырыстар жоқ.",
 
     // Сообщения
     welcomeMessage: "Кітапханамызға қош келдіңіз. Оқырман билетін алу үшін төмендегі тіркеу формасын толтырыңыз.",
@@ -241,6 +265,7 @@ export const translations = {
     position: "Position",
     academicDegree: "Academic Degree",
     readersHall: "Reader Hall",
+    lastVisitDate: 'Last visited date',
 
     // Статусы
     pending: "Pending",
@@ -249,12 +274,23 @@ export const translations = {
     deleted: "Deleted",
     all: "All",
 
+    statusOrderOrdered: "Ordered",
+    statusOrderInStorage: "In storage",
+    statusOrderInReadingHall: "In the reading room",
+    statusOrderInHands: "In the reader's hands",
+    statusOrderPostponed: "Postponed",
+    statusOrderReturnToStorage: "Returned by the reading room",
+    statusOrderProcessed: "Processed in the archive",
+    statusOrderRejected: "Rejected",
+    statusOrderReaderReturned: "Returned by the reader",
+
     // Dashboard
     registrationRequests: "Registration Requests",
     statusFilter: "Status Filter",
     searchPlaceholder: "Search by IIN, full name or phone number",
     noRegistrations: "No registrations to display",
     date: "Date",
+    noOrders: "No active orders to display",
 
     // Сообщения
     welcomeMessage: "Welcome to our library. To get a reader's card, please fill out the registration form below.",

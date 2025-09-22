@@ -7,6 +7,7 @@ export interface Reader {
     barcode:string;
     registrationDate:string;
     expirationDate:string;
+    lastVisitDate: string;
     status:string;
     firstname:string
     iin:string

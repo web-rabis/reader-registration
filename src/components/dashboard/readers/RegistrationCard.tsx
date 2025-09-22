@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import {Reader } from "@/types/admin-api.ts";
 import { useTranslation } from "@/contexts/LanguageContext.tsx";
+import {formatter} from "@/utils/date.ts";
 
 interface RegistrationCardProps {
   registration: Reader;
@@ -27,11 +28,6 @@ export function RegistrationCard({
   getStatusLabel,
 }: RegistrationCardProps) {
   const { t } = useTranslation();
-    const formatter = new Intl.DateTimeFormat("ru-RU", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-    });
   const handleApprove = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();

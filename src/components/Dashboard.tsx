@@ -1,5 +1,5 @@
 
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {CardTitle} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -11,15 +11,7 @@ import { RegistrationPagination } from "./dashboard/RegistrationPagination";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "./LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
-import {ReaderListResponse, Reader, ReaderSearchParams, initReaderSearchParams} from "@/types/admin-api";
-import {adminReaderService} from "@/services/admin-service.ts";
-import { loadFromStorage, saveToStorage } from "@/utils/stateStorage";
-import {Paging} from "@/types/api.ts";
-import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";
-import {ReaderCropPhoto} from "@/components/dashboard/readers/ReaderCropPhoto.tsx";
-import {SelectItem, SelectTrigger, SelectValue, SelectContent, Select} from "@/components/ui/select.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
-import newReaderPage from "@/pages/NewReaderPage.tsx";
 import {Readers} from "@/components/dashboard/readers/Readers.tsx";
 import {Control} from "@/components/dashboard/control/Control.tsx";
 import {Employees} from "@/components/dashboard/readers/Employees.tsx";
@@ -49,7 +41,7 @@ export function Dashboard() {
             <TabsList>
                 <TabsTrigger value={"readers"} ><CardTitle>{t('readers')}</CardTitle></TabsTrigger>
                 {/*<TabsTrigger value={"employees"} disabled={false}><CardTitle>{t('employees')}</CardTitle></TabsTrigger>*/}
-                <TabsTrigger value={"control"} disabled={true}><CardTitle>{t('control')}</CardTitle></TabsTrigger>
+                <TabsTrigger value={"control"} disabled={false}><CardTitle>{t('control')}</CardTitle></TabsTrigger>
             </TabsList>
         </Tabs>
         {tabValue==='readers'  && <Readers readerType={tabValue}/>}
