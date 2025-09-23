@@ -72,7 +72,8 @@ export const translations = {
     // Dashboard
     registrationRequests: "Заявки на регистрацию",
     statusFilter: "Фильтр по статусу",
-    searchPlaceholder: "Поиск по ИИН, ФИО или номеру телефона",
+    searchPlaceholder: "Поиск по ИИН, ФИО, номер билета, штрих-коду или номеру телефона",
+    searchControlPlaceholder: "Поиск по номеру или штрих-коду читательского билета",
     noRegistrations: "Нет заявок для отображения",
     noOrders: "Нет активных заказов",
     date: "Дата",
@@ -179,7 +180,8 @@ export const translations = {
     // Dashboard
     registrationRequests: "Тіркеу өтініштері",
     statusFilter: "Мәртебе бойынша сүзгі",
-    searchPlaceholder: "ЖСН, аты-жөні немесе телефон нөмірі бойынша іздеу",
+    searchPlaceholder: "ЖСН, толық аты-жөні, кітапхана картасының нөмірі, штрих-код немесе телефон нөмірі бойынша іздеу",
+    searchControlPlaceholder: "Кітапхана картасының нөмірі немесе штрих-код бойынша іздеу",
     noRegistrations: "Көрсетілетін өтініштер жоқ",
     date: "Күні",
     noOrders: "Көрсетілетін тапсырыстар жоқ.",
@@ -287,7 +289,8 @@ export const translations = {
     // Dashboard
     registrationRequests: "Registration Requests",
     statusFilter: "Status Filter",
-    searchPlaceholder: "Search by IIN, full name or phone number",
+    searchPlaceholder: "Search by IIN, full name, ticket number, barcode or phone number",
+    searchControlPlaceholder: "Search by number or barcode of the reader's ticket",
     noRegistrations: "No registrations to display",
     date: "Date",
     noOrders: "No active orders to display",

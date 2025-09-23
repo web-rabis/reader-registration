@@ -17,16 +17,20 @@ export function Control() {
         try {
             const response = await adminControlService.visitsStatus(queryString);
             if(response.data.status==="out"){
-                await adminControlService.visitsCheckIn(queryString);
+                await adminControlService.visitsCheckIn(response.data.reader.ticketNumber);
             } else if(response.data.status==="in"){
-                await adminControlService.visitsCheckOut(queryString);
+                await adminControlService.visitsCheckOut(response.data.reader.ticketNumber);
             }
             setVisitStatus(response.data);
             setErrorMessage("");
         } catch (error) {
-            setErrorMessage(error.response?.data?.error?.message);
+            if (error.status===404){
+                setErrorMessage(t("readerNotFound"));
+            } else {
+                setErrorMessage(error.response?.data?.error?.message);
+            }
             setVisitStatus(undefined);
-            console.error(error.response?.data?.error?.message);
+            console.error(error.status);
 
         }
     }, [queryString,t]);
@@ -40,7 +44,7 @@ export function Control() {
         <Card>
             <CardHeader>
                 <Input
-                    placeholder={t('searchPlaceholder')}
+                    placeholder={t('searchControlPlaceholder')}
                     value={queryString}
                     onChange={(e) => handleSearchChange(e.target.value)}
                     onKeyDown={(e) => {
@@ -54,6 +58,9 @@ export function Control() {
                 {(errorMessage || (visitStatus && visitStatus.status!=="in"  && visitStatus.status!=="out")) && <Alert variant={"destructive"} className={"mb-3"}>
                     <AlertTitle>Внимание</AlertTitle>
                     <AlertDescription>
+                        {visitStatus && visitStatus.status==="readerNotFound" && <p>Читатель не найден</p>}
+                        {visitStatus && visitStatus.status==="ticketNumberOrBarcodeInvalid" && <p>Номер или штрих-код неверный</p>}
+                        {visitStatus && visitStatus.status==="ticketNumberOrBarcodeRequired" && <p>Номер или штрих-код пустой</p>}
                         {visitStatus && visitStatus.status==="expired" && <p>Читательский билет просрочен, нужна перерегистрация</p>}
                         {visitStatus && visitStatus.status==="checkIin" && <p>Необходимо проверить ИИН читателя</p>}
                         {visitStatus && visitStatus.status==="activeOrders" && <p>У читателя есть активные заказы</p>}
@@ -62,12 +69,13 @@ export function Control() {
                 </Alert>
                 }
 
-                {visitStatus && <ReaderInfo reader={visitStatus.reader} visitStatus={visitStatus.status}/>}
-                {!visitStatus || visitStatus.orders.length === 0 ? (
+                {visitStatus && visitStatus.reader && <ReaderInfo reader={visitStatus.reader} visitStatus={visitStatus.status}/>}
+                {(visitStatus && visitStatus.reader && visitStatus.orders.length === 0) &&
                     <div className="text-center py-8 text-muted-foreground">
                         {t('noOrders')}
                     </div>
-                ) : (
+                }
+                {(visitStatus && visitStatus.reader && visitStatus.orders.length > 0) && (
                         visitStatus.orders.map((order) => (<OrderInfo order={order}/>))
                     )
                 }
