@@ -15,7 +15,7 @@ import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Readers} from "@/components/dashboard/readers/Readers.tsx";
 import {Control} from "@/components/dashboard/control/Control.tsx";
 import {Employees} from "@/components/dashboard/readers/Employees.tsx";
-import imgLogo from '@/components/img/logo.png'
+import imgLogo from '@/components/img/logo2.png'
 export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ export function Dashboard() {
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6 min-w-[760px]">
       <div className="flex justify-between items-center">
-          <img src={imgLogo} alt="logo" className={"h-[37px]"}/>
+          <img src={imgLogo} alt="logo" className={"h-[35px]"}/>
 
         <div className="flex gap-4 items-center">
             <h1 className="text-3xl font-serif" >
