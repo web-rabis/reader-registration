@@ -31,7 +31,7 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">{t('librarianLogin')}</CardTitle>
+        <CardTitle className="text-2xl text-center">{t('login')}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">

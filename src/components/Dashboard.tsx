@@ -15,6 +15,7 @@ import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Readers} from "@/components/dashboard/readers/Readers.tsx";
 import {Control} from "@/components/dashboard/control/Control.tsx";
 import {Employees} from "@/components/dashboard/readers/Employees.tsx";
+import imgLogo from '@/components/img/logo.png'
 export function Dashboard() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -29,8 +30,13 @@ export function Dashboard() {
   return (
     <div className="space-y-6 w-full max-w-4xl mx-auto p-6 min-w-[760px]">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-serif">{t('dashboard')}</h1>
+          <img src={imgLogo} alt="logo" className={"h-[37px]"}/>
+
         <div className="flex gap-4 items-center">
+            <h1 className="text-3xl font-serif" >
+                {t('registry')}
+            </h1>
+
           <LanguageSelector />
           <Button variant="outline" onClick={handleLogout}>
             {t('logout')}
