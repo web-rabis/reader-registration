@@ -5,6 +5,7 @@ import {adminReaderService} from "@/services/admin-service.ts";
 import {toast} from "sonner";
 import {formatter} from "@/lib/date.ts";
 import {UserCheck, UserMinus} from "lucide-react";
+import noPhotoImg from "@/components/control/img/nophoto.png"
 
 interface ReaderInfoProps {
     reader: Reader;
@@ -16,7 +17,7 @@ export function ReaderInfo({reader,visitStatus }: ReaderInfoProps) {
     const [photo, setPhoto] = useState<string>("");
     useEffect(() => {
         fetchPhoto()
-    }, []);
+    }, [reader]);
     const fetchPhoto = useCallback(async () => {
         try {
             const responsePhoto = await adminReaderService.getReaderPhoto(reader.ticketNumber);
@@ -28,7 +29,9 @@ export function ReaderInfo({reader,visitStatus }: ReaderInfoProps) {
         <div className="p-4 border rounded-lg  gap-4 hover:bg-muted/50 transition-colors grid grid-cols-1">
             <div className="space-y-1 flex items-start justify-start  gap-2">
                 <div>
-                    <img src={`data:image/jpg;base64,${photo}`} alt="" className={"w-[100px] rounded-lg"}/>
+                    {photo && <img src={`data:image/jpg;base64,${photo}`} alt="" className={"w-[100px] rounded-lg"}/>}
+                    {!photo && <img src={noPhotoImg} alt="" className={"w-[100px] rounded-lg"}/>}
+
                 </div>
                 <div>
                     <div className="font-medium">

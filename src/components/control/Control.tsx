@@ -22,13 +22,10 @@ export function Control() {
                 await adminControlService.visitsCheckOut(response.data.reader.ticketNumber);
             }
             setVisitStatus(response.data);
+            setQueryString("")
             setErrorMessage("");
         } catch (error) {
-            if (error.status===404){
-                setErrorMessage(t("readerNotFound"));
-            } else {
-                setErrorMessage(error.response?.data?.error?.message);
-            }
+            setErrorMessage(error.response?.data?.error?.message);
             setVisitStatus(undefined);
             console.error(error.status);
 
