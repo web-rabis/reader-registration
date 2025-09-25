@@ -1,6 +1,7 @@
 
 import { RegistrationFormData,initRegistrationFormData} from "./registration";
 import { Dictionary, dictionaryWithLabel } from "./dictionary";
+import {number, string} from "zod";
 
 export type { RegistrationFormData,Dictionary  };
 export {initRegistrationFormData, dictionaryWithLabel};
@@ -21,11 +22,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
-  user: {
-    id: number;
-    username: string;
-    role: string;
-  };
+  user: User;
 }
 
 export interface RegistrationResponse {
@@ -44,3 +41,16 @@ export interface Paging {
     orderBy?: string
     order?: number
 }
+
+export interface User{
+    id: number;
+    username: string;
+    role: string;
+    department: Department;
+}
+
+export interface Department {
+    id: number;
+    code: string;
+    name: string;
+};

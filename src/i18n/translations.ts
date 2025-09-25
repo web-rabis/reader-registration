@@ -1,6 +1,7 @@
 export const translations = {
   ru: {
     registry: " Регистратура",
+    home: "Главная",
     // Общие
     back: "Назад",
     submit: "Отправить",
@@ -113,6 +114,7 @@ export const translations = {
   },
   kk: {
     registry: "Тіркеу бөлімі",
+    home: "Главная",
     // Общие
     back: "Артқа",
     submit: "Жіберу",
@@ -222,6 +224,7 @@ export const translations = {
     advancedSearch:"Кеңейтілген іздеу",
   },
   en: {
+    home: "Main",
     registry: " Registry",
     // Общие
     back: "Back",

@@ -4,8 +4,8 @@ import {Input} from "@/components/ui/input.tsx";
 import {useCallback,  useState} from "react";
 import {adminControlService} from "@/services/admin-control-service.ts";
 import {VisitStatusResponse} from "@/types/control.ts";
-import {ReaderInfo} from "@/components/dashboard/control/ReaderInfo.tsx";
-import {OrderInfo} from "@/components/dashboard/control/OrderInfo.tsx";
+import {ReaderInfo} from "@/components/control/ReaderInfo.tsx";
+import {OrderInfo} from "@/components/control/OrderInfo.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 export function Control() {

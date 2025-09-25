@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useTranslation } from "@/contexts/LanguageContext";
 
-const Index = () => {
+const RegistrationLanding = () => {
   const { t } = useTranslation();
 
   return (
@@ -31,4 +31,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default RegistrationLanding;

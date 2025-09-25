@@ -7,7 +7,7 @@ import {ReaderCropPhoto} from "@/components/dashboard/readers/ReaderCropPhoto.ts
 import {useCallback, useEffect, useState} from "react";
 import {initReaderSearchParams, ReaderListResponse} from "@/types/admin-api.ts";
 import {Reader, ReaderSearchParams} from "@/types/reader.ts";
-import {loadFromStorage, saveToStorage} from "@/utils/stateStorage.ts";
+import {loadFromStorage, saveToStorage} from "@/lib/stateStorage.ts";
 import {Paging} from "@/types/api.ts";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "@/contexts/LanguageContext.tsx";

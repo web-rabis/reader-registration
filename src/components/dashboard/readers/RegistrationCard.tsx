@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import {Reader } from "@/types/admin-api.ts";
 import { useTranslation } from "@/contexts/LanguageContext.tsx";
-import {formatter} from "@/utils/date.ts";
+import {formatter} from "@/lib/date.ts";
 
 interface RegistrationCardProps {
   registration: Reader;

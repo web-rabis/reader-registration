@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { jwtExpMs } from "@/utils/jwt";
+import { jwtExpMs } from "@/lib/jwt.ts";
 
 type AnyDict = Record<string, any>;
 

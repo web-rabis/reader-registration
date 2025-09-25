@@ -21,7 +21,7 @@ export function LoginForm() {
     e.preventDefault();
     try {
       const response = await authService.login(credentials);
-      login(response.data.token);
+      login(response.data.token,response.data.user);
       toast.success(t('loginSuccess'));
     } catch (error) {
       toast.error(t('loginError'));

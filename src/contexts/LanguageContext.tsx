@@ -8,6 +8,7 @@ interface LanguageContextType {
   currentLanguage: Language;
   changeLanguage: (lang: Language) => void;
   t: (key: keyof typeof translations['ru']) => string;
+  languages: Language[];
 }
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
@@ -26,8 +27,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return translations[currentLanguage][key] || key;
   };
 
-  return (
-    <LanguageContext.Provider value={{ currentLanguage, changeLanguage, t }}>
+  const languages: Language[] = ['ru', 'kk', 'en'];
+
+
+    return (
+    <LanguageContext.Provider value={{ currentLanguage, changeLanguage, t, languages }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -1,6 +1,6 @@
 import {Ebook, Magazine, Order} from "@/types/control.ts";
 import {BookType, Newspaper} from "lucide-react";
-import {formatterWithTime} from "@/utils/date.ts";
+import {formatterWithTime} from "@/lib/date.ts";
 import {Badge} from "@/components/ui/badge.tsx";
 import {useTranslation} from "@/contexts/LanguageContext.tsx";
 import {useCallback} from "react";

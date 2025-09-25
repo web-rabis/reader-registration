@@ -7,7 +7,7 @@ import {ReaderCropPhoto} from "@/components/dashboard/readers/ReaderCropPhoto.ts
 import {useCallback, useEffect, useState} from "react";
 import {initReaderSearchParams, ReaderListResponse} from "@/types/admin-api.ts";
 import {Reader, ReaderSearchParams} from "@/types/reader.ts";
-import {loadFromStorage, saveToStorage} from "@/utils/stateStorage.ts";
+import {loadFromStorage, saveToStorage} from "@/lib/stateStorage.ts";
 import {Paging} from "@/types/api.ts";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "@/contexts/LanguageContext.tsx";
@@ -17,21 +17,17 @@ const KEY_SEARCH   = "dashboard:search";
 const KEY_PAGING   = "dashboard:paging";
 const DEFAULT_SEARCH: ReaderSearchParams = initReaderSearchParams; // КОНСТАНТА, не вызываем!
 const DEFAULT_PAGING: Paging = { skip: 1, limit: 15 , orderBy:"ticketNumber", order:-1};
-interface ReadersProps {
-    readerType: string;
-
-}
-export function Readers({readerType}:ReadersProps) {
+export function Readers() {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
     const [openCropPhoto, setOpenCropPhoto] = useState<boolean>(false);
     const [registrations, setRegistrations] = useState<ReaderListResponse>({result:[],count:0});
     const [searchParams, setSearchParams] = useState<ReaderSearchParams>(() =>
-        loadFromStorage<ReaderSearchParams>(readerType+KEY_SEARCH, DEFAULT_SEARCH)
+        loadFromStorage<ReaderSearchParams>(KEY_SEARCH, DEFAULT_SEARCH)
     );
     const [paging, setPaging] = useState<Paging>(() =>
-        loadFromStorage<Paging>(readerType+KEY_PAGING, DEFAULT_PAGING)
+        loadFromStorage<Paging>(KEY_PAGING, DEFAULT_PAGING)
     );
     const [selectedRegistration, setSelectedRegistration] = useState<Reader | null>(null);
     const fetchRegistrations = useCallback(async () => {
@@ -45,18 +41,15 @@ export function Readers({readerType}:ReadersProps) {
             toast.error(t('loadError'));
         }
     }, [ searchParams,paging, t]);
-    useEffect(() => { saveToStorage(readerType+KEY_SEARCH, searchParams); },        [searchParams,readerType]);
-    useEffect(() => { saveToStorage(readerType+KEY_PAGING, paging); },         [paging,readerType]);
+    useEffect(() => { saveToStorage(KEY_SEARCH, searchParams); },        [searchParams]);
+    useEffect(() => { saveToStorage(KEY_PAGING, paging); },         [paging]);
 
     useEffect(() => {
         fetchRegistrations();
-    }, [fetchRegistrations, paging,readerType]);
+    }, [fetchRegistrations, paging]);
 
 
     const handleApprove = useCallback(async (id: number) => {
-        if(readerType=="employees"){
-            return
-        }
         try {
             const response = await adminReaderService.approveReaderRegistration(id);
             toast.success(t('approveSuccess').replace('{id}', id.toString()));

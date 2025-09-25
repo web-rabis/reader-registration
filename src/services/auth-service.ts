@@ -1,7 +1,7 @@
 
 import { LoginRequest, LoginResponse, ApiResponse } from "@/types/api";
 import apiClient from "@/services/api-client.ts";
-import {clearStorageKeys, KEY_PAGING, KEY_SEARCH} from "@/utils/stateStorage.ts";
+import {clearStorageKeys, KEY_PAGING, KEY_SEARCH} from "@/lib/stateStorage.ts";
 
 export const authService = {
   login: async (credentials: LoginRequest): Promise<ApiResponse<LoginResponse>> => {

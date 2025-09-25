@@ -3,7 +3,7 @@ import {useTranslation} from "@/contexts/LanguageContext.tsx";
 import {useCallback, useEffect, useState} from "react";
 import {adminReaderService} from "@/services/admin-service.ts";
 import {toast} from "sonner";
-import {formatter} from "@/utils/date.ts";
+import {formatter} from "@/lib/date.ts";
 import {UserCheck, UserMinus} from "lucide-react";
 
 interface ReaderInfoProps {

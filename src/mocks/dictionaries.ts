@@ -1,5 +1,5 @@
 
-import { Dictionary } from "@/types/registration";
+import { Dictionary } from "@/types/dictionary";
 
 export const genderDictionary: Dictionary[] = [
   { id: 1, name: "Мужской" },

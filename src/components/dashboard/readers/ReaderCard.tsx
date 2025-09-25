@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useTranslation } from "@/hooks/useTranslation.ts";
 import {Reader} from "@/types/reader.ts";
 import {Ean13} from "@/components/dashboard/Ean13.tsx";
-import {printDiv} from "@/utils/print.ts";
+import {printDiv} from "@/lib/print.ts";
 import {useCallback, useEffect, useState} from "react";
 import {adminReaderService} from "@/services/admin-service.ts";
 import {adminDictionaryService} from "@/services/admin-dictionary-service.ts";

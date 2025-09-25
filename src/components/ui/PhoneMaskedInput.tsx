@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { onlyDigits } from "@/utils/phone";
+import { onlyDigits } from "@/lib/phone.ts";
 
 const BASE = "8 ";
 

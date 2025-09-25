@@ -1,10 +1,11 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import {User} from "@/types/api.ts";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (token: string) => void;
+  login: (token: string, user:User) => void;
   logout: () => void;
 }
 
@@ -12,25 +13,27 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return !!localStorage.getItem('librarian-token');
+    return !!localStorage.getItem('librarian-token') && !!localStorage.getItem('librarian-user');
   });
   const navigate = useNavigate();
   const location = useLocation();
 
-  const login = (token: string) => {
+  const login = (token: string, user:User) => {
     localStorage.setItem('librarian-token', token);
+    localStorage.setItem('librarian-user', JSON.stringify(user));
     setIsAuthenticated(true);
   };
 
   const logout = () => {
     localStorage.removeItem('librarian-token');
+    localStorage.removeItem('librarian-user');
     setIsAuthenticated(false);
   };
 
   useEffect(() => {
     const path = location.pathname;
     if (isAuthenticated && (path === '/login' || path === '/')) {
-      navigate('/dashboard', { replace: true });
+      navigate('/admin', { replace: true });
     } else if (!isAuthenticated && path !== '/' && path !== '/login') {
       navigate('/login', { replace: true });
     }
