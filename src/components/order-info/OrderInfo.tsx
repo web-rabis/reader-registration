@@ -80,9 +80,16 @@ return (
                 {order.type==='ebook' && <BookType/>}
                 {order.type==='magazine' && <Newspaper/>}
             </div>
-            <div>
-                №   {order.id} от {formatterWithTime.format(new Date(order.orderedAt))}
-                <Badge variant="secondary" >{getStatusLabel(order.status.code)}</Badge>
+            <div className={"w-full"}>
+                <div className={"flex justify-between pb-3"}>
+                    <div>№ {order.id} от {formatterWithTime.format(new Date(order.orderedAt))}
+                        <span className={"pl-3"}>{order.department.name}</span>
+                    </div>
+                    <Badge variant="secondary" >{getStatusLabel(order.status.code)}</Badge>
+                </div>
+                <div>
+
+                </div>
                 {EbookInfo(order.ebook)}
                 {MagazineInfo(order.magazine)}
 

@@ -9,7 +9,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import NewReaderPage from "@/pages/NewReaderPage.tsx";
 import RegistrationLanding from "@/pages/RegistrationLanding.tsx";
 import AdminLayout from "@/layouts/AdminLayout.tsx";
-import {Control} from "@/components/control/Control.tsx";
+import {Control} from "@/components/Control/Control.tsx";
 import {Readers} from "@/components/dashboard/readers/Readers.tsx";
 import {Employees} from "@/components/dashboard/readers/Employees.tsx";
 

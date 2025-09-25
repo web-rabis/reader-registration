@@ -4,15 +4,13 @@ import {useCallback, useEffect, useState} from "react";
 import {adminReaderService} from "@/services/admin-service.ts";
 import {toast} from "sonner";
 import {formatter} from "@/lib/date.ts";
-import {UserCheck, UserMinus} from "lucide-react";
-import noPhotoImg from "@/components/control/img/nophoto.png"
+import noPhotoImg from "@/components/reader-info/img/nophoto.png"
 
 interface ReaderInfoProps {
     reader: Reader;
-    visitStatus: string;
 }
 
-export function ReaderInfo({reader,visitStatus }: ReaderInfoProps) {
+export function ReaderInfo({reader }: ReaderInfoProps) {
     const { t } = useTranslation();
     const [photo, setPhoto] = useState<string>("");
     useEffect(() => {
@@ -64,11 +62,6 @@ export function ReaderInfo({reader,visitStatus }: ReaderInfoProps) {
                             {t('readersHall')}: {reader.readersHall}
                         </p>
                     )}
-                    <div className={"mt-4"}>
-                        {visitStatus==="out" && <div className={"flex items-center text-green-600"}><UserCheck className={"mr-2"}/> <p>Читатель успешно прошел контроль</p></div>}
-                        {visitStatus==="in" && <div className={"flex items-center text-indigo-700"}><UserMinus className={"mr-2"}/> <p>Читатель отмечен как вышедший</p></div>}
-                    </div>
-
                 </div>
 
             </div>

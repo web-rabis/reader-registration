@@ -16,7 +16,7 @@ import {Sidebar} from "@/components/ui/sidebar.tsx";
 
 export default function AdminLayout() {
     const [leftOpen, setLeftOpen] = useState(true);
-    const [rightOpen, setRightOpen] = useState(true);
+    const [rightOpen, setRightOpen] = useState(false);
     const [dark, setDark] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const userMenuRef = useRef<HTMLDivElement | null>(null);

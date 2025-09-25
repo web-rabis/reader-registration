@@ -1,12 +1,14 @@
-import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {useTranslation} from "@/contexts/LanguageContext.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {useCallback,  useState} from "react";
 import {adminControlService} from "@/services/admin-control-service.ts";
 import {VisitStatusResponse} from "@/types/control.ts";
-import {ReaderInfo} from "@/components/control/ReaderInfo.tsx";
-import {OrderInfo} from "@/components/control/OrderInfo.tsx";
+import {ReaderInfo} from "@/components/reader-info/ReaderInfo.tsx";
+import {OrderInfo} from "@/components/order-info/OrderInfo.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
+import {toast} from "@/components/ui/use-toast.ts";
+import {UserCheck, UserMinus} from "lucide-react";
 
 export function Control() {
     const {t} = useTranslation()
@@ -39,6 +41,9 @@ export function Control() {
 
     return         <div>
         <Card>
+            <CardTitle className={"pl-6 pr-6 pt-4 pb-2 mb-0 text-2xl"}>
+                {t('control')}
+            </CardTitle>
             <CardHeader>
                 <Input
                     placeholder={t('searchControlPlaceholder')}
@@ -50,7 +55,9 @@ export function Control() {
                         }
                     }}
                     className="pl-8"
-                />            </CardHeader>
+                />
+
+            </CardHeader>
             <CardContent>
                 {(errorMessage || (visitStatus && visitStatus.status!=="in"  && visitStatus.status!=="out")) && <Alert variant={"destructive"} className={"mb-3"}>
                     <AlertTitle>Внимание</AlertTitle>
@@ -65,8 +72,18 @@ export function Control() {
                     </AlertDescription>
                 </Alert>
                 }
+                <div>
+                    {visitStatus && (visitStatus.status==="out" || visitStatus.status==="in") && (
+                        <Alert variant={"default"} className={"mb-3"}>
+                            <AlertDescription>
+                                {visitStatus.status==="out" && <div className={"flex items-center text-green-600"}><UserCheck className={"mr-2"}/> <p>Читатель успешно прошел контроль</p></div>}
+                                {visitStatus.status==="in" && <div className={"flex items-center text-indigo-700"}><UserMinus className={"mr-2"}/> <p>Читатель отмечен как вышедший</p></div>}
+                            </AlertDescription>
+                        </Alert>
+                    )}
+                </div>
 
-                {visitStatus && visitStatus.reader && <ReaderInfo reader={visitStatus.reader} visitStatus={visitStatus.status}/>}
+                {visitStatus && visitStatus.reader && <ReaderInfo reader={visitStatus.reader}/>}
                 {(visitStatus && visitStatus.reader && visitStatus.orders.length === 0) &&
                     <div className="text-center py-8 text-muted-foreground">
                         {t('noOrders')}
