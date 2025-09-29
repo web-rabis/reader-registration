@@ -89,11 +89,11 @@ export function Readers() {
     }, [t]);
 
     const handleEdit = useCallback((id: number) => {
-        navigate(`/edit-registration/${id}`);
+        navigate(`/admin/readers/${id}/edit`);
     }, [navigate]);
 
     const handleNew = useCallback(() => {
-        navigate(`/new-reader`);
+        navigate(`/admin/readers/new`);
     }, [navigate]);
 
     const totalPages = Math.ceil(registrations.count / paging.limit);

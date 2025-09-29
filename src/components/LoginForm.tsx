@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { authService } from "@/services/auth-service";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useAuth } from "@/contexts/AuthContext";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 export function LoginForm() {
   const { t } = useTranslation();
@@ -16,15 +17,16 @@ export function LoginForm() {
     username: "",
     password: "",
   });
+  const [errorMessage, setErrorMassage] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await authService.login(credentials);
       login(response.data.token,response.data.user);
-      toast.success(t('loginSuccess'));
+      setErrorMassage("");
     } catch (error) {
-      toast.error(t('loginError'));
+        setErrorMassage(t('loginError'));
     }
   };
 
@@ -34,6 +36,12 @@ export function LoginForm() {
         <CardTitle className="text-2xl text-center">{t('login')}</CardTitle>
       </CardHeader>
       <CardContent>
+          {errorMessage!=="" && <Alert variant={"destructive"} className={"mb-3"}>
+              <AlertDescription>
+                  <p>{errorMessage}</p>
+              </AlertDescription>
+          </Alert>
+          }
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="username">{t('username')}</Label>

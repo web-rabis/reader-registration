@@ -9,8 +9,8 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import NewReaderPage from "@/pages/NewReaderPage.tsx";
 import RegistrationLanding from "@/pages/RegistrationLanding.tsx";
 import AdminLayout from "@/layouts/AdminLayout.tsx";
-import {Control} from "@/components/Control/Control.tsx";
-import {Readers} from "@/components/dashboard/readers/Readers.tsx";
+import {Control} from "@/components/control/Control.tsx";
+import {Readers} from "@/components/readers/Readers.tsx";
 import {Employees} from "@/components/dashboard/readers/Employees.tsx";
 
 function App() {
@@ -24,10 +24,9 @@ function App() {
               <Route index element={<Navigate to="readers" replace />} />
               <Route path="control" element={<Control />} />
               <Route path="readers" element={<Readers />} />
+              <Route path="readers/:id/edit" element={<EditRegistrationPage />} />
+              <Route path="readers/new" element={<NewReaderPage />} />
               <Route path="employees" element={<Employees />} />
-              <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="new-reader" element={<NewReaderPage />} />
-              <Route path="edit-registration/:id" element={<EditRegistrationPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

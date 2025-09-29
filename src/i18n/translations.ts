@@ -16,6 +16,13 @@ export const translations = {
     control: "Контроль",
     renewalRegistration: "Продление регистрации",
     sort:"Сортировка",
+    inHall:"В зале",
+    numberVisitorsToday:"Количество посетителей за сегодня",
+    readersInHall:"Читатели в зале",
+    visitDate:"Дата посещения",
+    employeeVisit:"Сотрудник(вход)",
+    exitDate:"Дата выхода",
+    employeeExit:"Сотрудник(выход)",
 
     // Заголовки
     dashboard: "Панель управления",
@@ -128,6 +135,13 @@ export const translations = {
     employees: "Қызметкерлер",
     control: "Бақылау",
     renewalRegistration: "Тіркеуді жаңарту",
+    inHall:"Залда",
+    numberVisitorsToday:"Бүгінгі келушілер саны",
+    readersInHall:"Залдағы оқырмандар",
+    visitDate:"Келу күні",
+    employeeVisit:"Қызметкер (Кіру)",
+    exitDate:"Шығу күні",
+    employeeExit:"Қызметкер (Шығу)",
 
     // Заголовки
     dashboard: "Басқару панелі",
@@ -239,6 +253,13 @@ export const translations = {
     employees: "Employees",
     control: "Control",
     renewalRegistration: "Renewal registation",
+    inHall:"In th hall",
+    numberVisitorsToday:"Number of visitors today",
+    readersInHall:"Readers in the hall",
+    visitDate:"Visit Date",
+    employeeVisit:"Employee (Entry)",
+    exitDate:"Exit Date",
+    employeeExit:"Employee (Exit)",
 
     // Заголовки
     dashboard: "Dashboard",

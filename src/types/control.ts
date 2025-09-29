@@ -7,6 +7,16 @@ export interface VisitStatusResponse {
     orders:Order[];
 }
 
+export interface VisitsTodayResponse {
+    result:Control[];
+    count:number;
+}
+
+export interface VisitsStatisticsResponse {
+    all:number;
+    inHall:number;
+}
+
 export interface Order{
     id:number;
     type:string;
@@ -45,4 +55,16 @@ export interface Department{
     id:number;
     code:string;
     name:string;
+}
+
+export interface Control {
+    ticketNumber:number;
+    visitDate:string;
+    exitDate:string;
+    userVisit:string;
+    userExit:string;
+    departmentF51:string
+    department:string;
+    ordersCount:number;
+    count:number;
 }

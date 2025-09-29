@@ -23,7 +23,8 @@ export function ReaderInfo({reader }: ReaderInfoProps) {
         } catch (error) {
             toast.error(t('loadError'));
         }
-    }, [ reader, t]);    return (
+    }, [ reader, t]);
+    return (
         <div className="p-4 border rounded-lg  gap-4 hover:bg-muted/50 transition-colors grid grid-cols-1">
             <div className="space-y-1 flex items-start justify-start  gap-2">
                 <div>

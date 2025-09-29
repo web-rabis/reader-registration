@@ -26,19 +26,7 @@ export function EditRegistrationPage() {
 
   return (
     <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBack}>
-            {t('back')}
-          </Button>
-        </div>
-        <div className="flex items-center gap-4">
-          <LanguageSelector />
-          <Button variant="outline" onClick={handleLogout}>
-            {t('logout')}
-          </Button>
-        </div>
-      </div>
+
       <ReaderEditForm mode="edit" id={Number(id)} />
     </div>
   );
