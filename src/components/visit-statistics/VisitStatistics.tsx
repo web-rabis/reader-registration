@@ -34,24 +34,23 @@ export function VisitStatistics() {
     const totalPages = Math.ceil(visitsToday.count / paging.limit);
     return (
         <>
-        <div className="p-4 border rounded-lg  gap-4 grid grid-cols-1 mb-4">
-            <div className={"flex items-center justify-between"}>
-                <span className={"text-2xl"}>{t('numberVisitorsToday')}</span>
-                <Button variant={"link"} onClick={()=> fetchVisits()}><LucideRefreshCcw/></Button>
-            </div>
-            <span className={"pl-4"}>{t("all")} - {visitsStatistics.all }</span>
-            <span className={"pl-4"}>{t("inHall")} - {visitsStatistics.inHall }</span>
-        </div>
             <div className="p-4 border rounded-lg  gap-4 grid grid-cols-1 mb-4">
-            {visitsToday.count>0 && (
-                <div className="space-y-4">
-                    <span className={"text-2xl"}>{t("readersInHall")}</span>
-                    {visitsToday.result.map((visit) => (<VisitInfo visit={visit}/>))}
-                    <GeneralPagination totalPages={totalPages} currentPage={paging.skip} onPageChange={(page) => setPaging({...paging, skip: page})} />
+                <div className={"flex items-center justify-between"}>
+                    <span className={"text-2xl"}>{t('numberVisitorsToday')}</span>
+                    <Button variant={"link"} onClick={()=> fetchVisits()}><LucideRefreshCcw/></Button>
                 </div>
-
-            )}
+                <span className={"pl-4"}>{t("all")} - {visitsStatistics.all }</span>
+                <span className={"pl-4"}>{t("inHall")} - {visitsStatistics.inHall }</span>
             </div>
+            {visitsToday.count>0 && (
+                <div className="p-4 border rounded-lg  gap-4 grid grid-cols-1 mb-4">
+                    <div className="space-y-4">
+                        <span className={"text-2xl"}>{t("readersInHall")}</span>
+                        {visitsToday.result.map((visit) => (<VisitInfo visit={visit}/>))}
+                        <GeneralPagination totalPages={totalPages} currentPage={paging.skip} onPageChange={(page) => setPaging({...paging, skip: page})} />
+                    </div>
+                </div>
+            )}
 
         </>
     )
