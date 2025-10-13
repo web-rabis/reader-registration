@@ -124,10 +124,10 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
       if (mode === "edit" && id) {
         await adminReaderService.updateReader(id, formData);
         toast.success(t('updateSuccess'));
-        navigate("/dashboard");
+        navigate("/admin/readers");
       } else {
           await adminReaderService.createReader(formData);
-          navigate("/dashboard");
+          navigate("/admin/readers");
       }
     } catch (error) {
         alert(t('processingError')+'\n'+error.response?.data.error.message)

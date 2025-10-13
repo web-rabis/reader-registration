@@ -15,7 +15,7 @@ export function EditRegistrationPage() {
   const { logout } = useAuth();
 
   const handleBack = () => {
-    navigate("/dashboard");
+    navigate("/admin/readers");
   };
 
   const handleLogout = () => {
