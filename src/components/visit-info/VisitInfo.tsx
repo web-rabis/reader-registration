@@ -50,8 +50,6 @@ export function VisitInfo({visit }: VisitInfoProps) {
             <p className="text-sm text-muted-foreground">{t('visitDate')}: {formatterWithTime.format(new Date(visit.visitDate))}</p>
             <p className="text-sm text-muted-foreground">КР: {visit.departmentF51}</p>
             <p className="text-sm text-muted-foreground">{t('employeeVisit')}: {visit.userVisit}</p>
-            <p className="text-sm text-muted-foreground">{t('exitDate')}: {formatterWithTime.format(new Date(visit.exitDate))}</p>
-            <p className="text-sm text-muted-foreground">{t('employeeExit')}: {visit.userVisit}</p>
         </div>
     </div>
 }
