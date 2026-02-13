@@ -4,6 +4,7 @@ services:
   nlrk_reader-front:
     container_name: nlrk_reader-front
     image: shaisarov/nlrk_reader-front
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
