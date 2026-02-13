@@ -21,6 +21,8 @@ import {adminReaderService} from "@/services/admin-service.ts";
 import {Crop} from "lucide-react";
 import {ReaderCropPhoto} from "@/components/dashboard/readers/ReaderCropPhoto.tsx";
 import {TypeCard} from "@/types/dictionary.ts";
+import {Checkbox} from "@/components/ui/checkbox.tsx";
+import {Switch} from "@/components/ui/switch.tsx";
 
 interface ReaderEditFormProps {
   mode?: "create" | "edit";
@@ -166,7 +168,20 @@ export function ReaderEditForm({ mode = "create", id }: ReaderEditFormProps) {
                     {/*</div>*/}
                 </div>
             )}
-
+            <div className="space-y-2">
+                <div className="space-y-2 inline-flex items-center">
+                    <div className="flex items-center space-x-2">
+                        <Switch
+                            id="search-mode"
+                            checked={formData.isEmployee}
+                            onCheckedChange={(e) => setFormData({ ...formData, isEmployee: e })}
+                        />
+                        <Label htmlFor="search-mode">
+                            {t("isEmployee")}
+                        </Label>
+                    </div>
+                </div>
+            </div>
             <div className="space-y-2">
             <Label htmlFor="photo">{t('photo')}</Label>
             <Input

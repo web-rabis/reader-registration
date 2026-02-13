@@ -37,6 +37,7 @@ export interface Reader {
     readersHall?:string;
     note?:string;
     priznakUdal?:string;
+    isEmployee?:boolean;
 }
 export interface ReaderUser {
     id:number;
@@ -95,7 +96,8 @@ export interface EditReaderFormData {
     position: string;
     academicDegree: number;
     status:string;
-    readersHall:string;
+    readersHall: string;
+    isEmployee: boolean;
 }
 export interface ReaderSearchParams {
     status: string;
@@ -103,6 +105,7 @@ export interface ReaderSearchParams {
     expirationDateLow: string;
     expirationDateHigh: string;
     advancedSearch: boolean;
+    isEmployee?:boolean;
 }
 export const initEditReaderFormData: EditReaderFormData = {
     photoView: null,
@@ -131,6 +134,7 @@ export const initEditReaderFormData: EditReaderFormData = {
     academicDegree: 0,
     status:"",
     readersHall:"",
+    isEmployee: false,
 };
 export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFormData=>(
     {
@@ -160,6 +164,7 @@ export const editReaderFormDataFromReaderData = (data:Reader,photo):EditReaderFo
         academicDegree: data.academicDegree?.id ?? 0,
         status: data.status ?? "",
         readersHall: data.readersHall ?? "",
+        isEmployee: data.isEmployee ?? false,
     })
 export const initReaderSearchParams: ReaderSearchParams = {
     status: "",
@@ -167,4 +172,5 @@ export const initReaderSearchParams: ReaderSearchParams = {
     expirationDateLow: "",
     expirationDateHigh: "",
     advancedSearch: false,
+    isEmployee: false,
 }

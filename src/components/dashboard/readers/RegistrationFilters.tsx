@@ -17,6 +17,8 @@ import {Paging} from "@/types/api.ts";
 import {Link} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import {Checkbox} from "@/components/ui/checkbox.tsx";
+import {Switch} from "@/components/ui/switch.tsx";
 
 interface RegistrationFiltersProps {
   searchParams:ReaderSearchParams;
@@ -25,6 +27,7 @@ interface RegistrationFiltersProps {
   onSearchChange: (value: string) => void;
   onExpirationLowChange: (value: string) => void;
   onExpirationHighChange: (value: string) => void;
+  onIsEmployeeChange: (value: boolean) => void;
   onAdvancedToggle: (value: boolean) => void;
   onNewReader: ()=>void;
 }
@@ -36,6 +39,7 @@ export function RegistrationFilters({
   onSearchChange,
   onExpirationLowChange,
   onExpirationHighChange,
+  onIsEmployeeChange,
   onAdvancedToggle,
   onNewReader,
 }: RegistrationFiltersProps) {
@@ -95,7 +99,7 @@ export function RegistrationFilters({
             {/*</div>*/}
         </div>
         {searchParams.advancedSearch && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-4 ">
             <div className="space-y-2 inline-flex items-center">
               <Label htmlFor="expirationDate" className="block text-sm font-medium text-gray-700 w-[280px]">
                 {t('expirationDate')}
@@ -117,7 +121,21 @@ export function RegistrationFilters({
                     className="width-full"
                 />
             </div>
+              <div className="space-y-2 inline-flex items-center">
+                  <div className="flex items-center space-x-2">
+                      <Switch
+                          id="search-mode"
+                          checked={searchParams.isEmployee}
+                          onCheckedChange={onIsEmployeeChange}
+                      />
+                      <Label htmlFor="search-mode">
+                          {t("isEmployee")}
+                      </Label>
+                  </div>
+              </div>
+
           </div>
+
         )}
     </div>
   );

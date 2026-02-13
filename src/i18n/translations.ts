@@ -60,6 +60,7 @@ export const translations = {
     academicDegree: "Ученая степень",
     readersHall: "Читальный зал",
     lastVisitDate: 'Дата последнего посещения',
+    isEmployee:"Сотрудник",
 
     // Статусы
     pending: "Ожидает",
@@ -177,6 +178,7 @@ export const translations = {
     academicDegree: "Ғылыми дәрежесі",
     readersHall: "Оқу залы",
     lastVisitDate: 'Соңғы барған күні',
+    isEmployee:"Қызметкер",
 
     // Статусы
     pending: "Күтуде",
@@ -295,7 +297,7 @@ export const translations = {
     academicDegree: "Academic Degree",
     readersHall: "Reader Hall",
     lastVisitDate: 'Last visited date',
-
+    isEmployee:"Employee",
     // Статусы
     pending: "Pending",
     approved: "Approved",

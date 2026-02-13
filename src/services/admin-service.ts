@@ -20,6 +20,7 @@ export const adminReaderService = {
         if (params.advancedSearch) {
             if (params.expirationDateLow !== undefined) queryParams.append('expirationDateLow', params.expirationDateLow)
             if (params.expirationDateHigh !== undefined) queryParams.append('expirationDateHigh', params.expirationDateHigh)
+            if (params.isEmployee !== undefined) queryParams.append('isEmployee', params.isEmployee.toString())
         }
         return await apiClient.get(`/v1/admin/reader?${queryParams.toString()}`);
     },

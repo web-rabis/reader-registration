@@ -142,6 +142,10 @@ export function Readers() {
         setSearchParams(prev => ({ ...prev, expirationDateHigh: value}));
         setPaging(DEFAULT_PAGING); // сброс
     }, []);
+    const handleIsEmployeeChange = useCallback((value: boolean) => {
+        setSearchParams(prev => ({ ...prev, isEmployee: value}));
+        setPaging(DEFAULT_PAGING); // сброс
+    }, []);
 
     const handlePageChange = useCallback((page: number) => {
         setPaging({...paging,skip:page}); // сброс
@@ -181,6 +185,7 @@ export function Readers() {
                     onSearchChange={handleSearchChange}
                     onExpirationLowChange={handleExpirationChangeLow}
                     onExpirationHighChange={handleExpirationChangeHigh}
+                    onIsEmployeeChange={handleIsEmployeeChange}
                     onAdvancedToggle={handleAdvancedToggle}
                     onNewReader={handleNew}
                 />
