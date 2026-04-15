@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 // В будущем это будет взято из переменных окружения
 const API_URL = import.meta.env.VITE_API_URL || "/api";
-const BASENAME = import.meta.env.VITE_APP_BASENAME || "";
+const BASENAME = import.meta.env.VITE_APP_BASENAME || "/";
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -28,7 +28,8 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("librarian-token");
-        window.location.href = `${BASENAME}/login`;
+      alert(`${BASENAME}login`)
+        window.location.href = `${BASENAME}login`;
       toast.error("Сессия истекла. Пожалуйста, войдите снова.");
     }
     return Promise.reject(error);

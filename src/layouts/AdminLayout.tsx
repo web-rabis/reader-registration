@@ -40,8 +40,9 @@ export default function AdminLayout() {
 
     const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
+    const BASENAME = import.meta.env.VITE_APP_BASENAME || "/";
     if (!isAuthenticated) {
-        navigate("/login");
+        navigate(`${BASENAME}login`);
         return null;
     }
     const user = JSON.parse(localStorage.getItem("librarian-user"))
