@@ -28,7 +28,6 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("librarian-token");
-      alert(`${BASENAME}login`)
         window.location.href = `${BASENAME}login`;
       toast.error("Сессия истекла. Пожалуйста, войдите снова.");
     }
