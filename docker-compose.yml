@@ -1,15 +1,15 @@
 version: '3.8'
 
 services:
-  nlrk_reader-front:
-    container_name: nlrk_reader-front
-    image: shaisarov/nlrk_reader-front
+  nlrk-reader-registration-v2:
+    container_name: nlrk-reader-registration-v2
+    image: shaisarov/nlrk-reader-registration-v2
     restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9086:80"
+      - "19086:80"
     environment:
       - NODE_ENV=production
     networks:
